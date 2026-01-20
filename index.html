@@ -14,7 +14,6 @@
         .item-row { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
         .item-row:hover { background: #080808; }
         
-        /* Desktop Specific Enlargement */
         @media (min-width: 1024px) {
             body { font-size: 16px; }
             .stat-card { padding: 1.75rem; }
@@ -125,7 +124,8 @@
         "IEM (5128)": 15,
         "Over-Ear (5128)": 15,
         "IEM (711)": 15,
-        "Over-Ear (711)": 15
+        "Over-Ear (711)": 15,
+        "Misc/Unknown": 10
     };
 
     const PAGE_SIZE = 50;
@@ -160,22 +160,38 @@
         const reviewer = (entry.reviewer || "").toLowerCase();
         const item = resolveName(entry.item).toLowerCase();
         
+        // 1. Force-correct known IEM brands/models that trigger false OE tags
+        const knownIEMs = [
+            '64 audio', 'artii', 'audiosense', 'campfire', 'zigaat', 'letshuoer', 'shuoer',
+            'isine', 'lcd-i', 'afaq', 'u6t', 'u12t', 'u18', 'duo', 'trio', 'fourte', 'astrolith',
+            'dioko', '7hz', 'moondrop', 'kiwi ears', 'truthear', 'symphonium', 'nightjar', 'fatfreq', 'softars'
+        ];
+        
+        const isKnownIEM = knownIEMs.some(brand => item.includes(brand));
+
+        // 2. Identify Rig
         const isEA = reviewer.includes("earphone's archive") || reviewer.includes("earphonesarchive");
         const is5128Domain = link.includes('hangout.audio') || link.includes('listener800.github.io');
         const is5128Explicit = reviewer.includes("5128") || link.includes('5128');
         const isExplicit711 = link.includes('/711') || link.includes('type=711') || item.includes('(711)');
-        const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/') || item.includes('(hp)') || item.includes('headphone');
         
         const is5128 = !isExplicit711 && (isEA || is5128Domain || is5128Explicit);
 
-        if (is5128) {
-            const hasOEAttr = ['+oe', '(oe)', 'over-ear', 'open-back', 'closed-back', 'over ear'].some(attr => item.includes(attr));
-            if (hasOEAttr || isExplicitHP) return "Over-Ear (5128)";
-            return "IEM (5128)";
-        }
-        if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
-        if (isExplicitHP || isExplicit711) return "Over-Ear (711)";
-        return "IEM (711)";
+        // 3. Determine Form Factor with Exception logic
+        const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/') || item.includes('(hp)') || item.includes('headphone');
+        const hasOEAttr = ['+oe', '(oe)', 'over-ear', 'open-back', 'closed-back', 'over ear'].some(attr => item.includes(attr));
+        const isExplicitIEM = ['(iem)', 'in-ear', 'in ear'].some(attr => item.includes(attr));
+
+        const isOverEar = (isExplicitHP || hasOEAttr) && !isKnownIEM;
+        const isIEM = isKnownIEM || isExplicitIEM || (!isOverEar && (link.includes('type=iem') || link.includes('/iems/')));
+
+        if (is5128) return isOverEar ? "Over-Ear (5128)" : (isIEM ? "IEM (5128)" : "Misc/Unknown");
+        if (link.includes('type=tws') || link.includes('/earbuds/') || item.includes('tws')) return "TWS & Earbuds";
+        
+        if (isOverEar) return "Over-Ear (711)";
+        if (isIEM) return "IEM (711)";
+        
+        return "Misc/Unknown";
     }
 
     function expandCategory(cat) {
@@ -207,15 +223,18 @@
 
     function renderStats() {
         const statsContainer = document.getElementById('stats');
-        const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (711)": 0, "TWS & Earbuds": 0 };
-        const lists = { "IEM (711)": [], "IEM (5128)": [], "Over-Ear (5128)": [], "Over-Ear (711)": [] };
+        const categories = ["IEM (5128)", "Over-Ear (5128)", "IEM (711)", "Over-Ear (711)", "Misc/Unknown", "TWS & Earbuds"];
+        const counts = {};
+        const lists = {};
+        categories.forEach(c => { counts[c] = 0; lists[c] = []; });
+        
         const contributors = {};
 
         fullHistory.forEach(entry => {
             const cat = getEntryMetadata(entry);
             if (counts[cat] !== undefined) {
                 counts[cat]++;
-                if (lists[cat]) lists[cat].push(entry);
+                lists[cat].push(entry);
             }
             if (cat.includes("5128")) {
                 const rev = entry.reviewer || "Unknown";
@@ -236,16 +255,16 @@
             </div>`;
 
         const renderCategoryCard = (title, key, colorClass) => {
-            const limit = statsPagination[key];
+            const limit = statsPagination[key] || 15;
             const items = lists[key].slice(0, limit);
             const hasMore = lists[key].length > limit;
-            const barTotal = key.includes("IEM") ? totalIEM : totalOE;
+            const barTotal = key.includes("IEM") ? totalIEM : (key.includes("Over-Ear") ? totalOE : fullHistory.length);
 
             return `
                 <div class="stat-card">
                     <span class="text-[10px] lg:text-[13px] uppercase mono font-bold ${colorClass}">${title}</span>
                     ${renderBar("Composition Share", counts[key], barTotal, key.includes("5128") ? "bg-white" : "bg-zinc-700")}
-                    <span class="text-[9px] lg:text-[11px] uppercase mono text-zinc-500 block border-b border-zinc-900 pb-1 mb-2 mt-4">Latest Measurements</span>
+                    <span class="text-[9px] lg:text-[11px] uppercase mono text-zinc-500 block border-b border-zinc-900 pb-1 mb-2 mt-4">Latest</span>
                     <ul class="recent-list-mini">
                         ${items.map(i => `<li><a href="${i.link}" target="_blank" class="block truncate">${resolveName(i.item)} <span class="opacity-40 ml-1">[${i.reviewer}]</span></a></li>`).join('')}
                     </ul>
@@ -261,7 +280,7 @@
                 ${renderCategoryCard("711 Over-Ears", "Over-Ear (711)", "text-zinc-500")}
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                  <div class="stat-card">
                     <span class="text-[10px] lg:text-[13px] uppercase mono text-zinc-500 font-bold">5128 Power Rankings</span>
                     <table class="contributor-table mono">
@@ -271,6 +290,7 @@
                         </tbody>
                     </table>
                 </div>
+                ${renderCategoryCard("Misc / Unknown", "Misc/Unknown", "text-orange-900")}
                 <div class="stat-card flex flex-col justify-center items-center opacity-50">
                     <span class="text-[10px] lg:text-[13px] uppercase mono">Total Database Composition</span>
                     <div class="text-3xl lg:text-5xl mono mt-2 text-white">${fullHistory.length.toLocaleString()}</div>
@@ -313,7 +333,7 @@
             const date = toLocalTime(entry.date);
             const isNew = date && (new Date() - date) < NEW_BADGE_MS;
             const rigType = getEntryMetadata(entry);
-            const rigColor = rigType.includes("5128") ? "text-white border-zinc-600" : "text-zinc-500 border-zinc-900";
+            const rigColor = rigType.includes("5128") ? "text-white border-zinc-600" : (rigType.includes("Unknown") ? "text-orange-800 border-orange-900" : "text-zinc-500 border-zinc-900");
             return `
                 <div class="item-row py-6 flex justify-between items-center group">
                     <div class="min-w-0 pr-4">
