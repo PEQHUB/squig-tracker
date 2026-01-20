@@ -3,173 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQUIG.LINK // TRACKER</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>SQUIGLINK // TRACKER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --bg-dark: #0a0a0a;
-            --bg-card: #121212;
-            --border: #1f1f1f;
-            --text-main: #e5e5e5;
-            --text-dim: #737373;
+            --bg: #0a0a0a;
+            --card: #141414;
+            --border: #222222;
+            --text: #e5e5e5;
+            --dim: #737373;
         }
-
         body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-dark); 
-            color: var(--text-main); 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
         }
-
         .mono { font-family: 'JetBrains Mono', monospace; }
-        
-        /* Custom scrollbar for a clean look */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: #262626; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #404040; }
-
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
         .stat-card {
-            background: var(--bg-card);
+            background: var(--card);
             border: 1px solid var(--border);
-            padding: 1.5rem;
+            padding: 1.25rem;
             border-radius: 4px;
         }
-
         .feed-item {
             border-bottom: 1px solid var(--border);
-            transition: all 0.2s ease;
+            transition: background 0.2s ease;
         }
-
-        .feed-item:hover {
-            background-color: #111111;
-            padding-left: 8px;
-        }
-
-        .search-input:focus {
-            box-shadow: 0 1px 0 0 #fff;
-        }
+        .feed-item:hover { background: #111; }
+        input::placeholder { color: #3f3f46; }
     </style>
 </head>
-<body class="min-h-screen py-10 px-4 md:px-0">
+<body class="max-w-4xl mx-auto px-6 py-12">
 
-    <div class="max-w-4xl mx-auto">
-        <header class="mb-12">
-            <h1 class="text-[11px] font-bold tracking-[0.3em] text-zinc-500 uppercase mb-8">Squiglink Database Tracker</h1>
-            
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="stat-card">
-                    <p class="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Total Graphs</p>
-                    <p class="text-2xl font-medium mono" id="stat-total">0</p>
-                </div>
-                <div class="stat-card">
-                    <p class="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Unique Models</p>
-                    <p class="text-2xl font-medium mono" id="stat-unique">0</p>
-                </div>
-                <div class="stat-card">
-                    <p class="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Active Reviewers</p>
-                    <p class="text-2xl font-medium mono" id="stat-sources">0</p>
-                </div>
-                <div class="stat-card">
-                    <p class="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Last Update</p>
-                    <p class="text-2xl font-medium mono" id="stat-time">--:--</p>
-                </div>
+    <header class="mb-12">
+        <h1 class="text-[11px] font-bold tracking-[0.4em] text-zinc-500 uppercase mb-8">Audio Database Monitor</h1>
+        
+        <div class="stat-grid">
+            <div class="stat-card">
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Total Graphs</span>
+                <span id="stat-total" class="text-2xl font-medium mono text-white">0</span>
             </div>
-        </header>
-
-        <section class="mb-8">
-            <input type="text" id="searchInput" placeholder="Search models or reviewers..." 
-                class="w-full bg-transparent border-b border-zinc-800 py-4 text-lg font-light outline-none search-input transition-all placeholder:text-zinc-800">
-        </section>
-
-        <section id="feed-container">
-            <div id="feed" class="flex flex-col">
-                <div class="py-20 text-center text-zinc-600 text-sm animate-pulse">Initializing data stream...</div>
+            <div class="stat-card">
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Unique Models</span>
+                <span id="stat-unique" class="text-2xl font-medium mono text-white">0</span>
             </div>
-        </section>
-    </div>
+            <div class="stat-card">
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Reviewers</span>
+                <span id="stat-sources" class="text-2xl font-medium mono text-white">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 mb-2">Sync Time</span>
+                <span id="stat-time" class="text-2xl font-medium mono text-white">--:--</span>
+            </div>
+        </div>
+
+        <input type="text" id="search" placeholder="Filter by model or reviewer..." 
+            class="w-full bg-transparent border-b border-zinc-800 py-4 text-xl font-light outline-none focus:border-white transition-colors">
+    </header>
+
+    <main id="feed" class="flex flex-col"></main>
 
     <script>
-        let fullHistory = [];
-        const cacheBust = `?t=${Date.now()}`;
+        let historyData = [];
+        let databaseData = {};
 
-        // Fetching both JSON files
-        Promise.all([
-            fetch(`./history.json${cacheBust}`).then(res => res.json()),
-            fetch(`./database.json${cacheBust}`).then(res => res.json())
-        ])
-        .then(([historyData, dbData]) => {
-            fullHistory = historyData;
-            renderFeed(historyData);
-            updateStats(dbData);
-        })
-        .catch(err => {
-            document.getElementById('feed').innerHTML = `<div class="py-20 text-center text-zinc-700 text-xs uppercase tracking-widest">Failed to load database.</div>`;
-        });
-
-        function updateStats(db) {
-            const sources = Object.keys(db).length;
-            let totalGraphs = 0;
-            let uniqueModels = new Set();
-
-            for (const reviewer in db) {
-                if (Array.isArray(db[reviewer])) {
-                    db[reviewer].forEach(item => {
-                        totalGraphs++;
-                        // Extracting actual name if stored as a stringified object by accident
-                        let name = item;
-                        if (typeof item === 'string' && item.includes("'name':")) {
-                            const match = item.match(/'name':\s*'([^']+)'/);
-                            name = match ? match[1] : item;
-                        }
-                        uniqueModels.add(name.toLowerCase().trim());
-                    });
-                }
+        // RECURSIVE PARSER: The core fix for "readable" names
+        function getReadableName(item) {
+            if (typeof item === 'string') return item;
+            if (item && typeof item === 'object') {
+                // If it's the Crinacle/AlphaDelta style: {name: "Brand", phones: [...]}
+                if (item.name && item.phones) return item.name; 
+                // If it's a single phone object: {name: "Model", file: "..."}
+                if (item.name) return item.name;
             }
+            return "Unknown Model";
+        }
 
-            document.getElementById('stat-total').innerText = totalGraphs.toLocaleString();
-            document.getElementById('stat-unique').innerText = uniqueModels.size.toLocaleString();
-            document.getElementById('stat-sources').innerText = sources;
+        async function init() {
+            try {
+                const [hRes, dRes] = await Promise.all([
+                    fetch(`./history.json?t=${Date.now()}`),
+                    fetch(`./database.json?t=${Date.now()}`)
+                ]);
+                historyData = await hRes.json();
+                databaseData = await dRes.json();
+                
+                renderStats();
+                renderFeed(historyData);
+            } catch (e) {
+                document.getElementById('feed').innerHTML = `<p class="text-zinc-600 mono text-xs uppercase">Error linking to database.</p>`;
+            }
+        }
+
+        function renderStats() {
+            let total = 0;
+            const unique = new Set();
             
-            const now = new Date();
-            document.getElementById('stat-time').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            Object.values(databaseData).forEach(reviewerList => {
+                reviewerList.forEach(item => {
+                    total++;
+                    const name = getReadableName(item);
+                    unique.add(name.toLowerCase().trim());
+                });
+            });
+
+            document.getElementById('stat-total').innerText = total.toLocaleString();
+            document.getElementById('stat-unique').innerText = unique.size.toLocaleString();
+            document.getElementById('stat-sources').innerText = Object.keys(databaseData).length;
+            document.getElementById('stat-time').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         }
 
         function renderFeed(data) {
-            const feed = document.getElementById('feed');
-            if (!data || data.length === 0) {
-                feed.innerHTML = '<div class="py-20 text-center text-zinc-800 text-xs uppercase tracking-widest">No matching results.</div>';
-                return;
-            }
-
-            feed.innerHTML = data.map(entry => `
-                <div class="feed-item flex items-center justify-between py-5">
-                    <div class="flex flex-col min-w-0 pr-6">
+            const container = document.getElementById('feed');
+            container.innerHTML = data.map(entry => {
+                const cleanName = getReadableName(entry.item);
+                return `
+                <div class="feed-item py-6 flex justify-between items-center group">
+                    <div class="pr-4">
                         <div class="flex items-center gap-3 mb-1">
-                            <span class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">${entry.reviewer}</span>
+                            <span class="text-[10px] font-semibold text-zinc-500 uppercase tracking-tighter">${entry.reviewer}</span>
                             <span class="text-[10px] text-zinc-700 mono">${entry.date}</span>
                         </div>
-                        <h2 class="text-[15px] font-normal text-zinc-200 truncate leading-snug">
-                            ${entry.item}
-                        </h2>
+                        <h2 class="text-md text-zinc-200 font-normal">${cleanName}</h2>
                     </div>
-                    <a href="${entry.link}" target="_blank" class="flex-shrink-0 flex items-center gap-2 group">
-                        <span class="text-[10px] font-bold text-zinc-600 group-hover:text-white uppercase tracking-widest transition-colors">View Graph</span>
-                        <svg class="w-3 h-3 text-zinc-700 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    <a href="${entry.link}" target="_blank" class="flex items-center gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
+                        <span class="text-[10px] uppercase font-bold tracking-widest">Graph</span>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filtered = fullHistory.filter(h => 
-                h.item.toLowerCase().includes(query) || 
-                h.reviewer.toLowerCase().includes(query)
+        document.getElementById('search').addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const filtered = historyData.filter(h => 
+                getReadableName(h.item).toLowerCase().includes(val) || 
+                h.reviewer.toLowerCase().includes(val)
             );
             renderFeed(filtered);
         });
+
+        init();
     </script>
 </body>
 </html>
