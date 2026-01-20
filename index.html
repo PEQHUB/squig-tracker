@@ -78,141 +78,153 @@
     
     <button id="load-all-btn" class="mono uppercase hidden">Load Entire History</button>
 
-    <script>
-        let fullHistory = [];
-        let filteredHistory = [];
-        let databaseData = {};
-        
-        const CUTOFF_MS = 12 * 60 * 60 * 1000; 
-        const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
+<script>
+    let fullHistory = [];
+    let filteredHistory = [];
+    let databaseData = {};
+    
+    const CUTOFF_MS = 12 * 60 * 60 * 1000; 
+    const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
-        function toLocalTime(dateStr) {
-            if (!dateStr) return null;
-            try {
-                // Handle cases where the string might not be formatted for standard JS Date
-                const d = new Date(dateStr.includes("UTC") ? dateStr : dateStr + " UTC");
-                if (isNaN(d.getTime())) {
-                    // Manual parse for "Jan 20, 14:30" format
-                    const parts = dateStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
-                    if (parts) {
-                        const [_, month, day, hour, min] = parts;
-                        return new Date(`${month} ${day} ${new Date().getFullYear()} ${hour}:${min} UTC`);
-                    }
+    // ANDROID COMPATIBLE PARSER
+    function toLocalTime(dateStr) {
+        if (!dateStr) return null;
+        try {
+            // 1. Try standard ISO/UTC parse
+            let d = new Date(dateStr.includes("UTC") ? dateStr : dateStr + " UTC");
+            
+            // 2. If Android fails (Invalid Date), manual parse "Jan 20, 14:30"
+            if (isNaN(d.getTime())) {
+                const months = {
+                    Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5,
+                    Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11
+                };
+                const match = dateStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
+                if (match) {
+                    const [_, mon, day, hr, min] = match;
+                    const now = new Date();
+                    // Create date using UTC constructor for cross-device consistency
+                    d = new Date(Date.UTC(now.getFullYear(), months[mon], day, hr, min));
                 }
-                return isNaN(d.getTime()) ? null : d;
-            } catch (e) { return null; }
-        }
-
-        function resolveName(data) {
-            if (!data) return "Unknown";
-            if (typeof data === 'string') return data;
-            return data.name || Object.values(data)[0] || "Unknown";
-        }
-
-        async function fetchData() {
-            const feedElement = document.getElementById('feed');
-            try {
-                const t = Date.now();
-                // Removed leading dot-slash for better GH Pages compatibility
-                const [hReq, dReq] = await Promise.all([
-                    fetch(`history.json?t=${t}`),
-                    fetch(`database.json?t=${t}`)
-                ]);
-                
-                if (!hReq.ok || !dReq.ok) throw new Error("Data files not found");
-
-                const rawHistory = await hReq.json();
-                databaseData = await dReq.json();
-                
-                // Robust Sorting: Newest dates first
-                fullHistory = rawHistory.sort((a, b) => {
-                    const dateA = toLocalTime(a.date) || 0;
-                    const dateB = toLocalTime(b.date) || 0;
-                    return dateB - dateA;
-                });
-
-                const now = Date.now();
-                filteredHistory = fullHistory.filter(entry => {
-                    const d = toLocalTime(entry.date);
-                    return d && (now - d.getTime() < CUTOFF_MS);
-                });
-
-                // Display logic: Show 12h filtered items, or fallback to most recent 10
-                const displayList = filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10);
-
-                if (fullHistory.length > displayList.length) {
-                    document.getElementById('load-all-btn').classList.remove('hidden');
-                }
-
-                updateDashboard();
-                renderItems(displayList);
-            } catch (err) {
-                console.error("Fetch Error:", err);
-                feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Syncing Database... Please refresh in a moment.</div>`;
             }
-        }
+            return isNaN(d.getTime()) ? null : d;
+        } catch (e) { return null; }
+    }
 
-        function updateDashboard() {
-            const reviewers = Object.keys(databaseData).filter(k => k !== 'last_sync');
-            document.getElementById('stat-total').innerText = filteredHistory.length;
-            document.getElementById('stat-db-total').innerText = fullHistory.length.toLocaleString();
-            document.getElementById('stat-sources').innerText = reviewers.length;
-        }
+    function resolveName(data) {
+        if (!data) return "Unknown";
+        if (typeof data === 'string') return data;
+        return data.name || Object.values(data)[0] || "Unknown";
+    }
 
-        function renderItems(data) {
-            const container = document.getElementById('feed');
-            let htmlContent = "";
-            const now = Date.now();
-            let lastHourLabel = "";
+    async function fetchData() {
+        const feedElement = document.getElementById('feed');
+        try {
+            const t = Date.now();
+            const [hReq, dReq] = await Promise.all([
+                fetch(`history.json?t=${t}`),
+                fetch(`database.json?t=${t}`)
+            ]);
+            
+            if (!hReq.ok || !dReq.ok) throw new Error("Data files not found");
 
-            data.forEach(entry => {
-                const model = resolveName(entry.item);
-                const dateObj = toLocalTime(entry.date);
-                const isVeryRecent = dateObj && (now - dateObj.getTime() < NEW_BADGE_MS);
-                
-                const localStr = dateObj ? dateObj.toLocaleTimeString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }) : "Pending";
-                const currentHourLabel = localStr.split(':')[0];
-
-                if (currentHourLabel !== lastHourLabel) {
-                    htmlContent += `<div class="time-divider">${currentHourLabel}:00 Block</div>`;
-                    lastHourLabel = currentHourLabel;
-                }
-
-                htmlContent += `
-                <div class="item-row py-8 flex justify-between items-center group">
-                    <div class="min-w-0 pr-4">
-                        <div class="flex items-center gap-3 mb-2">
-                            ${isVeryRecent ? '<span class="bg-white text-black px-1.5 py-0.5 text-[9px] font-black tracking-tighter uppercase rounded-sm">New</span>' : ''}
-                            <span class="text-[12px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
-                            <span class="text-[12px] text-zinc-500 font-medium mono uppercase">${localStr}</span>
-                        </div>
-                        <h2 class="text-[19px] md:text-[22px] font-normal text-zinc-200 truncate tracking-tight">${model}</h2>
-                    </div>
-                    <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 group-hover:border-zinc-400 text-zinc-600 group-hover:text-white transition-all duration-300">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </a>
-                </div>`;
+            const rawHistory = await hReq.json();
+            databaseData = await dReq.json();
+            
+            // Robust Sorting
+            fullHistory = rawHistory.sort((a, b) => {
+                const dateA = toLocalTime(a.date) || 0;
+                const dateB = toLocalTime(b.date) || 0;
+                return dateB - dateA;
             });
-            container.innerHTML = htmlContent;
+
+            const now = Date.now();
+            filteredHistory = fullHistory.filter(entry => {
+                const d = toLocalTime(entry.date);
+                // Ensure date exists and is NOT in the future (common Android bug)
+                return d && (now - d.getTime() < CUTOFF_MS) && (d.getTime() <= now + 60000);
+            });
+
+            // Fallback: If 12h is empty, show latest 10
+            const displayList = filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10);
+
+            if (fullHistory.length > displayList.length) {
+                document.getElementById('load-all-btn').classList.remove('hidden');
+            }
+
+            updateDashboard();
+            renderItems(displayList);
+        } catch (err) {
+            console.error("Fetch Error:", err);
+            feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Connection Lost</div>`;
         }
+    }
 
-        document.getElementById('load-all-btn').addEventListener('click', () => {
-            renderItems(fullHistory);
-            document.getElementById('load-all-btn').classList.add('hidden');
-            document.getElementById('stat-total').innerText = fullHistory.length.toLocaleString();
+    function updateDashboard() {
+        const reviewers = Object.keys(databaseData).filter(k => k !== 'last_sync');
+        document.getElementById('stat-total').innerText = filteredHistory.length;
+        document.getElementById('stat-db-total').innerText = fullHistory.length.toLocaleString();
+        document.getElementById('stat-sources').innerText = reviewers.length;
+    }
+
+    function renderItems(data) {
+        const container = document.getElementById('feed');
+        let htmlContent = "";
+        const now = Date.now();
+        let lastHourLabel = "";
+
+        data.forEach(entry => {
+            const model = resolveName(entry.item);
+            const dateObj = toLocalTime(entry.date);
+            const isVeryRecent = dateObj && (now - dateObj.getTime() < NEW_BADGE_MS);
+            
+            // Format time for mobile display
+            const localStr = dateObj ? dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : "Pending";
+            const dayStr = dateObj ? dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' }) : "";
+            
+            const currentHourLabel = `${dayStr} ${localStr.split(':')[0]}`;
+
+            if (currentHourLabel !== lastHourLabel) {
+                htmlContent += `<div class="time-divider">${dayStr} — ${localStr.split(':')[0]}:00 Block</div>`;
+                lastHourLabel = currentHourLabel;
+            }
+
+            htmlContent += `
+            <div class="item-row py-8 flex justify-between items-center group">
+                <div class="min-w-0 pr-4">
+                    <div class="flex items-center gap-3 mb-2">
+                        ${isVeryRecent ? '<span class="bg-white text-black px-1.5 py-0.5 text-[9px] font-black tracking-tighter uppercase rounded-sm">New</span>' : ''}
+                        <span class="text-[12px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
+                        <span class="text-[12px] text-zinc-500 font-medium mono uppercase">${localStr}</span>
+                    </div>
+                    <h2 class="text-[19px] md:text-[22px] font-normal text-zinc-200 truncate tracking-tight">${model}</h2>
+                </div>
+                <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 text-zinc-600 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>`;
         });
+        container.innerHTML = htmlContent;
+    }
 
-        document.getElementById('search').addEventListener('input', (e) => {
-            const val = e.target.value.toLowerCase();
-            const source = (document.getElementById('load-all-btn').classList.contains('hidden')) ? fullHistory : (filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10));
-            const filtered = source.filter(h => 
-                resolveName(h.item).toLowerCase().includes(val) || 
-                h.reviewer.toLowerCase().includes(val)
-            );
-            renderItems(filtered);
-        });
+    document.getElementById('load-all-btn').addEventListener('click', () => {
+        renderItems(fullHistory);
+        document.getElementById('load-all-btn').classList.add('hidden');
+        document.getElementById('stat-total').innerText = fullHistory.length.toLocaleString();
+    });
 
-        fetchData();
-    </script>
+    document.getElementById('search').addEventListener('input', (e) => {
+        const val = e.target.value.toLowerCase();
+        const source = (document.getElementById('load-all-btn').classList.contains('hidden')) ? fullHistory : (filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10));
+        const filtered = source.filter(h => 
+            resolveName(h.item).toLowerCase().includes(val) || 
+            h.reviewer.toLowerCase().includes(val)
+        );
+        renderItems(filtered);
+    });
+
+    fetchData();
+</script>
 </body>
 </html>
+
