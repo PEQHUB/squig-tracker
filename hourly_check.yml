@@ -1,0 +1,31 @@
+name: Hourly Squig Check
+on:
+  schedule:
+    - cron: '0 * * * *' # This means "Every hour at minute 0"
+  workflow_dispatch: # Allows you to run it manually with a button
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run script
+        run: python check.py
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "SquigBot"
+          git config --global user.email "bot@squig.link"
+          git add database.json history.json
+          git commit -m "Update measurements" || exit 0
+          git push
