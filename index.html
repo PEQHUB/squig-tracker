@@ -54,29 +54,25 @@
 </head>
 <body class="max-w-5xl mx-auto px-6 py-12">
 
-    <header class="mb-12">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
-                <span id="stat-total" class="text-xl font-medium mono text-white">0</span>
-            </div>
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Total DB</span>
-                <span id="stat-db-total" class="text-xl font-medium mono text-white">0</span>
-            </div>
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Reviewers</span>
-                <span id="stat-sources" class="text-xl font-medium mono text-white">0</span>
-            </div>
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last Refresh</span>
-                <span id="stat-time" class="text-xl font-medium mono text-white">--:--</span>
-            </div>
+   <header class="mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+        <div class="stat-card">
+            <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
+            <span id="stat-total" class="text-xl font-medium mono text-white">0</span>
         </div>
+        <div class="stat-card">
+            <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Total DB</span>
+            <span id="stat-db-total" class="text-xl font-medium mono text-white">0</span>
+        </div>
+        <div class="stat-card">
+            <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Reviewers</span>
+            <span id="stat-sources" class="text-xl font-medium mono text-white">0</span>
+        </div>
+    </div>
 
-        <input type="text" id="search" placeholder="Search Filter..." 
-            class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
-    </header>
+    <input type="text" id="search" placeholder="Search Filter..." 
+        class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
+</header>
 
     <main id="feed" class="flex flex-col"></main>
     
@@ -217,3 +213,4 @@
     </script>
 </body>
 </html>
+
