@@ -100,7 +100,7 @@
 
     <main id="feed" class="flex flex-col"></main>
     <main id="advanced" class="hidden flex flex-col"></main>
-    <main id="stats" class="hidden flex flex-col py-10 space-y-12"></main>
+    <main id="stats" class="hidden flex flex-col py-10 space-y-16"></main>
     
     <button id="load-all-btn" class="mono uppercase hidden">Load 50 More</button>
 
@@ -154,18 +154,19 @@
 
     function switchTab(tab) {
         currentTab = tab;
-        // Update Buttons
         document.getElementById('tab-feed').classList.toggle('active', tab === 'feed');
         document.getElementById('tab-advanced').classList.toggle('active', tab === 'advanced');
         document.getElementById('tab-stats').classList.toggle('active', tab === 'stats');
         
-        // Update Containers
         document.getElementById('feed').classList.toggle('hidden', tab !== 'feed');
         document.getElementById('advanced').classList.toggle('hidden', tab !== 'advanced');
         document.getElementById('stats').classList.toggle('hidden', tab !== 'stats');
         
-        // Update Load Button
-        document.getElementById('load-all-btn').classList.toggle('hidden', tab !== 'feed');
+        // Ensure "Load More" is only visible on the Live Feed
+        document.getElementById('load-all-btn').classList.add('hidden');
+        if (tab === 'feed' && currentIndex < fullHistory.length) {
+            document.getElementById('load-all-btn').classList.remove('hidden');
+        }
         
         if (tab === 'advanced') renderAdvanced();
         if (tab === 'stats') renderStats();
@@ -257,55 +258,93 @@
 
     function renderStats() {
         const statsContainer = document.getElementById('stats');
-        let c711 = 0, c5128 = 0;
+        let iem711 = 0, iem5128 = 0, oe711 = 0, oe5128 = 0;
+        let reviewerCounts = [];
 
-        fullHistory.forEach(entry => {
-            const name = resolveName(entry.item).toLowerCase();
-            const rev = entry.reviewer.toLowerCase();
-            const isIEM = !(name.includes("over") || name.includes("headphone") || rev.includes("overear"));
+        // Global DB Scan for accurate counts
+        Object.entries(databaseData).forEach(([reviewer, items]) => {
+            if (reviewer === 'last_sync') return;
+            const revLower = reviewer.toLowerCase();
+            let revTotal = 0;
             
-            if (isIEM) {
-                if (name.includes("5128") || rev.includes("5128") || name.includes("4620")) c5128++;
-                else c711++;
-            }
+            items.forEach(item => {
+                revTotal++;
+                const itemName = (typeof item === 'string' ? item : item.name || "").toLowerCase();
+                const isOE = itemName.includes("over") || itemName.includes("headphone") || revLower.includes("overear");
+                const is5128 = itemName.includes("5128") || revLower.includes("5128") || itemName.includes("4620");
+
+                if (isOE) {
+                    if (is5128) oe5128++; else oe711++;
+                } else {
+                    if (is5128) iem5128++; else iem711++;
+                }
+            });
+            reviewerCounts.push({ name: reviewer, count: revTotal });
         });
 
-        const total = c711 + c5128;
-        const p711 = ((c711 / total) * 100).toFixed(1);
-        const p5128 = ((c5128 / total) * 100).toFixed(1);
+        // Sort reviewers by size
+        reviewerCounts.sort((a, b) => b.count - a.count);
+        const topReviewers = reviewerCounts.slice(0, 10);
+        const maxRevCount = topReviewers[0]?.count || 1;
 
-        statsContainer.innerHTML = `
+        const iemTotal = iem711 + iem5128;
+        const oeTotal = oe711 + oe5128;
+        const getPercent = (val, total) => total > 0 ? ((val / total) * 100).toFixed(1) : 0;
+
+        const renderBar = (label, count, total, colorClass) => `
             <div>
-                <div class="time-divider">Measurement Standard Breakdown (IEMs)</div>
-                <div class="space-y-8 mt-6">
-                    <div>
-                        <div class="flex justify-between items-end mb-2 mono text-[10px] uppercase tracking-widest">
-                            <span class="text-white">IEC-711 (Legacy)</span>
-                            <span class="text-zinc-500">${c711.toLocaleString()} units — ${p711}%</span>
-                        </div>
-                        <div class="chart-bar-container">
-                            <div class="chart-bar-fill bg-zinc-600" style="width: ${p711}%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-end mb-2 mono text-[10px] uppercase tracking-widest">
-                            <span class="text-white">B&K 5128 (Modern)</span>
-                            <span class="text-zinc-500">${c5128.toLocaleString()} units — ${p5128}%</span>
-                        </div>
-                        <div class="chart-bar-container">
-                            <div class="chart-bar-fill bg-white" style="width: ${p5128}%"></div>
-                        </div>
-                    </div>
+                <div class="flex justify-between items-end mb-2 mono text-[10px] uppercase tracking-widest">
+                    <span class="text-white">${label}</span>
+                    <span class="text-zinc-500">${count.toLocaleString()} units — ${getPercent(count, total)}%</span>
                 </div>
+                <div class="chart-bar-container">
+                    <div class="chart-bar-fill ${colorClass}" style="width: ${getPercent(count, total)}%"></div>
+                </div>
+            </div>`;
+
+        let html = `
+            <div class="space-y-16">
+                <section>
+                    <div class="time-divider">In-Ear Monitor Standards</div>
+                    <div class="space-y-6 mt-4">
+                        ${renderBar("IEC-711 (Legacy)", iem711, iemTotal, "bg-zinc-600")}
+                        ${renderBar("B&K 5128 (Modern)", iem5128, iemTotal, "bg-white")}
+                    </div>
+                </section>
+
+                <section>
+                    <div class="time-divider">Over-Ear Standards</div>
+                    <div class="space-y-6 mt-4">
+                        ${renderBar("GRAS / Generic", oe711, oeTotal, "bg-zinc-600")}
+                        ${renderBar("B&K 5128 (Modern)", oe5128, oeTotal, "bg-white")}
+                    </div>
+                </section>
+
+                <section>
+                    <div class="time-divider">Top Database Contributors</div>
+                    <div class="space-y-6 mt-4">
+                        ${topReviewers.map(r => `
+                            <div>
+                                <div class="flex justify-between items-end mb-2 mono text-[10px] uppercase tracking-widest">
+                                    <span class="text-white">${r.name}</span>
+                                    <span class="text-zinc-500">${r.count.toLocaleString()} measurements</span>
+                                </div>
+                                <div class="chart-bar-container">
+                                    <div class="chart-bar-fill bg-zinc-800" style="width: ${(r.count / maxRevCount * 100)}%"></div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
             </div>
             
             <div class="stat-card opacity-50">
                 <p class="text-[10px] mono uppercase leading-relaxed text-zinc-400">
-                    The 5128 standard uses a high-fidelity anthropometric ear simulator (B&K 4620), 
-                    providing more human-like acoustic impedance compared to the legacy IEC 60318-4 (711) couplers.
+                    Statistics are compiled from the full Squiglink index. Standards are identified via item tags and reviewer hardware metadata.
                 </p>
             </div>
         `;
+        statsContainer.innerHTML = html;
     }
 
     function renderItems(data, containerId, isSubSection = false) {
