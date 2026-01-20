@@ -117,3 +117,55 @@
                     });
                 }
             });
+
+            document.getElementById('stat-total').innerText = totalCount.toLocaleString();
+            document.getElementById('stat-unique').innerText = uniqueSet.size.toLocaleString();
+            document.getElementById('stat-sources').innerText = reviewers.length;
+
+            // Display current browser time as "Last Update" 
+            // (Assuming the site just loaded the newest data)
+            document.getElementById('stat-time').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
+        }
+
+        function renderItems(data) {
+            const container = document.getElementById('feed');
+            if (!data || data.length === 0) {
+                container.innerHTML = `<div class="py-10 text-zinc-800 mono text-xs uppercase tracking-widest text-center">No entries found.</div>`;
+                return;
+            }
+
+            container.innerHTML = data.map(entry => {
+                const model = resolveName(entry.item);
+                // CONVERT TO LOCAL TIME HERE
+                const localDate = toLocalTime(entry.date);
+
+                return `
+                <div class="item-row py-6 flex justify-between items-center group">
+                    <div class="min-w-0 pr-4">
+                        <div class="flex items-center gap-3 mb-1">
+                            <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">${entry.reviewer}</span>
+                            <span class="text-[9px] text-zinc-800 mono uppercase">${localDate}</span>
+                        </div>
+                        <h2 class="text-base font-normal text-zinc-300 truncate">${model}</h2>
+                    </div>
+                    <a href="${entry.link}" target="_blank" class="shrink-0 p-2 border border-zinc-900 hover:border-zinc-500 text-zinc-700 hover:text-white transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+                `;
+            }).join('');
+        }
+
+        document.getElementById('search').addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const filtered = historyData.filter(h => 
+                resolveName(h.item).toLowerCase().includes(val) || 
+                h.reviewer.toLowerCase().includes(val)
+            );
+            renderItems(filtered);
+        });
+
+        fetchData();
+    </script>
+</body>
+</html>
