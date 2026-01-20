@@ -114,35 +114,39 @@
         return typeof data === 'string' ? data : (data.name || "Unknown Device");
     }
 
-    // UPDATED LOGIC TO FIX CRINACLE 5128 IEM CLASSIFICATION
     function getEntryMetadata(entry) {
         const link = (entry.link || "").toLowerCase();
         const reviewer = (entry.reviewer || "").toLowerCase();
         
-        const is5128 = link.includes('5128') || 
+        // 1. Explicit Path Markers
+        const isExplicit711 = link.includes('/711') || link.includes('type=711');
+        const isExplicitIEM = link.includes('/iem/') || link.includes('type=iem') || link.includes('5128iem');
+        const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/');
+
+        // 2. Rig Detection (711 markers override general 5128 domain keywords)
+        const is5128 = !isExplicit711 && (
+                       link.includes('5128') || 
                        link.includes('hangout.audio') || 
                        link.includes('listener800.github.io') || 
-                       reviewer.includes('5128');
+                       reviewer.includes('5128'));
 
-        // Priority check for 5128 IEMs (Handles Crinacle override)
+        // 3. Classification
+        
+        // Crinacle or Explicit IEM paths on a 5128 rig take top priority
         if (is5128) {
             const isCrinacle = reviewer.includes('crin') || link.includes('crinacle');
-            const hasIEMKeywords = link.includes('5128iem') || link.includes('type=iem');
-            
-            if (isCrinacle || hasIEMKeywords) {
-                return "IEM (5128)";
-            }
+            if (isCrinacle || isExplicitIEM) return "IEM (5128)";
         }
 
-        // TWS detection
+        // TWS
         if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
 
-        // Headphone/Over-Ear detection
-        if (link.includes('type=headphone') || link.includes('/headphones/')) {
+        // Headphone Logic (Only if not already caught by IEM logic)
+        if (isExplicitHP) {
             return is5128 ? "Over-Ear (5128)" : "Over-Ear (Legacy/Other)";
         }
 
-        // Default fallback
+        // Final Fallback
         return is5128 ? "IEM (5128)" : "IEM (711)";
     }
 
