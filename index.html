@@ -54,25 +54,25 @@
 </head>
 <body class="max-w-5xl mx-auto px-6 py-12">
 
-   <header class="mb-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-        <div class="stat-card">
-            <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
-            <span id="stat-total" class="text-xl font-medium mono text-white">0</span>
+    <header class="mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+            <div class="stat-card">
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
+                <span id="stat-total" class="text-xl font-medium mono text-white">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Total DB</span>
+                <span id="stat-db-total" class="text-xl font-medium mono text-white">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Reviewers</span>
+                <span id="stat-sources" class="text-xl font-medium mono text-white">0</span>
+            </div>
         </div>
-        <div class="stat-card">
-            <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Total DB</span>
-            <span id="stat-db-total" class="text-xl font-medium mono text-white">0</span>
-        </div>
-        <div class="stat-card">
-            <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Reviewers</span>
-            <span id="stat-sources" class="text-xl font-medium mono text-white">0</span>
-        </div>
-    </div>
 
-    <input type="text" id="search" placeholder="Search Filter..." 
-        class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
-</header>
+        <input type="text" id="search" placeholder="Search Filter..." 
+            class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
+    </header>
 
     <main id="feed" class="flex flex-col"></main>
     
@@ -86,17 +86,19 @@
         const CUTOFF_MS = 12 * 60 * 60 * 1000; 
         const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
-        // Cross-browser safe date parser (Android Fix)
         function toLocalTime(dateStr) {
             if (!dateStr) return null;
             try {
-                const parts = dateStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
-                if (!parts) return new Date(dateStr); 
-
-                const [_, month, day, hour, min] = parts;
-                const year = new Date().getFullYear();
-                const cleanStr = `${month} ${day} ${year} ${hour}:${min} UTC`;
-                const d = new Date(cleanStr);
+                // Handle cases where the string might not be formatted for standard JS Date
+                const d = new Date(dateStr.includes("UTC") ? dateStr : dateStr + " UTC");
+                if (isNaN(d.getTime())) {
+                    // Manual parse for "Jan 20, 14:30" format
+                    const parts = dateStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
+                    if (parts) {
+                        const [_, month, day, hour, min] = parts;
+                        return new Date(`${month} ${day} ${new Date().getFullYear()} ${hour}:${min} UTC`);
+                    }
+                }
                 return isNaN(d.getTime()) ? null : d;
             } catch (e) { return null; }
         }
@@ -104,26 +106,30 @@
         function resolveName(data) {
             if (!data) return "Unknown";
             if (typeof data === 'string') return data;
-            if (typeof data === 'object') {
-                if (data.name) return data.name;
-                return Object.values(data)[0] || "Unknown";
-            }
-            return "Unknown";
+            return data.name || Object.values(data)[0] || "Unknown";
         }
 
         async function fetchData() {
+            const feedElement = document.getElementById('feed');
             try {
                 const t = Date.now();
+                // Removed leading dot-slash for better GH Pages compatibility
                 const [hReq, dReq] = await Promise.all([
-                    fetch(`./history.json?t=${t}`),
-                    fetch(`./database.json?t=${t}`)
+                    fetch(`history.json?t=${t}`),
+                    fetch(`database.json?t=${t}`)
                 ]);
                 
+                if (!hReq.ok || !dReq.ok) throw new Error("Data files not found");
+
                 const rawHistory = await hReq.json();
                 databaseData = await dReq.json();
                 
-                // Sort Newest First
-                fullHistory = rawHistory.reverse();
+                // Robust Sorting: Newest dates first
+                fullHistory = rawHistory.sort((a, b) => {
+                    const dateA = toLocalTime(a.date) || 0;
+                    const dateB = toLocalTime(b.date) || 0;
+                    return dateB - dateA;
+                });
 
                 const now = Date.now();
                 filteredHistory = fullHistory.filter(entry => {
@@ -131,14 +137,18 @@
                     return d && (now - d.getTime() < CUTOFF_MS);
                 });
 
-                if (fullHistory.length > filteredHistory.length) {
+                // Display logic: Show 12h filtered items, or fallback to most recent 10
+                const displayList = filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10);
+
+                if (fullHistory.length > displayList.length) {
                     document.getElementById('load-all-btn').classList.remove('hidden');
                 }
 
                 updateDashboard();
-                renderItems(filteredHistory);
+                renderItems(displayList);
             } catch (err) {
-                document.getElementById('feed').innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Connection Lost</div>`;
+                console.error("Fetch Error:", err);
+                feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Syncing Database... Please refresh in a moment.</div>`;
             }
         }
 
@@ -147,19 +157,13 @@
             document.getElementById('stat-total').innerText = filteredHistory.length;
             document.getElementById('stat-db-total').innerText = fullHistory.length.toLocaleString();
             document.getElementById('stat-sources').innerText = reviewers.length;
-            document.getElementById('stat-time').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
         }
 
         function renderItems(data) {
             const container = document.getElementById('feed');
-            if (!data || data.length === 0) {
-                container.innerHTML = `<div class="py-40 text-zinc-600 mono text-xs uppercase tracking-widest text-center">No new measurements in the last 12 hours</div>`;
-                return;
-            }
-
-            let lastHourLabel = "";
             let htmlContent = "";
             const now = Date.now();
+            let lastHourLabel = "";
 
             data.forEach(entry => {
                 const model = resolveName(entry.item);
@@ -187,8 +191,7 @@
                     <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 group-hover:border-zinc-400 text-zinc-600 group-hover:text-white transition-all duration-300">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
-                </div>
-                `;
+                </div>`;
             });
             container.innerHTML = htmlContent;
         }
@@ -201,7 +204,7 @@
 
         document.getElementById('search').addEventListener('input', (e) => {
             const val = e.target.value.toLowerCase();
-            const source = (document.getElementById('load-all-btn').classList.contains('hidden')) ? fullHistory : filteredHistory;
+            const source = (document.getElementById('load-all-btn').classList.contains('hidden')) ? fullHistory : (filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10));
             const filtered = source.filter(h => 
                 resolveName(h.item).toLowerCase().includes(val) || 
                 h.reviewer.toLowerCase().includes(val)
@@ -213,4 +216,3 @@
     </script>
 </body>
 </html>
-
