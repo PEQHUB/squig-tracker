@@ -39,35 +39,39 @@ def fetch_data(url):
     return None
 
 def process_item(link_domain, name, share_id, database, sub_key, new_finds):
-    encoded_id = urllib.parse.quote(share_id)
+    # Fix: Ensure share_id is a string to avoid 'quote_from_bytes' error
+    str_share_id = str(share_id) if share_id is not None else ""
+    str_name = str(name) if name is not None else "Unknown Item"
+    
+    encoded_id = urllib.parse.quote(str_share_id)
     deep_link = f"https://{link_domain}/?share={encoded_id}"
 
-    if name not in database[sub_key]:
-        database[sub_key].append(name)
+    if str_name not in database[sub_key]:
+        database[sub_key].append(str_name)
         new_finds.append({
             "reviewer": sub_key.capitalize(),
-            "item": name,
+            "item": str_name,
             "date": datetime.now().strftime("%b %d, %H:%M"),
             "link": deep_link
         })
 
 def run_check():
-    # 1. LOAD DATA
     if os.path.exists(DB_FILE):
         with open(DB_FILE, "r") as f:
-            database = json.load(f)
+            try: database = json.load(f)
+            except: database = {}
     else:
         database = {}
 
     if os.path.exists(HISTORY_FILE):
         with open(HISTORY_FILE, "r") as f:
-            history = json.load(f)
+            try: history = json.load(f)
+            except: history = []
     else:
         history = []
 
     new_finds = []
 
-    # 2. RUN SCRAPER
     for sub in SUBDOMAINS:
         print(f"Checking {sub}...")
         if sub not in database:
@@ -80,10 +84,9 @@ def run_check():
         for path in paths_to_try:
             base_url = f"https://{sub}.squig.link"
             if path: base_url += f"/{path}"
-            
             check_url = f"{base_url}/data/phone_book.json"
-            fetched = fetch_data(check_url)
             
+            fetched = fetch_data(check_url)
             if fetched:
                 data = fetched
                 link_domain = f"{sub}.squig.link/{path}" if path else f"{sub}.squig.link"
@@ -92,7 +95,6 @@ def run_check():
         if not data:
             continue
         
-        # 3. PARSE DATA
         if isinstance(data, dict):
             for share_id, display_name in data.items():
                 if isinstance(display_name, list):
@@ -104,14 +106,11 @@ def run_check():
             for item in data:
                 process_item(link_domain, item, item, database, sub, new_finds)
         
-        time.sleep(1)
+        time.sleep(0.5) # Slight delay to be polite
 
-    # 4. SAVE DATA
     if new_finds:
-        print(f"Found {len(new_finds)} new items!")
-        # Update history and keep only latest 200
+        print(f"Success! Found {len(new_finds)} new items.")
         history = (new_finds + history)[:200]
-        
         with open(DB_FILE, "w") as f:
             json.dump(database, f, indent=4)
         with open(HISTORY_FILE, "w") as f:
