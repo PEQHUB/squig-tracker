@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQUIGLINK MONITOR</title>
+    <title>SQUIGLINK MONITOR + ANALYZER</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -15,41 +15,22 @@
         .item-row:hover { background: #080808; }
         
         .time-divider {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 2.5rem 0 1rem 0;
-            color: #3f3f46;
-            font-size: 10px;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
+            display: flex; align-items: center; gap: 1rem; padding: 2.5rem 0 1rem 0;
+            color: #3f3f46; font-size: 10px; font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.2em; text-transform: uppercase;
         }
-        .time-divider::after {
-            content: "";
-            height: 1px;
-            flex-grow: 1;
-            background: linear-gradient(90deg, #222222 0%, transparent 100%);
-        }
+        .time-divider::after { content: ""; height: 1px; flex-grow: 1; background: linear-gradient(90deg, #222222 0%, transparent 100%); }
 
         #load-all-btn {
-            margin: 4rem auto;
-            display: block;
-            border: 1px solid #27272a;
-            padding: 0.75rem 2rem;
-            font-size: 10px;
-            letter-spacing: 0.1em;
-            color: #71717a;
-            transition: all 0.2s;
+            margin: 4rem auto; display: block; border: 1px solid #27272a; padding: 0.75rem 2rem;
+            font-size: 10px; letter-spacing: 0.1em; color: #71717a; transition: all 0.2s;
         }
-        #load-all-btn:hover {
-            border-color: #52525b;
-            color: #ffffff;
-            background: #0a0a0a;
-        }
+        #load-all-btn:hover { border-color: #52525b; color: #ffffff; background: #0a0a0a; }
 
         input::placeholder { color: #3f3f46; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
+        
+        .score-badge { font-size: 10px; background: #111; border: 1px solid #333; padding: 2px 6px; border-radius: 2px; color: #10b981; }
     </style>
 </head>
 <body class="max-w-5xl mx-auto px-6 py-12">
@@ -74,38 +55,76 @@
             </div>
         </div>
 
-        <input type="text" id="search" placeholder="Search Filter..." 
-            class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
+        <div class="flex flex-col gap-6">
+            <input type="text" id="search" placeholder="Search Filter..." 
+                class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
+            
+            <div class="border border-zinc-800 p-6 bg-[#050505] flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h3 class="text-[10px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Custom Target Ranking</h3>
+                    <p class="text-[10px] text-zinc-600 mono">Upload a (Freq, Amp) .txt file to rank by Harman Preference.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div id="target-status" class="hidden text-[10px] mono text-emerald-500 italic">Target Active</div>
+                    <label class="cursor-pointer bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 px-4 py-2 text-[10px] mono uppercase transition-all">
+                        <span>Select .txt Target</span>
+                        <input type="file" id="target-upload" class="hidden" accept=".txt,.csv">
+                    </label>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main id="feed" class="flex flex-col"></main>
-    
     <button id="load-all-btn" class="mono uppercase hidden">Load Entire History</button>
 
     <script>
         let fullHistory = [];
         let filteredHistory = [];
         let databaseData = {};
-        
-        // --- CONFIGURATION ---
-        // Items before this date are hidden by default
-const CUTOFF_DATE = new Date("2026-01-21T00:00:00Z"); 
+        let customTarget = null;
+        const FREQ_POINTS = Array.from({length: 300}, (_, i) => 20 * Math.pow(20000/20, i/299));
 
+        const CUTOFF_DATE = new Date("2026-01-21T00:00:00Z"); 
+
+        // --- PREFERENCE MODEL MATH ---
+        function calculateHarmanScore(headphoneData, targetData) {
+            const hInterp = interpolate(headphoneData, FREQ_POINTS);
+            const tInterp = interpolate(targetData, FREQ_POINTS);
+            
+            // Normalize at 1kHz (Index 182 approx for 1k in a 300-pt log scale)
+            const idx1k = FREQ_POINTS.findIndex(f => f >= 1000);
+            const hOffset = hInterp[idx1k];
+            const tOffset = tInterp[idx1k];
+            
+            const errors = hInterp.map((val, i) => (val - hOffset) - (tInterp[i] - tOffset));
+            const meanError = errors.reduce((a, b) => a + b) / errors.length;
+            const stdDev = Math.sqrt(errors.map(x => Math.pow(x - meanError, 2)).reduce((a, b) => a + b) / errors.length);
+            
+            // Final Score Calculation
+            let score = 114.39 - (43.18 * stdDev);
+            return Math.max(0, Math.min(100, score)).toFixed(1);
+        }
+
+        function interpolate(data, targetFreqs) {
+            return targetFreqs.map(tf => {
+                let i = data.findIndex(p => p.f >= tf);
+                if (i <= 0) return data[0].a;
+                if (i >= data.length) return data[data.length-1].a;
+                const p1 = data[i-1], p2 = data[i];
+                return p1.a + (p2.a - p1.a) * (tf - p1.f) / (p2.f - p1.f);
+            });
+        }
+
+        // --- CORE LOGIC ---
         function toLocalTime(dateStr) {
-            try {
-                const year = new Date().getFullYear();
-                return new Date(`${dateStr}, ${year} UTC`);
-            } catch (e) { return null; }
+            try { return new Date(`${dateStr}, ${new Date().getFullYear()} UTC`); } catch (e) { return null; }
         }
 
         function resolveName(data) {
             if (!data) return "Unknown";
             if (typeof data === 'string') return data;
-            if (typeof data === 'object') {
-                if (data.name && typeof data.name === 'string') return data.name;
-                return Object.values(data)[0] || "Unknown";
-            }
-            return "Unknown";
+            return data.name || Object.values(data)[0] || "Unknown";
         }
 
         async function fetchData() {
@@ -115,33 +134,26 @@ const CUTOFF_DATE = new Date("2026-01-21T00:00:00Z");
                     fetch(`./history.json?t=${t}`),
                     fetch(`./database.json?t=${t}`)
                 ]);
-                
                 fullHistory = await hReq.json();
                 databaseData = await dReq.json();
 
-                // Initial Filter
                 filteredHistory = fullHistory.filter(entry => {
                     const d = toLocalTime(entry.date);
                     return d && d >= CUTOFF_DATE;
                 });
 
-                if (fullHistory.length > filteredHistory.length) {
-                    document.getElementById('load-all-btn').classList.remove('hidden');
-                }
+                if (fullHistory.length > filteredHistory.length) document.getElementById('load-all-btn').classList.remove('hidden');
 
                 updateDashboard();
                 renderItems(filteredHistory);
             } catch (err) {
-                document.getElementById('feed').innerHTML = `<div class="py-10 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Connection Lost</div>`;
+                document.getElementById('feed').innerHTML = `<div class="py-10 text-zinc-500 mono text-xs text-center">Connection Lost</div>`;
             }
         }
 
         function updateDashboard() {
             const reviewers = Object.keys(databaseData).filter(k => k !== 'last_sync');
-            
-            // "New Hits" counts items post-cutoff
             document.getElementById('stat-total').innerText = filteredHistory.length;
-            // "Total DB" counts everything in history.json
             document.getElementById('stat-db-total').innerText = fullHistory.length.toLocaleString();
             document.getElementById('stat-sources').innerText = reviewers.length;
             document.getElementById('stat-time').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
@@ -150,7 +162,7 @@ const CUTOFF_DATE = new Date("2026-01-21T00:00:00Z");
         function renderItems(data) {
             const container = document.getElementById('feed');
             if (!data || data.length === 0) {
-                container.innerHTML = `<div class="py-20 text-zinc-600 mono text-xs uppercase tracking-widest text-center">Monitoring for new measurements...</div>`;
+                container.innerHTML = `<div class="py-20 text-zinc-600 mono text-xs uppercase text-center">No measurements found...</div>`;
                 return;
             }
 
@@ -163,7 +175,7 @@ const CUTOFF_DATE = new Date("2026-01-21T00:00:00Z");
                 const localStr = dateObj.toLocaleTimeString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
                 const currentHourLabel = localStr.split(':')[0];
 
-                if (currentHourLabel !== lastHourLabel) {
+                if (currentHourLabel !== lastHourLabel && !customTarget) {
                     htmlContent += `<div class="time-divider">${currentHourLabel}:00 Block</div>`;
                     lastHourLabel = currentHourLabel;
                 }
@@ -174,34 +186,49 @@ const CUTOFF_DATE = new Date("2026-01-21T00:00:00Z");
                         <div class="flex items-center gap-3 mb-1.5">
                             <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
                             <span class="text-[10px] text-zinc-500 font-medium mono uppercase">${localStr}</span>
+                            ${entry.score ? `<span class="score-badge mono">Match: ${entry.score}%</span>` : ''}
                         </div>
                         <h2 class="text-[17px] font-normal text-zinc-200 truncate">${model}</h2>
                     </div>
                     <a href="${entry.link}" target="_blank" class="shrink-0 p-2.5 border border-zinc-800 group-hover:border-zinc-500 text-zinc-600 group-hover:text-white transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
-                </div>
-                `;
+                </div>`;
             });
             container.innerHTML = htmlContent;
         }
 
-        // --- EVENTS ---
+        // --- TARGET UPLOAD LOGIC ---
+        document.getElementById('target-upload').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const text = await file.text();
+            
+            customTarget = text.split('\n').map(line => {
+                const [f, a] = line.trim().split(/[\s,]+/).map(parseFloat);
+                return (!isNaN(f) && !isNaN(a)) ? {f, a} : null;
+            }).filter(x => x);
+
+            if (customTarget.length > 0) {
+                document.getElementById('target-status').classList.remove('hidden');
+                document.getElementById('load-all-btn').classList.add('hidden'); // Hide load btn when scoring
+                
+                // Note: Actual browser-side scoring of 19k items requires the raw FR data 
+                // which isn't in history.json yet. For now, this prepares the UI.
+                alert("Target loaded. This will rank items once local data analysis is synced.");
+            }
+        });
+
         document.getElementById('load-all-btn').addEventListener('click', () => {
             renderItems(fullHistory);
             document.getElementById('load-all-btn').classList.add('hidden');
-            // Update "New Hits" to match full history so stats don't look broken
             document.getElementById('stat-total').innerText = fullHistory.length.toLocaleString();
         });
 
         document.getElementById('search').addEventListener('input', (e) => {
             const val = e.target.value.toLowerCase();
-            // Search will look through whatever is currently rendered
-            const source = (fullHistory.length === filteredHistory.length) ? fullHistory : filteredHistory;
-            const filtered = source.filter(h => 
-                resolveName(h.item).toLowerCase().includes(val) || 
-                h.reviewer.toLowerCase().includes(val)
-            );
+            const source = (document.getElementById('load-all-btn').classList.contains('hidden')) ? fullHistory : filteredHistory;
+            const filtered = source.filter(h => resolveName(h.item).toLowerCase().includes(val) || h.reviewer.toLowerCase().includes(val));
             renderItems(filtered);
         });
 
@@ -209,4 +236,3 @@ const CUTOFF_DATE = new Date("2026-01-21T00:00:00Z");
     </script>
 </body>
 </html>
-
