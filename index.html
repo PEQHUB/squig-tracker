@@ -23,10 +23,7 @@
             border-bottom: 2px solid transparent;
             transition: all 0.2s;
         }
-        .tab-btn.active {
-            color: #ffffff;
-            border-bottom-color: #ffffff;
-        }
+        .tab-btn.active { color: #ffffff; border-bottom-color: #ffffff; }
 
         .chart-bar-container { background: #111; height: 8px; border-radius: 1px; overflow: hidden; margin: 10px 0; }
         .chart-bar-fill { height: 100%; transition: width 1s ease-out; }
@@ -46,6 +43,19 @@
             transition: all 0.2s;
         }
         #load-all-btn:hover { border-color: #52525b; color: #ffffff; background: #0a0a0a; }
+
+        select {
+            background: transparent;
+            border: none;
+            color: #52525b;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            outline: none;
+        }
+        select option { background: #0a0a0a; color: #fff; }
 
         input::placeholder { color: #3f3f46; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
@@ -69,13 +79,22 @@
             </div>
         </div>
 
-        <div class="flex gap-4 mb-8 border-b border-zinc-900">
-            <button onclick="switchTab('feed')" id="tab-feed" class="tab-btn active mono">Live Feed</button>
-            <button onclick="switchTab('advanced')" id="tab-advanced" class="tab-btn mono">Advanced View</button>
-            <button onclick="switchTab('stats')" id="tab-stats" class="tab-btn mono">Statistics</button>
+        <div class="flex items-center justify-between mb-8 border-b border-zinc-900">
+            <div class="flex gap-4">
+                <button onclick="switchTab('feed')" id="tab-feed" class="tab-btn active mono">Live Feed</button>
+                <button onclick="switchTab('advanced')" id="tab-advanced" class="tab-btn mono">Advanced View</button>
+                <button onclick="switchTab('stats')" id="tab-stats" class="tab-btn mono">Statistics</button>
+            </div>
+            <div class="pb-1">
+                <select id="standard-filter" onchange="handleFilter()">
+                    <option value="all">All Standards</option>
+                    <option value="5128">5128 Only</option>
+                    <option value="711">711/Legacy Only</option>
+                </select>
+            </div>
         </div>
 
-        <input type="text" id="search" placeholder="Search Filter..." 
+        <input type="text" id="search" placeholder="Search Filter..." oninput="handleFilter()"
             class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
     </header>
 
@@ -124,11 +143,11 @@
         const is5128 = link.includes('5128') || link.includes('hangout.audio') || 
                        link.includes('listener800.github.io') || entry.reviewer.toLowerCase().includes('5128');
 
-        if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
+        if (link.includes('type=tws') || link.includes('/earbuds/')) return { type: "TWS & Earbuds", is5128: false };
         if (link.includes('type=headphone') || link.includes('/headphones/')) {
-            return is5128 ? "Over-Ear (5128)" : "Over-Ear (Legacy/Other)";
+            return { type: is5128 ? "Over-Ear (5128)" : "Over-Ear (Legacy/Other)", is5128: is5128 };
         }
-        return is5128 ? "IEM (5128)" : "IEM (711)";
+        return { type: is5128 ? "IEM (5128)" : "IEM (711)", is5128: is5128 };
     }
 
     async function fetchData() {
@@ -139,7 +158,7 @@
             databaseData = await dReq.json();
             fullHistory.sort((a,b) => (toLocalTime(b.date) - toLocalTime(a.date)));
             updateDashboard();
-            loadMore();
+            handleFilter(); 
         } catch (e) { 
             console.error("Sync Error", e);
         }
@@ -153,21 +172,54 @@
         document.getElementById('stat-sources').innerText = Math.max(0, Object.keys(databaseData).length - 1);
     }
 
+    function handleFilter() {
+        const searchTerm = document.getElementById('search').value.toLowerCase();
+        const standard = document.getElementById('standard-filter').value;
+        
+        const filtered = fullHistory.filter(entry => {
+            const meta = getEntryMetadata(entry);
+            const matchesSearch = resolveName(entry.item).toLowerCase().includes(searchTerm) || 
+                                entry.reviewer.toLowerCase().includes(searchTerm);
+            
+            let matchesStandard = true;
+            if (standard === '5128') matchesStandard = meta.is5128;
+            if (standard === '711') matchesStandard = !meta.is5128;
+
+            return matchesSearch && matchesStandard;
+        });
+
+        currentIndex = PAGE_SIZE;
+        displayedHistory = filtered.slice(0, PAGE_SIZE);
+        renderItems(displayedHistory, currentTab === 'stats' ? 'feed' : currentTab);
+        
+        const btn = document.getElementById('load-all-btn');
+        if (currentTab !== 'stats') {
+            btn.classList.toggle('hidden', displayedHistory.length >= filtered.length);
+        }
+    }
+
     function renderStats() {
         const statsContainer = document.getElementById('stats');
-        const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (Legacy/Other)": 0, "TWS & Earbuds": 0 };
+        const counts = { "711": 0, "5128": 0, "OE_5128": 0, "OE_Legacy": 0, "TWS": 0 };
         const recentLists = { "IEM": [], "Over-Ear": [], "TWS": [] };
 
         fullHistory.forEach(entry => {
-            const cat = getEntryMetadata(entry);
-            if (counts[cat] !== undefined) counts[cat]++;
+            const meta = getEntryMetadata(entry);
+            const cat = meta.type;
+            
+            if (cat === "IEM (711)") counts["711"]++;
+            if (cat === "IEM (5128)") counts["5128"]++;
+            if (cat === "Over-Ear (5128)") counts["OE_5128"]++;
+            if (cat === "Over-Ear (Legacy/Other)") counts["OE_Legacy"]++;
+            if (cat === "TWS & Earbuds") counts["TWS"]++;
+
             if (cat.includes("IEM") && recentLists["IEM"].length < statsRecentLimit) recentLists["IEM"].push(entry);
             if (cat.includes("Over-Ear") && recentLists["Over-Ear"].length < statsRecentLimit) recentLists["Over-Ear"].push(entry);
             if (cat.includes("TWS") && recentLists["TWS"].length < statsRecentLimit) recentLists["TWS"].push(entry);
         });
 
-        const totalIEM = (counts["IEM (711)"] + counts["IEM (5128)"]) || 1;
-        const totalOE = (counts["Over-Ear (5128)"] + counts["Over-Ear (Legacy/Other)"]) || 1;
+        const totalIEM = (counts["711"] + counts["5128"]) || 1;
+        const totalOE = (counts["OE_5128"] + counts["OE_Legacy"]) || 1;
 
         const renderBar = (label, count, total, color) => `
             <div class="mb-6">
@@ -183,17 +235,17 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="stat-card">
                     <span class="text-[10px] uppercase mono text-zinc-500">IEM Standards</span>
-                    <div class="mt-4">${renderBar("5128", counts["IEM (5128)"], totalIEM, "bg-white")} ${renderBar("711", counts["IEM (711)"], totalIEM, "bg-zinc-800")}</div>
+                    <div class="mt-4">${renderBar("5128", counts["5128"], totalIEM, "bg-white")} ${renderBar("711", counts["711"], totalIEM, "bg-zinc-800")}</div>
                     ${renderRecent(recentLists["IEM"])}
                 </div>
                 <div class="stat-card">
                     <span class="text-[10px] uppercase mono text-zinc-500">Over-Ear Standards</span>
-                    <div class="mt-4">${renderBar("5128", counts["Over-Ear (5128)"], totalOE, "bg-white")} ${renderBar("Legacy", counts["Over-Ear (Legacy/Other)"], totalOE, "bg-zinc-800")}</div>
+                    <div class="mt-4">${renderBar("5128", counts["OE_5128"], totalOE, "bg-white")} ${renderBar("Legacy", counts["OE_Legacy"], totalOE, "bg-zinc-800")}</div>
                     ${renderRecent(recentLists["Over-Ear"])}
                 </div>
                 <div class="stat-card">
                     <span class="text-[10px] uppercase mono text-zinc-500">Consumer/TWS</span>
-                    <div class="text-2xl mono mt-4 text-white">${counts["TWS & Earbuds"]} <span class="text-xs text-zinc-500">Units</span></div>
+                    <div class="text-2xl mono mt-4 text-white">${counts["TWS"]} <span class="text-xs text-zinc-500">Units</span></div>
                     ${renderRecent(recentLists["TWS"])}
                 </div>
             </div>`;
@@ -201,6 +253,7 @@
 
     function renderItems(data, containerId) {
         const container = document.getElementById(containerId);
+        if (!container) return;
         if (!data.length) {
             container.innerHTML = `<div class="py-20 text-center mono text-[10px] uppercase text-zinc-600 tracking-widest">No matching items found</div>`;
             return;
@@ -208,61 +261,10 @@
         container.innerHTML = data.map(entry => {
             const date = toLocalTime(entry.date);
             const isNew = (new Date() - date) < NEW_BADGE_MS;
+            const meta = getEntryMetadata(entry);
             return `
                 <div class="item-row py-6 flex justify-between items-center group">
                     <div class="min-w-0 pr-4">
                         <div class="flex items-center gap-3 mb-1">
                             ${isNew ? '<span class="bg-white text-black px-1 py-0.5 text-[8px] font-black uppercase rounded-sm">New</span>' : ''}
-                            <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
-                            <span class="text-[11px] text-zinc-500 mono uppercase">${getRelativeTime(date)}</span>
-                        </div>
-                        <h2 class="text-[17px] font-normal text-zinc-200 truncate tracking-tight">${resolveName(entry.item)}</h2>
-                    </div>
-                    <a href="${entry.link}" target="_blank" class="shrink-0 p-2 border border-zinc-800 text-zinc-600 transition-all hover:border-zinc-400 hover:text-white">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </a>
-                </div>`;
-        }).join('');
-    }
-
-    function switchTab(tab) {
-        currentTab = tab;
-        ['feed', 'advanced', 'stats'].forEach(t => {
-            document.getElementById(t).classList.toggle('hidden', t !== tab);
-            document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
-        });
-        if (tab === 'stats') {
-            renderStats();
-            document.getElementById('load-all-btn').classList.remove('hidden');
-        } else if (tab === 'feed') {
-            document.getElementById('load-all-btn').classList.toggle('hidden', currentIndex >= fullHistory.length);
-        } else {
-            document.getElementById('load-all-btn').classList.add('hidden');
-        }
-    }
-
-    function loadMore() {
-        if (currentTab === 'stats') {
-            statsRecentLimit += 10;
-            renderStats();
-            if (statsRecentLimit >= fullHistory.length) document.getElementById('load-all-btn').classList.add('hidden');
-        } else {
-            const nextBatch = fullHistory.slice(currentIndex, currentIndex + PAGE_SIZE);
-            displayedHistory = [...displayedHistory, ...nextBatch];
-            currentIndex += PAGE_SIZE;
-            renderItems(displayedHistory, 'feed');
-            if (currentIndex >= fullHistory.length) document.getElementById('load-all-btn').classList.add('hidden');
-        }
-    }
-
-    document.getElementById('load-all-btn').addEventListener('click', loadMore);
-    document.getElementById('search').addEventListener('input', (e) => {
-        const val = e.target.value.toLowerCase();
-        const filtered = fullHistory.filter(h => resolveName(h.item).toLowerCase().includes(val) || h.reviewer.toLowerCase().includes(val));
-        renderItems(filtered, currentTab === 'stats' || currentTab === 'feed' ? 'feed' : currentTab);
-    });
-
-    fetchData();
-</script>
-</body>
-</html>
+                            ${meta.is5128 ? '<span class="border
