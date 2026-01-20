@@ -32,6 +32,20 @@
             background: linear-gradient(90deg, #222222 0%, transparent 100%);
         }
 
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #52525b;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+
         #load-all-btn {
             margin: 4rem auto;
             display: block;
@@ -70,19 +84,27 @@
             </div>
         </div>
 
+        <div class="flex gap-4 mb-8 border-b border-zinc-900">
+            <button onclick="switchTab('feed')" id="tab-feed" class="tab-btn active mono">Live Feed</button>
+            <button onclick="switchTab('advanced')" id="tab-advanced" class="tab-btn mono">Advanced View</button>
+        </div>
+
         <input type="text" id="search" placeholder="Search Filter..." 
             class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
     </header>
 
     <main id="feed" class="flex flex-col"></main>
+
+    <main id="advanced" class="hidden flex flex-col"></main>
     
-    <button id="load-all-btn" class="mono uppercase hidden">Load Entire History</button>
+    <button id="load-all-btn" class="mono uppercase hidden">Load 50 More</button>
 
 <script>
     let fullHistory = [];
     let displayedHistory = [];
     let databaseData = {};
     let currentIndex = 0;
+    let currentTab = 'feed';
     const PAGE_SIZE = 50;
     
     const CUTOFF_MS = 12 * 60 * 60 * 1000; 
@@ -92,18 +114,13 @@
         if (!dateStr) return null;
         try {
             const s = dateStr.trim();
-            // 1. Attempt standard parse
             let d = new Date(s.includes("UTC") ? s : s + " UTC");
-            
-            // 2. Fallback for Android (Handles 9131 days / 1970 bug)
             if (isNaN(d.getTime()) || d.getFullYear() <= 1970) {
                 const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
-                // Regex to match "Jan 20, 12:43"
                 const match = s.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
                 if (match) {
                     const [_, mon, day, hr, min] = match;
-                    const year = 2026; // Hardcoded for current project scope to prevent Epoch fallback
-                    d = new Date(Date.UTC(year, months[mon], parseInt(day), parseInt(hr), parseInt(min)));
+                    d = new Date(Date.UTC(2026, months[mon], parseInt(day), parseInt(hr), parseInt(min)));
                 }
             }
             return isNaN(d.getTime()) ? null : d;
@@ -114,19 +131,13 @@
         if (!date) return "Pending";
         const now = new Date();
         const diffInSeconds = Math.floor((now - date) / 1000);
-        
-        // Clock drift protection
         if (diffInSeconds < 15) return `Just now`;
         if (diffInSeconds < 60) return `${diffInSeconds}s ago`;
-        
         const diffInMinutes = Math.floor(diffInSeconds / 60);
         if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-        
         const diffInHours = Math.floor(diffInMinutes / 60);
         if (diffInHours < 24) return `${diffInHours}h ago`;
-        
         const diffInDays = Math.floor(diffInHours / 24);
-        // Final guard against 9131 days appearing in text
         return diffInDays > 1000 ? "Recent" : `${diffInDays}d ago`;
     }
 
@@ -136,6 +147,17 @@
         return data.name || Object.values(data)[0] || "Unknown";
     }
 
+    function switchTab(tab) {
+        currentTab = tab;
+        document.getElementById('tab-feed').classList.toggle('active', tab === 'feed');
+        document.getElementById('tab-advanced').classList.toggle('active', tab === 'advanced');
+        document.getElementById('feed').classList.toggle('hidden', tab === 'advanced');
+        document.getElementById('advanced').classList.toggle('hidden', tab === 'feed');
+        document.getElementById('load-all-btn').classList.toggle('hidden', tab === 'advanced');
+        
+        if (tab === 'advanced') renderAdvanced();
+    }
+
     async function fetchData() {
         try {
             const t = Date.now();
@@ -143,23 +165,18 @@
                 fetch(`history.json?t=${t}`),
                 fetch(`database.json?t=${t}`)
             ]);
-            
             if (!hReq.ok || !dReq.ok) throw new Error("Offline");
-
             const rawHistory = await hReq.json();
             databaseData = await dReq.json();
-            
-            // Sort by actual timestamp
             fullHistory = rawHistory.sort((a, b) => {
                 const dateA = toLocalTime(a.date)?.getTime() || 0;
                 const dateB = toLocalTime(b.date)?.getTime() || 0;
                 return dateB - dateA;
             });
-
             updateDashboard();
-            loadMore(); // Initial load
+            loadMore();
         } catch (err) {
-            document.getElementById('feed').innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase text-center">Connection Error</div>`;
+            document.getElementById('feed').innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase text-center">Sync Error</div>`;
         }
     }
 
@@ -167,16 +184,11 @@
         const nextBatch = fullHistory.slice(currentIndex, currentIndex + PAGE_SIZE);
         displayedHistory = displayedHistory.concat(nextBatch);
         currentIndex += PAGE_SIZE;
-
-        renderItems(displayedHistory);
-
+        renderItems(displayedHistory, 'feed');
         const btn = document.getElementById('load-all-btn');
         btn.innerText = `Load ${PAGE_SIZE} More`;
-        if (currentIndex >= fullHistory.length) {
-            btn.classList.add('hidden');
-        } else {
-            btn.classList.remove('hidden');
-        }
+        if (currentIndex >= fullHistory.length || currentTab === 'advanced') btn.classList.add('hidden');
+        else btn.classList.remove('hidden');
     }
 
     function updateDashboard() {
@@ -185,15 +197,54 @@
             const d = toLocalTime(entry.date);
             return d && (now - d.getTime() < CUTOFF_MS);
         }).length;
-
         const reviewers = Object.keys(databaseData).filter(k => k !== 'last_sync');
         document.getElementById('stat-total').innerText = last12h;
         document.getElementById('stat-db-total').innerText = fullHistory.length.toLocaleString();
         document.getElementById('stat-sources').innerText = reviewers.length;
     }
 
-    function renderItems(data) {
-        const container = document.getElementById('feed');
+    function renderAdvanced() {
+        const advContainer = document.getElementById('advanced');
+        const sections = {
+            "IEM - 5128": [],
+            "IEM - 711": [],
+            "Over-Ear - 5128": [],
+            "Over-Ear - Generic/Other": []
+        };
+
+        fullHistory.forEach(entry => {
+            const name = resolveName(entry.item).toLowerCase();
+            const rev = entry.reviewer.toLowerCase();
+            
+            // Logic based on Squiglink reviewer standards
+            if (name.includes("over") || name.includes("headphone") || rev.includes("overear")) {
+                if (name.includes("5128") || rev.includes("5128")) sections["Over-Ear - 5128"].push(entry);
+                else sections["Over-Ear - Generic/Other"].push(entry);
+            } else {
+                if (name.includes("5128") || rev.includes("5128") || name.includes("4620")) sections["IEM - 5128"].push(entry);
+                else sections["IEM - 711"].push(entry);
+            }
+        });
+
+        let advHtml = "";
+        for (const [title, items] of Object.entries(sections)) {
+            if (items.length > 0) {
+                advHtml += `<div class="time-divider">${title}</div>`;
+                advHtml += `<div id="section-${title.replace(/\s+/g, '')}"></div>`;
+            }
+        }
+        advContainer.innerHTML = advHtml;
+        
+        for (const [title, items] of Object.entries(sections)) {
+            if (items.length > 0) {
+                const subId = `section-${title.replace(/\s+/g, '')}`;
+                renderItems(items.slice(0, 20), subId, true);
+            }
+        }
+    }
+
+    function renderItems(data, containerId, isSubSection = false) {
+        const container = document.getElementById(containerId);
         let htmlContent = "";
         const now = new Date().getTime();
         let lastDividerLabel = "";
@@ -204,28 +255,30 @@
             const relativeStr = getRelativeTime(dateObj);
             const isVeryRecent = dateObj && (now - dateObj.getTime() < NEW_BADGE_MS);
             
-            const dayStr = dateObj ? dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' }) : "Recently";
-            if (dayStr !== lastDividerLabel) {
-                htmlContent += `<div class="time-divider">${dayStr}</div>`;
-                lastDividerLabel = dayStr;
+            if (!isSubSection) {
+                const dayStr = dateObj ? dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' }) : "Recent";
+                if (dayStr !== lastDividerLabel) {
+                    htmlContent += `<div class="time-divider">${dayStr}</div>`;
+                    lastDividerLabel = dayStr;
+                }
             }
 
             htmlContent += `
-            <div class="item-row py-8 flex justify-between items-center group">
+            <div class="item-row py-6 flex justify-between items-center group">
                 <div class="min-w-0 pr-4">
-                    <div class="flex items-center gap-3 mb-2">
-                        ${isVeryRecent ? '<span class="bg-white text-black px-1.5 py-0.5 text-[9px] font-black tracking-tighter uppercase rounded-sm">New</span>' : ''}
-                        <span class="text-[12px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
-                        <span class="text-[12px] text-zinc-500 font-medium mono uppercase">${relativeStr}</span>
+                    <div class="flex items-center gap-3 mb-1">
+                        ${isVeryRecent ? '<span class="bg-white text-black px-1.2 py-0.5 text-[8px] font-black uppercase rounded-sm">New</span>' : ''}
+                        <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
+                        <span class="text-[11px] text-zinc-500 mono uppercase">${relativeStr}</span>
                     </div>
-                    <h2 class="text-[19px] md:text-[22px] font-normal text-zinc-200 truncate tracking-tight">${model}</h2>
+                    <h2 class="text-[17px] font-normal text-zinc-200 truncate tracking-tight">${model}</h2>
                 </div>
-                <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 text-zinc-600 transition-all hover:border-zinc-400 hover:text-white">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <a href="${entry.link}" target="_blank" class="shrink-0 p-2 border border-zinc-800 text-zinc-600 transition-all hover:border-zinc-400 hover:text-white">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             </div>`;
         });
-        container.innerHTML = htmlContent;
+        container.innerHTML = isSubSection ? htmlContent : htmlContent;
     }
 
     document.getElementById('load-all-btn').addEventListener('click', loadMore);
@@ -233,25 +286,19 @@
     document.getElementById('search').addEventListener('input', (e) => {
         const val = e.target.value.toLowerCase();
         if (val === "") {
-            renderItems(displayedHistory);
-            document.getElementById('load-all-btn').classList.remove('hidden');
+            renderItems(displayedHistory, 'feed');
+            if (currentTab === 'feed') document.getElementById('load-all-btn').classList.remove('hidden');
             return;
         }
-        
-        // Hide load button during search to prevent index confusion
         document.getElementById('load-all-btn').classList.add('hidden');
-        
         const filtered = fullHistory.filter(h => 
             resolveName(h.item).toLowerCase().includes(val) || 
             h.reviewer.toLowerCase().includes(val)
         );
-        renderItems(filtered);
+        renderItems(filtered, currentTab === 'feed' ? 'feed' : 'advanced');
     });
 
     fetchData();
 </script>
 </body>
 </html>
-
-
-
