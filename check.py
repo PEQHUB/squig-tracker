@@ -129,8 +129,9 @@ def run_check():
     all_targets = list(set(SUBDOMAINS + [k for k in database.keys() if k != 'last_sync'] + discovered))
     
     # These paths allow index.html to categorize items (e.g., Over-Ear vs IEM)
-    SCAN_PATHS = ["", "iems", "headphones", "earbuds", "5128"]
-
+   SCAN_PATHS = [
+    "", "iems", "headphones", "earbuds", "5128", 
+    "headphones/5128", "iems/5128", "5128/headphones"
     for sub in all_targets:
         if sub in OVERRIDES: continue # Skip since we already checked overrides
         
@@ -158,3 +159,4 @@ def run_check():
 
 if __name__ == "__main__":
     run_check()
+
