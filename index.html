@@ -7,13 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --text: #d4d4d8; }
+        /* Slightly lightened the text and border colors for better contrast */
+        :root { --bg: #000000; --card: #0a0a0a; --border: #222222; --text: #e4e4e7; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; border-radius: 2px; }
         .item-row { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
-        .item-row:hover { background: #050505; }
-        input::placeholder { color: #27272a; }
+        .item-row:hover { background: #080808; }
+        input::placeholder { color: #3f3f46; } /* Brighter placeholder */
         ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
 </head>
@@ -22,25 +23,25 @@
     <header class="mb-12">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
             <div class="stat-card">
-                <span class="block text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Total Measurements</span>
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Total Measurements</span>
                 <span id="stat-total" class="text-xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Unique Models</span>
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Unique Models</span>
                 <span id="stat-unique" class="text-xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Reviewers</span>
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Reviewers</span>
                 <span id="stat-sources" class="text-xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Last Sync (Local)</span>
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last Update</span>
                 <span id="stat-time" class="text-xl font-medium mono text-white">--:--</span>
             </div>
         </div>
 
         <input type="text" id="search" placeholder="Search..." 
-            class="w-full bg-transparent border-b border-zinc-900 py-3 text-lg font-light outline-none focus:border-zinc-500 transition-colors uppercase tracking-widest">
+            class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
     </header>
 
     <main id="feed" class="flex flex-col"></main>
@@ -49,14 +50,10 @@
         let historyData = [];
         let databaseData = {};
 
-        // Helper to convert the scraper's UTC string to User's Local Time
         function toLocalTime(dateStr) {
             try {
-                // If dateStr is "Oct 24, 14:30", we append current year and "UTC"
-                // This tells the browser the source is UTC.
                 const year = new Date().getFullYear();
                 const utcDate = new Date(`${dateStr}, ${year} UTC`);
-                
                 return utcDate.toLocaleTimeString([], { 
                     month: 'short', 
                     day: 'numeric', 
@@ -64,9 +61,7 @@
                     minute: '2-digit', 
                     hour12: false 
                 });
-            } catch (e) {
-                return dateStr; // Fallback to original if parsing fails
-            }
+            } catch (e) { return dateStr; }
         }
 
         function resolveName(data) {
@@ -75,8 +70,7 @@
             if (typeof data === 'object') {
                 if (data.name && typeof data.name === 'string') return data.name;
                 if (Array.isArray(data)) return resolveName(data[0]);
-                const values = Object.values(data);
-                return typeof values[0] === 'string' ? values[0] : "Complex Object";
+                return Object.values(data)[0] || "Unknown";
             }
             return "Unknown";
         }
@@ -88,25 +82,18 @@
                     fetch(`./history.json?t=${t}`),
                     fetch(`./database.json?t=${t}`)
                 ]);
-
-                if (!hReq.ok || !dReq.ok) throw new Error("Files not found");
-
                 historyData = await hReq.json();
                 databaseData = await dReq.json();
-                
                 updateDashboard();
                 renderItems(historyData);
             } catch (err) {
-                console.error(err);
-                document.getElementById('feed').innerHTML = `<div class="py-10 text-zinc-800 mono text-xs uppercase tracking-widest text-center">Data connection lost.</div>`;
+                document.getElementById('feed').innerHTML = `<div class="py-10 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Connection Lost</div>`;
             }
         }
 
         function updateDashboard() {
             let totalCount = 0;
             const uniqueSet = new Set();
-            
-            // Filter out 'last_sync' key if you added it to Python later
             const reviewers = Object.keys(databaseData).filter(k => k !== 'last_sync');
 
             Object.values(databaseData).forEach(list => {
@@ -121,35 +108,30 @@
             document.getElementById('stat-total').innerText = totalCount.toLocaleString();
             document.getElementById('stat-unique').innerText = uniqueSet.size.toLocaleString();
             document.getElementById('stat-sources').innerText = reviewers.length;
-
-            // Display current browser time as "Last Update" 
-            // (Assuming the site just loaded the newest data)
             document.getElementById('stat-time').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
         }
 
         function renderItems(data) {
             const container = document.getElementById('feed');
             if (!data || data.length === 0) {
-                container.innerHTML = `<div class="py-10 text-zinc-800 mono text-xs uppercase tracking-widest text-center">No entries found.</div>`;
+                container.innerHTML = `<div class="py-10 text-zinc-600 mono text-xs uppercase tracking-widest text-center">No results</div>`;
                 return;
             }
 
             container.innerHTML = data.map(entry => {
                 const model = resolveName(entry.item);
-                // CONVERT TO LOCAL TIME HERE
                 const localDate = toLocalTime(entry.date);
-
                 return `
                 <div class="item-row py-6 flex justify-between items-center group">
                     <div class="min-w-0 pr-4">
-                        <div class="flex items-center gap-3 mb-1">
-                            <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">${entry.reviewer}</span>
-                            <span class="text-[9px] text-zinc-800 mono uppercase">${localDate}</span>
+                        <div class="flex items-center gap-3 mb-1.5">
+                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
+                            <span class="text-[10px] text-zinc-500 font-medium mono uppercase">${localDate}</span>
                         </div>
-                        <h2 class="text-base font-normal text-zinc-300 truncate">${model}</h2>
+                        <h2 class="text-[17px] font-normal text-zinc-200 truncate">${model}</h2>
                     </div>
-                    <a href="${entry.link}" target="_blank" class="shrink-0 p-2 border border-zinc-900 hover:border-zinc-500 text-zinc-700 hover:text-white transition-all">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <a href="${entry.link}" target="_blank" class="shrink-0 p-2.5 border border-zinc-800 group-hover:border-zinc-500 text-zinc-600 group-hover:text-white transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>
                 `;
