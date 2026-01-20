@@ -4,6 +4,7 @@ import os
 import urllib.parse
 from datetime import datetime
 
+# --- Target Discovery ---
 SUBDOMAINS = [
     "crinacle", "superreview", "hbb", "precog", "timmyv", "aftersound", 
     "paulwasabii", "vortexreviews", "tonedeafmonk", "rg", "nymz", 
@@ -33,30 +34,45 @@ OVERRIDES = {
     "listener5128": "https://listener800.github.io/5128/data/phone_book.json"
 }
 
-# Only specific model series and explicit labels
+# --- Massive Over-Ear Keyword List ---
 HP_KEYWORDS = [
-    "(OE)", "Headphone", "Over-Ear", "On-Ear", "Closed-back", "Open-back", "Circumaural",
-    "HD600", "HD650", "HD800", "HD660", "MDR-Z", "MDR-1", "ATH-M", "LCD-", "DT770", "DT880", "DT990", 
-    "DT1990", "DT1770", "Clear", "Utopia", "Elex", "Sundara", "Ananda", "Arya", "Susvara"
+    "(OE)", "Headphone", "Over-Ear", "On-Ear", "Closed-back", "Open-back", 
+    "Circumaural", "Supra-aural", "Full-size", "Cans", "Electrostatic",
+    "HD400", "HD450", "HD500", "HD518", "HD555", "HD558", "HD559", "HD560", 
+    "HD569", "HD579", "HD580", "HD58X", "HD598", "HD599", "HD600", "HD620", 
+    "HD630", "HD650", "HD660", "HD6XX", "HD700", "HD800", "HD820", "Momentum",
+    "HE-1", "Orpheus", "HD25", "HD280", "HD300", "HD380", "Sundara", "Ananda", 
+    "Arya", "Susvara", "HE400", "HE4XX", "HE5XX", "HE6", "HE1000", "Edition XS", 
+    "Jade", "Shangri-La", "Deva", "Audivina", "HE-R9", "HE-R10", "DT770", "DT880", 
+    "DT990", "DT1770", "DT1990", "DT700", "DT900", "Amiron", "Custom One", 
+    "T1", "T5", "T5p", "Tygr", "MMX 300", "Utopia", "Stellia", "Clear", "Elex", 
+    "Elear", "Radiance", "Celestee", "Bathys", "Listen", "Hadenys", "Azurys", 
+    "LCD-2", "LCD-3", "LCD-4", "LCD-5", "LCD-X", "LCD-XC", "LCD-MX4", "LCD-GX", 
+    "Maxwell", "Mobius", "Penrose", "MM-500", "MM-100", "CRBN", "ATH-M20", 
+    "ATH-M30", "ATH-M40", "ATH-M50", "ATH-M60", "ATH-M70", "ATH-AD", "ATH-A900", 
+    "ATH-R70x", "ATH-W", "Air Dynamic", "ATH-AP2000", "MDR-V", "MDR-7506", 
+    "MDR-CD900ST", "MDR-M1", "MDR-Z", "MDR-1", "MDR-SA", "WH-1000X", "WH-CH", 
+    "WH-XB", "ULT Wear", "MV1", "K121", "K141", "K240", "K271", "K371", "K361", 
+    "K550", "K601", "K612", "K701", "K702", "K712", "K7XX", "K812", "K872", 
+    "Stealth", "Expanse", "Ether", "Aeon", "Corina", "Voce", "Mad Dog", "Alpha Dog",
+    "Atrium", "Verite", "Aeolus", "Eikon", "Auteur", "Caldera", "Bokeh", 
+    "Empyrean", "Elite", "Liric", "109 Pro", "99 Classic", "99 Neo", "Diana", 
+    "AB-1266", "SR60", "SR80", "SR125", "SR225", "SR325", "RS1", "RS2", "GS1000", 
+    "QuietComfort", "QC35", "QC45", "QC Ultra", "AirPods Max", "Austrian Audio Hi-X", 
+    "Bowers & Wilkins PX", "Denon AH-D", "Fostex TH", "Fostex T50RP", "HEDDphone", 
+    "Kennerton", "Koss ESP", "Koss Porta Pro", "Koss KSC75", "LSA HP", "Monolith M", 
+    "Nectar Hive", "Ollo Audio", "Raal-Requisite", "Rosson", "Sivga SV", 
+    "Sivga Luan", "Sonos Ace", "Stax SR", "Verum 1", "Yamaha YH"
+]
+
+# --- TWS / Earbud Keywords (Third Category) ---
+TWS_KEYWORDS = [
+    "Earbud", "TWS", "Wireless", "Buds", "Pods", "True Wireless", "AirPods", 
+    "Earfree", "Monk Plus", "Flathead", "LBBS", "EB2S"
 ]
 
 DB_FILE = "database.json"
 HISTORY_FILE = "history.json"
-
-def get_discovered_subdomains():
-    try:
-        print("Discovering new Squiglink reviewers...")
-        url = "https://crt.sh/?q=%.squig.link&output=json"
-        response = requests.get(url, timeout=25)
-        if response.status_code != 200: return []
-        data = response.json()
-        discovered = set()
-        for entry in data:
-            name = entry['common_name'].lower().replace('*.', '')
-            if name.endswith('.squig.link') and name not in ['squig.link', 'www.squig.link']:
-                discovered.add(name.split('.')[0])
-        return list(discovered)
-    except Exception: return []
 
 def fetch_data(url):
     try:
@@ -74,10 +90,17 @@ def log_item(link_domain, name, file_id, database, sub_key, new_finds):
     final_file_id = file_id[0] if isinstance(file_id, list) else file_id
     current_link = f"https://{link_domain}/?share={urllib.parse.quote(str(final_file_id))}"
 
-    # Check against specific model/label keywords
-    is_hp_by_keyword = any(kw.lower() in clean_name.lower() for kw in HP_KEYWORDS)
+    # Logic 1: Detect TWS/Earbud (Highest priority to avoid Bose QC false positives)
+    is_tws = any(kw.lower() in clean_name.lower() for kw in TWS_KEYWORDS)
     
-    if is_hp_by_keyword and "headphones" not in current_link:
+    # Logic 2: Detect Over-Ear
+    is_hp = any(kw.lower() in clean_name.lower() for kw in HP_KEYWORDS)
+
+    # Apply Tags
+    if is_tws:
+        current_link += "&type=tws"
+    elif is_hp and "headphones" not in current_link:
+        # Extra safety: Ensure we aren't tagging something that was just marked as TWS
         current_link += "&type=headphone"
 
     if current_link not in database[sub_key]:
@@ -131,10 +154,9 @@ def run_check():
             domain_part = target_url.replace("https://", "").split('/data/')[0]
             parse_recursive(data, domain_part, database, sub_name, new_finds)
 
-    discovered = get_discovered_subdomains()
-    all_targets = list(set(SUBDOMAINS + [k for k in database.keys() if k != 'last_sync'] + discovered))
+    all_targets = list(set(SUBDOMAINS + [k for k in database.keys() if k != 'last_sync']))
     
-    # Nested paths ensure headphones/5128 directories are found
+    # Deep nested scanning for all rig types
     SCAN_PATHS = ["", "iems", "headphones", "earbuds", "5128", "headphones/5128", "5128/headphones"]
 
     for sub in all_targets:
@@ -145,13 +167,11 @@ def run_check():
             url = f"https://{base}/data/phone_book.json"
             data = fetch_data(url)
             if data:
-                print(f"  > Found data at /{path}")
                 parse_recursive(data, base, database, sub, new_finds)
 
     database["last_sync"] = datetime.now().isoformat()
 
     if new_finds:
-        print(f"Success! Found {len(new_finds)} new items.")
         history = new_finds + history 
         with open(HISTORY_FILE, "w") as f:
             json.dump(history, f, indent=4)
