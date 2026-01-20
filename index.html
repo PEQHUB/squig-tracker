@@ -3,24 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Squig Tracker</title>
+    <title>Squig Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #000; color: #fff; }
+        /* Clean transition for search focus */
+        input:focus { outline: none; border-color: #fff !important; }
+        /* Custom scrollbar for minimalist look */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+    </style>
 </head>
-<body class="bg-black text-gray-100 min-h-screen font-sans">
-    <div class="max-w-4xl mx-auto px-4 py-12">
-        <header class="mb-12">
-            <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-2">
-                Squig Tracker Pro
-            </h1>
-            <p class="text-gray-400">Monitoring 25+ databases for new IEM measurements.</p>
+<body class="selection:bg-white selection:text-black">
+    <div class="max-w-2xl mx-auto px-6 py-16">
+        
+        <header class="mb-12 border-b border-zinc-800 pb-8">
+            <h1 class="text-3xl font-light tracking-tighter mb-2">SQUIG_TRACKER</h1>
+            <p id="status" class="text-xs text-zinc-500 font-mono uppercase tracking-widest">System Active</p>
         </header>
 
-        <div class="relative mb-8">
-            <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Search IEMs or Reviewers..."
-                   class="w-full bg-gray-900 border border-gray-700 rounded-xl px-6 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+        <div class="mb-12">
+            <input type="text" id="searchInput" onkeyup="filterItems()" 
+                   placeholder="SEARCH MEASUREMENTS..." 
+                   class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-light placeholder:text-zinc-700 transition-colors">
         </div>
 
-        <div id="feed" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div id="feed" class="space-y-10">
             </div>
     </div>
 
@@ -28,37 +37,38 @@
         let allData = [];
 
         async function loadFeed() {
-            const response = await fetch('history.json');
-            allData = await response.json();
-            renderItems(allData);
+            try {
+                const response = await fetch('history.json');
+                allData = await response.json();
+                renderItems(allData);
+            } catch (e) {
+                document.getElementById('feed').innerHTML = '<p class="text-zinc-500 font-mono text-xs">NO DATA FOUND.</p>';
+            }
         }
 
         function renderItems(data) {
             const feed = document.getElementById('feed');
+            if (data.length === 0) {
+                feed.innerHTML = '<p class="text-zinc-500 font-mono text-xs uppercase">No matches found.</p>';
+                return;
+            }
+
             feed.innerHTML = data.map(item => `
-                <a href="${item.link}" target="_blank" class="item-card bg-gray-900 p-5 rounded-2xl border border-gray-800 hover:border-cyan-500 hover:scale-[1.02] transition-all group">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="bg-cyan-900/30 text-cyan-400 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-                            ${item.reviewer}
-                        </span>
-                        <span class="text-gray-500 text-xs">${item.date}</span>
+                <div class="group border-l border-zinc-800 pl-6 py-1 hover:border-white transition-colors">
+                    <div class="flex items-baseline justify-between mb-1">
+                        <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">${item.reviewer}</span>
+                        <span class="text-[10px] font-mono text-zinc-600">${item.date}</span>
                     </div>
-                    <h3 class="text-xl font-bold group-hover:text-cyan-400 transition">${item.item}</h3>
-                    <p class="text-gray-500 text-sm mt-2">View Graph &rarr;</p>
-                </a>
+                    <a href="${item.link}" target="_blank" class="block">
+                        <h2 class="text-xl font-medium tracking-tight hover:underline decoration-1 underline-offset-4 break-words">
+                            ${item.item}
+                        </h2>
+                    </a>
+                </div>
             `).join('');
         }
 
         function filterItems() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allData.filter(i =>
+            const filtered = allData.filter(i => 
                 i.item.toLowerCase().includes(query) ||
-                i.reviewer.toLowerCase().includes(query)
-            );
-            renderItems(filtered);
-        }
-
-        loadFeed();
-    </script>
-</body>
-</html>
