@@ -123,47 +123,41 @@
         const reviewer = (entry.reviewer || "").toLowerCase();
         const item = resolveName(entry.item).toLowerCase();
         
+        // Target Fix for Earphone's Archive (Exclusively 5128)
+        const isEarphonesArchive = reviewer.includes("earphone's archive") || reviewer.includes("earphones archive");
+
         const isExplicit711 = link.includes('/711') || link.includes('type=711');
         const isExplicitIEM = link.includes('/iem/') || link.includes('type=iem') || link.includes('5128iem');
         const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/');
 
-        const is5128 = !isExplicit711 && (
+        const is5128 = isEarphonesArchive || (!isExplicit711 && (
                        link.includes('5128') || 
                        link.includes('hangout.audio') || 
                        link.includes('listener800.github.io') || 
-                       reviewer.includes('5128'));
+                       reviewer.includes('5128')));
 
         if (link.includes('listener800.github.io')) {
             const hasOEAttr = ['+oe', '(oe)', 'over-ear', 'headphone', '(hp)', 'open-back', 'closed-back'].some(attr => item.includes(attr));
             if (hasOEAttr || isExplicitHP) return "Over-Ear (5128)";
-
             const pureIEMBrands = ['truthear', '7hz', 'kiwi ears', 'letshuoer', 'kz', 'cca', 'tanchjim', 'simgot', 'soft ears', 'qdc'];
             if (pureIEMBrands.some(brand => item.includes(brand))) return "IEM (5128)";
-
-            const hybridOEModels = [
-                'para', 'venus', 'void', 'joker', 
-                'hd600', 'hd650', 'hd800', 'hd660', 'hd560', 'hd400', 
-                'arya', 'sundara', 'ananda', 'he400', 'edition xs', 'susvara', 
-                'utopia', 'clear', 'elear', 'stellia', 'radiance', 'bathys', 
-                'lcd-', 'maxwell', 'mm-100', 'mm-500'
-            ];
+            const hybridOEModels = ['para', 'venus', 'void', 'joker', 'hd600', 'hd650', 'hd800', 'hd660', 'hd560', 'hd400', 'arya', 'sundara', 'ananda', 'he400', 'edition xs', 'susvara', 'utopia', 'clear', 'elear', 'stellia', 'radiance', 'bathys', 'lcd-', 'maxwell', 'mm-100', 'mm-500'];
             if (hybridOEModels.some(model => item.includes(model))) return "Over-Ear (5128)";
-
             return "IEM (5128)";
         }
 
         if (is5128) {
             const isCrinacle = reviewer.includes('crin') || link.includes('crinacle');
             if (isCrinacle || isExplicitIEM) return "IEM (5128)";
+            // If it's 5128 but not explicitly IEM, check if it's over-ear
+            if (isExplicitHP) return "Over-Ear (5128)";
+            return "IEM (5128)";
         }
 
         if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
+        if (isExplicitHP) return "Over-Ear (Legacy/Other)";
 
-        if (isExplicitHP) {
-            return is5128 ? "Over-Ear (5128)" : "Over-Ear (Legacy/Other)";
-        }
-
-        return is5128 ? "IEM (5128)" : "IEM (711)";
+        return "IEM (711)";
     }
 
     async function fetchData() {
