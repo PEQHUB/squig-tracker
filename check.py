@@ -4,7 +4,7 @@ import os
 import urllib.parse
 from datetime import datetime
 
-# The script will now automatically add found subdomains to this list
+# Core list of known subdomains
 SUBDOMAINS = [
     "crinacle", "superreview", "hbb", "precog", "timmyv", "aftersound", 
     "paulwasabii", "vortexreviews", "tonedeafmonk", "rg", "nymz", 
@@ -25,8 +25,10 @@ SUBDOMAINS = [
     "sai", "earphonesarchive"
 ]
 
+# Manual mappings for reviewers not using standard [name].squig.link formats
 OVERRIDES = {
     "crinacle": "https://graph.hangout.audio/iem/711/data/phone_book.json",
+    "crinacle5128": "https://graph.hangout.audio/iem/5128/data/phone_book.json",
     "superreview": "https://squig.link/data/phone_book.json",
     "den-fi": "https://ish.squig.link/data/phone_book.json",
     "paulwasabii": "https://pw.squig.link/data/phone_book.json"
@@ -36,21 +38,17 @@ DB_FILE = "database.json"
 HISTORY_FILE = "history.json"
 
 def get_discovered_subdomains():
-    """Fetches all registered .squig.link subdomains from public logs (crt.sh)."""
     try:
         print("Discovering new Squiglink reviewers via crt.sh...")
         url = "https://crt.sh/?q=%.squig.link&output=json"
         response = requests.get(url, timeout=25)
         if response.status_code != 200: return []
-        
         data = response.json()
         discovered = set()
         for entry in data:
-            name = entry['common_name'].lower()
-            name = name.replace('*.', '')
+            name = entry['common_name'].lower().replace('*.', '')
             if name.endswith('.squig.link') and name not in ['squig.link', 'www.squig.link']:
-                prefix = name.split('.')[0]
-                discovered.add(prefix)
+                discovered.add(name.split('.')[0])
         return list(discovered)
     except Exception as e:
         print(f"Discovery skipped: {e}")
@@ -60,15 +58,17 @@ def fetch_data(url):
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
         response = requests.get(url, headers=headers, timeout=10)
-        if response.status_code == 200:
-            return response.json()
-    except Exception:
-        pass
+        if response.status_code == 200: return response.json()
+    except: pass
     return None
 
 def log_item(link_domain, name, file_id, database, sub_key, new_finds):
     if not name or not isinstance(name, str): return
     clean_name = name.strip()
+    
+    # Initialize list if first time seeing this reviewer
+    if sub_key not in database: database[sub_key] = []
+    
     final_file_id = file_id[0] if isinstance(file_id, list) else file_id
     
     if clean_name not in database[sub_key]:
@@ -101,66 +101,54 @@ def parse_recursive(obj, link_domain, database, sub_key, new_finds, brand_contex
             parse_recursive(item, link_domain, database, sub_key, new_finds, brand_context)
 
 def run_check():
-    # Load existing data
+    # Load Data
     if os.path.exists(DB_FILE):
         with open(DB_FILE, "r") as f:
             try: database = json.load(f)
             except: database = {}
-    else:
-        database = {}
+    else: database = {}
 
     if os.path.exists(HISTORY_FILE):
         with open(HISTORY_FILE, "r") as f:
             try: history = json.load(f)
             except: history = []
-    else:
-        history = []
+    else: history = []
 
     new_finds = []
 
-    # --- STEP 1: Discovery ---
-    # Merge hardcoded SUBDOMAINS with whatever exists in database.json and new crt.sh finds
-    discovered = get_discovered_subdomains()
-    all_targets = list(set(SUBDOMAINS + list(database.keys()) + discovered))
-    
-    # Remove 'last_sync' from targets if it exists
-    all_targets = [t for t in all_targets if t != 'last_sync']
-
-    # --- STEP 2: Scrape ---
-    for sub in all_targets:
-        print(f"Checking {sub}...")
-        if sub not in database:
-            database[sub] = []
-        
-        data = None
-        link_domain = ""
-
-        if sub in OVERRIDES:
-            target_url = OVERRIDES[sub]
-            data = fetch_data(target_url)
-            if data:
-                link_domain = target_url.replace("https://", "").split('/data/')[0]
-
-        if not data:
-            # Try various standard Squiglink paths
-            for path in ["", "iems", "earbuds", "headphones"]:
-                base = f"{sub}.squig.link/{path}".strip('/')
-                url = f"https://{base}/data/phone_book.json"
-                fetched = fetch_data(url)
-                if fetched:
-                    data = fetched
-                    link_domain = base
-                    break
-        
+    # Step 1: Handle Manual Overrides first
+    for sub_name, target_url in OVERRIDES.items():
+        print(f"Checking Override: {sub_name}...")
+        data = fetch_data(target_url)
         if data:
-            parse_recursive(data, link_domain, database, sub, new_finds)
+            domain_part = target_url.replace("https://", "").split('/data/')[0]
+            parse_recursive(data, domain_part, database, sub_name, new_finds)
 
-    # --- STEP 3: Save results ---
-    # We update the sync time so the website knows we just finished a check
+    # Step 2: Discovery and Standard Scanning
+    discovered = get_discovered_subdomains()
+    all_targets = list(set(SUBDOMAINS + [k for k in database.keys() if k != 'last_sync'] + discovered))
+    
+    # These paths allow index.html to categorize items (e.g., Over-Ear vs IEM)
+    SCAN_PATHS = ["", "iems", "headphones", "earbuds", "5128"]
+
+    for sub in all_targets:
+        if sub in OVERRIDES: continue # Skip since we already checked overrides
+        
+        print(f"Checking {sub}...")
+        for path in SCAN_PATHS:
+            base = f"{sub}.squig.link/{path}".strip('/')
+            url = f"https://{base}/data/phone_book.json"
+            data = fetch_data(url)
+            if data:
+                print(f"  > Found data at /{path}")
+                parse_recursive(data, base, database, sub, new_finds)
+
+    # Step 3: Save and Finalize
     database["last_sync"] = datetime.now().isoformat()
 
     if new_finds:
         print(f"Success! Found {len(new_finds)} new items.")
+        # Prepend new finds to history
         history = new_finds + history 
         with open(HISTORY_FILE, "w") as f:
             json.dump(history, f, indent=4)
