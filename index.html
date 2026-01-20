@@ -149,16 +149,18 @@
                 is5128Domain = true;
             }
         } catch(e) {
+            // Robust fallback if URL parsing fails
             if (link.includes('hangout.audio/') || link.includes('listener800.github.io/')) is5128Domain = true;
         }
 
         const is5128Reviewer = reviewer.includes("earphone's archive") || reviewer.includes("5128");
         const isExplicit711 = link.includes('/711') || link.includes('type=711') || item.includes('(711)');
-        const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/');
+        const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/') || item.includes('(hp)') || item.includes('headphone');
+        
         const is5128 = !isExplicit711 && (is5128Reviewer || is5128Domain || link.includes('5128'));
 
         if (is5128) {
-            const hasOEAttr = ['+oe', '(oe)', 'over-ear', 'headphone', '(hp)', 'open-back', 'closed-back'].some(attr => item.includes(attr));
+            const hasOEAttr = ['+oe', '(oe)', 'over-ear', 'open-back', 'closed-back'].some(attr => item.includes(attr));
             if (hasOEAttr || isExplicitHP) return "Over-Ear (5128)";
             return "IEM (5128)";
         }
