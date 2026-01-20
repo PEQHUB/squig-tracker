@@ -1,0 +1,32 @@
+name: Crawler Logic (check.py)
+
+on:
+  push:
+    paths:
+      - 'reviewers.json'  # Run only if you add/remove reviewers
+  workflow_dispatch:      # Allows you to click "Run workflow" manually
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Run Crawler
+        run: python check.py
+
+      - name: Commit Database
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add database.json
+          git commit -m "Sync: Database updated via crawler" || exit 0
+          git push
