@@ -85,12 +85,13 @@
     
     <button id="load-all-btn" class="mono uppercase hidden">Load More</button>
 
-let fullHistory = [];
+<script>
+    let fullHistory = [];
     let displayedHistory = [];
     let databaseData = {};
     let currentIndex = 0;
     let currentTab = 'feed';
-    let statsRecentLimit = 5; // Global state for stats pagination
+    let statsRecentLimit = 5; 
     const PAGE_SIZE = 50;
     const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
@@ -258,11 +259,10 @@ let fullHistory = [];
     document.getElementById('search').addEventListener('input', (e) => {
         const val = e.target.value.toLowerCase();
         const filtered = fullHistory.filter(h => resolveName(h.item).toLowerCase().includes(val) || h.reviewer.toLowerCase().includes(val));
-        renderItems(filtered, currentTab === 'stats' ? 'feed' : currentTab);
+        renderItems(filtered, currentTab === 'stats' || currentTab === 'feed' ? 'feed' : currentTab);
     });
 
     fetchData();
+</script>
 </body>
 </html>
-
-
