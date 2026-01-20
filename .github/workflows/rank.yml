@@ -1,0 +1,8 @@
+on:
+  schedule:
+    - cron: '0 0 * * *' # Nightly
+  push:
+    paths-ignore:
+      - 'check.py'    # Don't run just because the script changed
+      - 'README.md'
+  workflow_dispatch:  # Manual trigger
