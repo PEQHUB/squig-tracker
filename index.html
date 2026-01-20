@@ -49,6 +49,10 @@
         .chart-bar-container { background: #111; height: 8px; border-radius: 1px; overflow: hidden; margin: 10px 0; }
         .chart-bar-fill { height: 100%; transition: width 1s ease-out; }
 
+        .recent-list-mini { font-size: 11px; color: #71717a; margin-top: 1rem; }
+        .recent-list-mini li { margin-bottom: 4px; border-left: 1px solid #222; padding-left: 8px; }
+        .recent-list-mini a:hover { color: #fff; text-decoration: underline; }
+
         #load-all-btn {
             margin: 4rem auto;
             display: block;
@@ -59,11 +63,7 @@
             color: #71717a;
             transition: all 0.2s;
         }
-        #load-all-btn:hover {
-            border-color: #52525b;
-            color: #ffffff;
-            background: #0a0a0a;
-        }
+        #load-all-btn:hover { border-color: #52525b; color: #ffffff; background: #0a0a0a; }
 
         input::placeholder { color: #3f3f46; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
@@ -110,303 +110,156 @@
     let currentIndex = 0;
     let currentTab = 'feed';
     const PAGE_SIZE = 50;
-    
-    const CUTOFF_MS = 12 * 60 * 60 * 1000; 
     const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
     function toLocalTime(dateStr) {
         if (!dateStr) return null;
-        try {
-            const s = dateStr.trim();
-            let d = new Date(s.includes("UTC") ? s : s + " UTC");
-            if (isNaN(d.getTime()) || d.getFullYear() <= 1970) {
-                const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
-                const match = s.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
-                if (match) {
-                    const [_, mon, day, hr, min] = match;
-                    d = new Date(Date.UTC(2026, months[mon], parseInt(day), parseInt(hr), parseInt(min)));
-                }
-            }
-            return isNaN(d.getTime()) ? null : d;
-        } catch (e) { return null; }
+        const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
+        const match = dateStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
+        if (match) {
+            const [_, mon, day, hr, min] = match;
+            return new Date(Date.UTC(2026, months[mon], parseInt(day), parseInt(hr), parseInt(min)));
+        }
+        return new Date(dateStr);
     }
 
     function getRelativeTime(date) {
-        if (!date) return "Pending";
-        const now = new Date();
-        const diffInSeconds = Math.floor((now - date) / 1000);
-        if (diffInSeconds < 15) return `Just now`;
-        if (diffInSeconds < 60) return `${diffInSeconds}s ago`;
-        const diffInMinutes = Math.floor(diffInSeconds / 60);
-        if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
-        const diffInHours = Math.floor(diffInMinutes / 60);
-        if (diffInHours < 24) return `${diffInHours}h ago`;
-        const diffInDays = Math.floor(diffInHours / 24);
-        return diffInDays > 1000 ? "Recent" : `${diffInDays}d ago`;
+        if (!date) return "Recent";
+        const diff = Math.floor((new Date() - date) / 1000);
+        if (diff < 60) return `${diff}s ago`;
+        if (diff < 3600) return `${Math.floor(diff/60)}m ago`;
+        if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
+        return `${Math.floor(diff/86400)}d ago`;
     }
 
     function resolveName(data) {
-        if (!data) return "Unknown";
-        if (typeof data === 'string') return data;
-        return data.name || Object.values(data)[0] || "Unknown";
+        return typeof data === 'string' ? data : (data.name || "Unknown Device");
     }
 
     /**
-     * Logic Fix: Uses URL patterns to identify standards
+     * Refined Metadata detection including TWS
      */
     function getEntryMetadata(entry) {
         const link = (entry.link || "").toLowerCase();
-        const name = resolveName(entry.item).toLowerCase();
-        const rev = entry.reviewer.toLowerCase();
+        const is5128 = link.includes('5128') || link.includes('hangout.audio') || link.includes('listener800');
         
-        // 5128 Detection (URLs + Strings)
-        const is5128 = link.includes('hangout.audio') || 
-                       link.includes('listener800') || 
-                       link.includes('5128') || 
-                       name.includes('5128') || 
-                       name.includes('4620');
-
-        // Over-Ear Detection
-        const isOE = link.includes('/headphones') || 
-                     name.includes('overear') || 
-                     name.includes('headphone') || 
-                     rev.includes('overear');
-
-        if (isOE) return is5128 ? "Over-Ear - 5128" : "Over-Ear - Generic/Other";
-        return is5128 ? "IEM - 5128" : "IEM - 711";
-    }
-
-    function switchTab(tab) {
-        currentTab = tab;
-        document.getElementById('tab-feed').classList.toggle('active', tab === 'feed');
-        document.getElementById('tab-advanced').classList.toggle('active', tab === 'advanced');
-        document.getElementById('tab-stats').classList.toggle('active', tab === 'stats');
-        
-        document.getElementById('feed').classList.toggle('hidden', tab !== 'feed');
-        document.getElementById('advanced').classList.toggle('hidden', tab !== 'advanced');
-        document.getElementById('stats').classList.toggle('hidden', tab !== 'stats');
-        
-        document.getElementById('load-all-btn').classList.add('hidden');
-        if (tab === 'feed' && currentIndex < fullHistory.length) {
-            document.getElementById('load-all-btn').classList.remove('hidden');
+        if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
+        if (link.includes('type=headphone') || link.includes('/headphones/')) {
+            return is5128 ? "Over-Ear (5128)" : "Over-Ear (Legacy/Other)";
         }
-        
-        if (tab === 'advanced') renderAdvanced();
-        if (tab === 'stats') renderStats();
+        return is5128 ? "IEM (5128)" : "IEM (711)";
     }
 
     async function fetchData() {
         try {
-            const t = Date.now();
-            const [hReq, dReq] = await Promise.all([
-                fetch(`history.json?t=${t}`),
-                fetch(`database.json?t=${t}`)
-            ]);
-            if (!hReq.ok || !dReq.ok) throw new Error("Offline");
-            const rawHistory = await hReq.json();
+            const [hReq, dReq] = await Promise.all([fetch('history.json'), fetch('database.json')]);
+            fullHistory = await hReq.json();
             databaseData = await dReq.json();
-            fullHistory = rawHistory.sort((a, b) => {
-                const dateA = toLocalTime(a.date)?.getTime() || 0;
-                const dateB = toLocalTime(b.date)?.getTime() || 0;
-                return dateB - dateA;
-            });
+            fullHistory.sort((a,b) => (toLocalTime(b.date) - toLocalTime(a.date)));
             updateDashboard();
             loadMore();
-        } catch (err) {
-            document.getElementById('feed').innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase text-center">Sync Error</div>`;
-        }
-    }
-
-    function loadMore() {
-        const nextBatch = fullHistory.slice(currentIndex, currentIndex + PAGE_SIZE);
-        displayedHistory = displayedHistory.concat(nextBatch);
-        currentIndex += PAGE_SIZE;
-        renderItems(displayedHistory, 'feed');
-        const btn = document.getElementById('load-all-btn');
-        btn.innerText = `Load ${PAGE_SIZE} More`;
-        if (currentIndex >= fullHistory.length || currentTab !== 'feed') btn.classList.add('hidden');
-        else btn.classList.remove('hidden');
+        } catch (e) { console.error("Sync Error", e); }
     }
 
     function updateDashboard() {
         const now = new Date().getTime();
-        const last12h = fullHistory.filter(entry => {
-            const d = toLocalTime(entry.date);
-            return d && (now - d.getTime() < CUTOFF_MS);
-        }).length;
-        const reviewers = Object.keys(databaseData).filter(k => k !== 'last_sync');
+        const last12h = fullHistory.filter(e => (now - toLocalTime(e.date).getTime() < 12*60*60*1000)).length;
         document.getElementById('stat-total').innerText = last12h;
         document.getElementById('stat-db-total').innerText = fullHistory.length.toLocaleString();
-        document.getElementById('stat-sources').innerText = reviewers.length;
-    }
-
-    function renderAdvanced() {
-        const advContainer = document.getElementById('advanced');
-        const sections = {
-            "IEM - 5128": [],
-            "IEM - 711": [],
-            "Over-Ear - 5128": [],
-            "Over-Ear - Generic/Other": []
-        };
-
-        fullHistory.forEach(entry => {
-            const category = getEntryMetadata(entry);
-            if (sections[category]) sections[category].push(entry);
-        });
-
-        let advHtml = "";
-        for (const [title, items] of Object.entries(sections)) {
-            if (items.length > 0) {
-                advHtml += `<div class="time-divider">${title}</div>`;
-                advHtml += `<div id="section-${title.replace(/\s+|\/|-/g, '')}"></div>`;
-            }
-        }
-        advContainer.innerHTML = advHtml;
-        
-        for (const [title, items] of Object.entries(sections)) {
-            if (items.length > 0) {
-                const subId = `section-${title.replace(/\s+|\/|-/g, '')}`;
-                renderItems(items.slice(0, 20), subId, true);
-            }
-        }
+        document.getElementById('stat-sources').innerText = Object.keys(databaseData).length - 1;
     }
 
     function renderStats() {
         const statsContainer = document.getElementById('stats');
-        let iem711 = 0, iem5128 = 0, oe711 = 0, oe5128 = 0;
-        let reviewerCounts = [];
+        const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (Legacy/Other)": 0, "TWS & Earbuds": 0 };
+        const recentLists = { "IEM": [], "Over-Ear": [], "TWS": [] };
 
-        // Note: For Statistics to be accurate, we iterate the history which has the links
         fullHistory.forEach(entry => {
             const cat = getEntryMetadata(entry);
-            if (cat === "IEM - 5128") iem5128++;
-            else if (cat === "IEM - 711") iem711++;
-            else if (cat === "Over-Ear - 5128") oe5128++;
-            else if (cat === "Over-Ear - Generic/Other") oe711++;
+            if (counts[cat] !== undefined) counts[cat]++;
+            
+            // Populate recent lists
+            if (cat.includes("IEM") && recentLists["IEM"].length < 5) recentLists["IEM"].push(entry);
+            if (cat.includes("Over-Ear") && recentLists["Over-Ear"].length < 5) recentLists["Over-Ear"].push(entry);
+            if (cat.includes("TWS") && recentLists["TWS"].length < 5) recentLists["TWS"].push(entry);
         });
 
-        // Reviewer contribution summary from databaseData
-        Object.entries(databaseData).forEach(([reviewer, items]) => {
-            if (reviewer === 'last_sync') return;
-            reviewerCounts.push({ name: reviewer, count: items.length });
-        });
+        const totalIEM = counts["IEM (711)"] + counts["IEM (5128)"];
+        const totalOE = counts["Over-Ear (5128)"] + counts["Over-Ear (Legacy/Other)"];
 
-        reviewerCounts.sort((a, b) => b.count - a.count);
-        const topReviewers = reviewerCounts.slice(0, 10);
-        const maxRevCount = topReviewers[0]?.count || 1;
-
-        const iemTotal = iem711 + iem5128;
-        const oeTotal = oe711 + oe5128;
-        const getPercent = (val, total) => total > 0 ? ((val / total) * 100).toFixed(1) : 0;
-
-        const renderBar = (label, count, total, colorClass) => `
-            <div>
-                <div class="flex justify-between items-end mb-2 mono text-[10px] uppercase tracking-widest">
-                    <span class="text-white">${label}</span>
-                    <span class="text-zinc-500">${count.toLocaleString()} units — ${getPercent(count, total)}%</span>
+        const renderBar = (label, count, total, color) => `
+            <div class="mb-6">
+                <div class="flex justify-between text-[10px] mono uppercase mb-2">
+                    <span>${label}</span><span>${count} (${((count/total)*100).toFixed(1)}%)</span>
                 </div>
-                <div class="chart-bar-container">
-                    <div class="chart-bar-fill ${colorClass}" style="width: ${getPercent(count, total)}%"></div>
-                </div>
+                <div class="chart-bar-container"><div class="chart-bar-fill ${color}" style="width:${(count/total)*100}%"></div></div>
             </div>`;
 
-        let html = `
-            <div class="space-y-16">
-                <section>
-                    <div class="time-divider">In-Ear Monitor Standards</div>
-                    <div class="space-y-6 mt-4">
-                        ${renderBar("IEC-711 (Legacy)", iem711, iemTotal, "bg-zinc-600")}
-                        ${renderBar("B&K 5128 (Modern)", iem5128, iemTotal, "bg-white")}
-                    </div>
-                </section>
+        const renderRecent = (list) => `<ul class="recent-list-mini">${list.map(i => `<li><a href="${i.link}" target="_blank">${resolveName(i.item)}</a></li>`).join('')}</ul>`;
 
-                <section>
-                    <div class="time-divider">Over-Ear Standards</div>
-                    <div class="space-y-6 mt-4">
-                        ${renderBar("GRAS / Generic", oe711, oeTotal, "bg-zinc-600")}
-                        ${renderBar("B&K 5128 (Modern)", oe5128, oeTotal, "bg-white")}
-                    </div>
-                </section>
-
-                <section>
-                    <div class="time-divider">Top Database Contributors</div>
-                    <div class="space-y-6 mt-4">
-                        ${topReviewers.map(r => `
-                            <div>
-                                <div class="flex justify-between items-end mb-2 mono text-[10px] uppercase tracking-widest">
-                                    <span class="text-white">${r.name}</span>
-                                    <span class="text-zinc-500">${r.count.toLocaleString()} measurements</span>
-                                </div>
-                                <div class="chart-bar-container">
-                                    <div class="chart-bar-fill bg-zinc-800" style="width: ${(r.count / maxRevCount * 100)}%"></div>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </section>
-            </div>
-            
-            <div class="stat-card opacity-50">
-                <p class="text-[10px] mono uppercase leading-relaxed text-zinc-400">
-                    Statistics are compiled from the full Squiglink index. Standards are identified via URL metadata and item tags.
-                </p>
-            </div>
-        `;
-        statsContainer.innerHTML = html;
+        statsContainer.innerHTML = `
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="stat-card">
+                    <span class="text-[10px] uppercase mono text-zinc-500">IEM Standards</span>
+                    <div class="mt-4">${renderBar("5128", counts["IEM (5128)"], totalIEM, "bg-white")} ${renderBar("711", counts["IEM (711)"], totalIEM, "bg-zinc-800")}</div>
+                    ${renderRecent(recentLists["IEM"])}
+                </div>
+                <div class="stat-card">
+                    <span class="text-[10px] uppercase mono text-zinc-500">Over-Ear Standards</span>
+                    <div class="mt-4">${renderBar("5128", counts["Over-Ear (5128)"], totalOE, "bg-white")} ${renderBar("Legacy", counts["Over-Ear (Legacy/Other)"], totalOE, "bg-zinc-800")}</div>
+                    ${renderRecent(recentLists["Over-Ear"])}
+                </div>
+                <div class="stat-card">
+                    <span class="text-[10px] uppercase mono text-zinc-500">Consumer/TWS</span>
+                    <div class="text-2xl mono mt-4 text-white">${counts["TWS & Earbuds"]} <span class="text-xs text-zinc-500">Units</span></div>
+                    ${renderRecent(recentLists["TWS"])}
+                </div>
+            </div>`;
     }
 
-    function renderItems(data, containerId, isSubSection = false) {
+    function renderItems(data, containerId) {
         const container = document.getElementById(containerId);
-        let htmlContent = "";
-        const now = new Date().getTime();
-        let lastDividerLabel = "";
-
-        data.forEach(entry => {
-            const model = resolveName(entry.item);
-            const dateObj = toLocalTime(entry.date);
-            const relativeStr = getRelativeTime(dateObj);
-            const isVeryRecent = dateObj && (now - dateObj.getTime() < NEW_BADGE_MS);
-            
-            if (!isSubSection) {
-                const dayStr = dateObj ? dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' }) : "Recent";
-                if (dayStr !== lastDividerLabel) {
-                    htmlContent += `<div class="time-divider">${dayStr}</div>`;
-                    lastDividerLabel = dayStr;
-                }
-            }
-
-            htmlContent += `
-            <div class="item-row py-6 flex justify-between items-center group">
-                <div class="min-w-0 pr-4">
-                    <div class="flex items-center gap-3 mb-1">
-                        ${isVeryRecent ? '<span class="bg-white text-black px-1 py-0.5 text-[8px] font-black uppercase rounded-sm">New</span>' : ''}
-                        <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
-                        <span class="text-[11px] text-zinc-500 mono uppercase">${relativeStr}</span>
+        container.innerHTML = data.map(entry => {
+            const date = toLocalTime(entry.date);
+            const isNew = (new Date() - date) < NEW_BADGE_MS;
+            return `
+                <div class="item-row py-6 flex justify-between items-center group">
+                    <div class="min-w-0 pr-4">
+                        <div class="flex items-center gap-3 mb-1">
+                            ${isNew ? '<span class="bg-white text-black px-1 py-0.5 text-[8px] font-black uppercase rounded-sm">New</span>' : ''}
+                            <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
+                            <span class="text-[11px] text-zinc-500 mono uppercase">${getRelativeTime(date)}</span>
+                        </div>
+                        <h2 class="text-[17px] font-normal text-zinc-200 truncate tracking-tight">${resolveName(entry.item)}</h2>
                     </div>
-                    <h2 class="text-[17px] font-normal text-zinc-200 truncate tracking-tight">${model}</h2>
-                </div>
-                <a href="${entry.link}" target="_blank" class="shrink-0 p-2 border border-zinc-800 text-zinc-600 transition-all hover:border-zinc-400 hover:text-white">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-            </div>`;
+                    <a href="${entry.link}" target="_blank" class="shrink-0 p-2 border border-zinc-800 text-zinc-600 transition-all hover:border-zinc-400 hover:text-white">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>`;
+        }).join('');
+    }
+
+    function switchTab(tab) {
+        currentTab = tab;
+        ['feed', 'advanced', 'stats'].forEach(t => {
+            document.getElementById(t).classList.toggle('hidden', t !== tab);
+            document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
         });
-        container.innerHTML = htmlContent;
+        if (tab === 'stats') renderStats();
+        document.getElementById('load-all-btn').classList.toggle('hidden', tab !== 'feed');
+    }
+
+    function loadMore() {
+        const nextBatch = fullHistory.slice(currentIndex, currentIndex + PAGE_SIZE);
+        displayedHistory = [...displayedHistory, ...nextBatch];
+        currentIndex += PAGE_SIZE;
+        renderItems(displayedHistory, 'feed');
     }
 
     document.getElementById('load-all-btn').addEventListener('click', loadMore);
-
     document.getElementById('search').addEventListener('input', (e) => {
         const val = e.target.value.toLowerCase();
-        if (val === "") {
-            renderItems(displayedHistory, 'feed');
-            if (currentTab === 'feed') document.getElementById('load-all-btn').classList.remove('hidden');
-            return;
-        }
-        document.getElementById('load-all-btn').classList.add('hidden');
-        const filtered = fullHistory.filter(h => 
-            resolveName(h.item).toLowerCase().includes(val) || 
-            h.reviewer.toLowerCase().includes(val)
-        );
+        const filtered = fullHistory.filter(h => resolveName(h.item).toLowerCase().includes(val) || h.reviewer.toLowerCase().includes(val));
         renderItems(filtered, currentTab === 'feed' ? 'feed' : 'advanced');
     });
 
