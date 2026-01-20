@@ -4,6 +4,7 @@ import os
 import urllib.parse
 from datetime import datetime
 
+# The script will now automatically add found subdomains to this list
 SUBDOMAINS = [
     "crinacle", "superreview", "hbb", "precog", "timmyv", "aftersound", 
     "paulwasabii", "vortexreviews", "tonedeafmonk", "rg", "nymz", 
@@ -34,6 +35,27 @@ OVERRIDES = {
 DB_FILE = "database.json"
 HISTORY_FILE = "history.json"
 
+def get_discovered_subdomains():
+    """Fetches all registered .squig.link subdomains from public logs (crt.sh)."""
+    try:
+        print("Discovering new Squiglink reviewers via crt.sh...")
+        url = "https://crt.sh/?q=%.squig.link&output=json"
+        response = requests.get(url, timeout=25)
+        if response.status_code != 200: return []
+        
+        data = response.json()
+        discovered = set()
+        for entry in data:
+            name = entry['common_name'].lower()
+            name = name.replace('*.', '')
+            if name.endswith('.squig.link') and name not in ['squig.link', 'www.squig.link']:
+                prefix = name.split('.')[0]
+                discovered.add(prefix)
+        return list(discovered)
+    except Exception as e:
+        print(f"Discovery skipped: {e}")
+        return []
+
 def fetch_data(url):
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
@@ -45,12 +67,8 @@ def fetch_data(url):
     return None
 
 def log_item(link_domain, name, file_id, database, sub_key, new_finds):
-    """Saves the individual IEM to the database and history."""
-    if not name or not isinstance(name, str):
-        return
-
+    if not name or not isinstance(name, str): return
     clean_name = name.strip()
-    # Handle cases where file_id is a list (take the first available measurement)
     final_file_id = file_id[0] if isinstance(file_id, list) else file_id
     
     if clean_name not in database[sub_key]:
@@ -63,32 +81,21 @@ def log_item(link_domain, name, file_id, database, sub_key, new_finds):
         })
 
 def parse_recursive(obj, link_domain, database, sub_key, new_finds, brand_context=""):
-    """
-    Unpacks nested Squiglink data. 
-    Handles Brand folders, phone lists, and flat ID:Name pairs.
-    """
-    # 1. Handle Brand Folders: {'name': '64 Audio', 'phones': [...]}
     if isinstance(obj, dict) and 'phones' in obj:
         current_brand = obj.get('name', brand_context)
         for phone in obj.get('phones', []):
             parse_recursive(phone, link_domain, database, sub_key, new_finds, current_brand)
-
-    # 2. Handle Individual Phone Objects: {'name': 'U12t', 'file': '...'}
     elif isinstance(obj, dict) and 'name' in obj:
         model_name = obj['name']
         file_id = obj.get('file', model_name)
         full_label = f"{brand_context} {model_name}".strip()
         log_item(link_domain, full_label, file_id, database, sub_key, new_finds)
-
-    # 3. Handle Standard Dicts: {'ID': 'Display Name'}
     elif isinstance(obj, dict):
         for key, val in obj.items():
             if isinstance(val, (dict, list)):
                 parse_recursive(val, link_domain, database, sub_key, new_finds, brand_context)
             else:
                 log_item(link_domain, val, key, database, sub_key, new_finds)
-
-    # 4. Handle Lists
     elif isinstance(obj, list):
         for item in obj:
             parse_recursive(item, link_domain, database, sub_key, new_finds, brand_context)
@@ -111,7 +118,16 @@ def run_check():
 
     new_finds = []
 
-    for sub in SUBDOMAINS:
+    # --- STEP 1: Discovery ---
+    # Merge hardcoded SUBDOMAINS with whatever exists in database.json and new crt.sh finds
+    discovered = get_discovered_subdomains()
+    all_targets = list(set(SUBDOMAINS + list(database.keys()) + discovered))
+    
+    # Remove 'last_sync' from targets if it exists
+    all_targets = [t for t in all_targets if t != 'last_sync']
+
+    # --- STEP 2: Scrape ---
+    for sub in all_targets:
         print(f"Checking {sub}...")
         if sub not in database:
             database[sub] = []
@@ -119,15 +135,14 @@ def run_check():
         data = None
         link_domain = ""
 
-        # Check Overrides
         if sub in OVERRIDES:
             target_url = OVERRIDES[sub]
             data = fetch_data(target_url)
             if data:
                 link_domain = target_url.replace("https://", "").split('/data/')[0]
 
-        # Standard Folder Guessing
         if not data:
+            # Try various standard Squiglink paths
             for path in ["", "iems", "earbuds", "headphones"]:
                 base = f"{sub}.squig.link/{path}".strip('/')
                 url = f"https://{base}/data/phone_book.json"
@@ -140,16 +155,18 @@ def run_check():
         if data:
             parse_recursive(data, link_domain, database, sub, new_finds)
 
-    # Save results
+    # --- STEP 3: Save results ---
+    # We update the sync time so the website knows we just finished a check
+    database["last_sync"] = datetime.now().isoformat()
+
     if new_finds:
         print(f"Success! Found {len(new_finds)} new items.")
         history = new_finds + history 
-        with open(DB_FILE, "w") as f:
-            json.dump(database, f, indent=4)
         with open(HISTORY_FILE, "w") as f:
             json.dump(history, f, indent=4)
-    else:
-        print("No new items found.")
+            
+    with open(DB_FILE, "w") as f:
+        json.dump(database, f, indent=4)
 
 if __name__ == "__main__":
     run_check()
