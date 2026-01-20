@@ -42,67 +42,83 @@ def fetch_data(subdomain):
         pass
     return None
 
-def process_item(sub, brand, model, database, new_finds):
-    full_name = f"{brand} {model}".strip()
+def process_item(sub, name, share_id, database, new_finds):
+    # 'name' = The pretty text (e.g., "Moondrop Kato")
+    # 'share_id' = The hidden filename (e.g., "Moondrop_Kato_Sample_1")
+    
+    # Generate the link using the EXACT ID from the source
+    import urllib.parse
+    encoded_id = urllib.parse.quote(share_id)
+    deep_link = f"https://{sub}.squig.link/?share={encoded_id}"
+
+    # Database logic
     if sub not in database:
         database[sub] = []
     
-    if full_name not in database[sub]:
-        database[sub].append(full_name)
+    # We check against the display name to avoid duplicates
+    if name not in database[sub]:
+        database[sub].append(name)
         new_finds.append({
             "reviewer": sub.capitalize(),
-            "item": full_name,
+            "item": name,
             "date": datetime.now().strftime("%b %d, %H:%M"),
-            "link": f"https://{sub}.squig.link"
+            "link": deep_link
         })
 
 def run_check():
-    # Load Database (The lookup list)
-    if os.path.exists(DB_FILE):
-        with open(DB_FILE, "r") as f:
-            try:
-                database = json.load(f)
-                if not isinstance(database, dict): database = {}
-            except: database = {}
-    else:
-        database = {}
-
-    new_finds = []
-
+    # ... (Keep your existing database loading code) ...
+    
     for sub in SUBDOMAINS:
         print(f"Checking {sub}...")
-        data = fetch_data(sub)
+        
+        # Helper to try main URL + subfolders
+        data = None
+        valid_path = sub # To remember which path worked (e.g., "crinacle" vs "crinacle/headphones")
+        
+        # Try finding the phonebook in common locations
+        paths_to_try = ["", "headphones", "earbuds", "iems"]
+        
+        for path in paths_to_try:
+            # Construct URL: https://crinacle.squig.link/data/phone_book.json
+            # OR https://crinacle.squig.link/headphones/data/phone_book.json
+            base_url = f"https://{sub}.squig.link"
+            if path: 
+                base_url += f"/{path}"
+                
+            check_url = f"{base_url}/data/phone_book.json"
+            
+            fetched = fetch_data_from_url(check_url)
+            if fetched:
+                data = fetched
+                valid_path = f"{sub}/{path}" if path else sub
+                # We need the base subdomain for the link, not the full path
+                # actually, if it's in a subfolder, the share link usually needs that folder too
+                # e.g. crinacle.squig.link/headphones/?share=...
+                link_domain = f"{sub}.squig.link/{path}" if path else f"{sub}.squig.link"
+                break
+        
         if not data: continue
-
+        
+        # --- ROBUST PARSING START ---
+        
+        # Type 1: Dictionary {"Unique_ID": "Display Name"} (Most common/Accurate)
         if isinstance(data, dict):
-            for brand, models in data.items():
-                if isinstance(models, list):
-                    for model in models:
-                        process_item(sub, brand, model, database, new_finds)
+            for share_id, display_name in data.items():
+                # Sometimes the value is a list (Old format: {"Brand": ["Model"]})
+                if isinstance(display_name, list):
+                    # In this rare case, we fall back to assuming ID = Name
+                    for model in display_name:
+                        process_item(link_domain, f"{share_id} {model}", model, database, new_finds)
+                else:
+                    # The Standard Format
+                    process_item(link_domain, display_name, share_id, database, new_finds)
+
+        # Type 2: Simple List ["Model A", "Model B"]
         elif isinstance(data, list):
             for item in data:
-                process_item(sub, "", item, database, new_finds)
-
-    # Save the lookup database
-    with open(DB_FILE, "w") as f:
-        json.dump(database, f, indent=4)
-
-    # Save the visual history for the website
-    if new_finds:
-        print(f"Found {len(new_finds)} new items!")
-        history = []
-        if os.path.exists(HISTORY_FILE):
-            with open(HISTORY_FILE, "r") as f:
-                try:
-                    history = json.load(f)
-                    if not isinstance(history, list): history = []
-                except: history = []
+                # In lists, the ID and Name are identical
+                process_item(link_domain, item, item, database, new_finds)
+                
+        # --- ROBUST PARSING END ---
         
-        # Combine the lists correctly
-        updated_history = new_finds + history
-        with open(HISTORY_FILE, "w") as f:
-            json.dump(updated_history[:200], f, indent=4)
-
-if __name__ == "__main__":
-    run_check()
-
+        time.sleep(1) # Safety delay
