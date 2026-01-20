@@ -4,11 +4,28 @@ import os
 from datetime import datetime
 
 SUBDOMAINS = [
-    "crinacle", "superreview", "hbb", "precog", "timmyv", 
-    "namedkenn", "rg", "wolfhawk", "akros", "paulwasabii", 
-    "vortex", "teds", "banbeucmas", "jaytiss", "tonedeafmonk", 
-    "aftersound", "hypethewiev", "tks", "venerable", "regancipher",
-    "den-fi", "kr0mka", "marcelo", "nick", "rohit", "shuji"
+    # The Essentials
+    "crinacle", "superreview", "hbb", 
+    
+    # Major Reviewers & Databases
+    "precog", "timmyv", "aftersound", "paulwasabii", "vortexreviews", 
+    "tonedeafmonk", "rg", "nymz", "gadgetrytech", "eliseaudio", "den-fi",
+    
+    # Community & Niche Databases (A-Z)
+    "achoreviews", "aden", "adri-n", "animagus", "ankramutt", "arc", 
+    "atechreviews", "arn", "audioamigo", "theaudiostore", "awsmdanny", 
+    "bakkwatan", "banzai1122", "bassyalexander", "bassaudio", "bedrock", 
+    "boizoff", "breampike", "bryaudioreviews", "bukanaudiophile", "csi-zone", 
+    "dchpgall", "dhrme", "dl", "doltonius", "ducbloke", "ekaudio", "fahryst", 
+    "enemyspider", "eplv", "flare", "foxtoldmeso", "freeryder05", "hadoe", 
+    "harpo", "hore", "hu-fi", "ianfann", "ideru", "iemocean", "iemworld", 
+    "isaiahse", "jacstone", "jaytiss", "joshtbvo", "kazi", "kr0mka", 
+    "lestat", "listener", "loomynarty", "lown-fi", "melatonin", "mmagtech", 
+    "musicafe", "obodio", "practiphile", "pw", "ragnarok", "recode", 
+    "regancipher", "riz", "smirk", "soundignity", "suporsalad", "tgx78", 
+    "therollo9", "scboy", "seanwee", "silicagel", "sl0the", "soundcheck39", 
+    "tanchjim", "tedthepraimortis", "treblewellxtended", "vsg", "yanyin", 
+    "yoshiultra", "kuulokenurkka", "sai", "earphonesarchive"
 ]
 
 DB_FILE = "database.json"
@@ -88,3 +105,4 @@ def run_check():
 
 if __name__ == "__main__":
     run_check()
+
