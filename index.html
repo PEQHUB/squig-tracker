@@ -157,41 +157,22 @@
     }
 
     function getEntryMetadata(entry) {
-    const link = (entry.link || "").toLowerCase();
-    const reviewer = (entry.reviewer || "").toLowerCase();
-    const item = resolveName(entry.item).toLowerCase();
-    
-    // 1. Path-Based & Domain Identification
-    const isListener = link.includes('listener.squig.link'); // NEW: Specific check for Listener
-    const isExplicitPathHP = link.includes('/headphones/') || link.includes('type=headphone') || isListener;
-    const isExplicitPathIEM = link.includes('/iems/') || link.includes('type=iem');
-    const isExplicitPathBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/');
+        const link = (entry.link || "").toLowerCase();
+        const reviewer = (entry.reviewer || "").toLowerCase();
+        const item = resolveName(entry.item).toLowerCase();
+        
+        // 1. Path-Based & Domain Identification
+        const isListener = link.includes('listener.squig.link');
+        const isExplicitPathHP = link.includes('/headphones/') || link.includes('type=headphone') || isListener;
+        const isExplicitPathIEM = link.includes('/iems/') || link.includes('type=iem');
+        const isExplicitPathBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/');
 
-    // ... [Sections 2, 3, and 4 remain the same] ...
-
-    // 5. Final Classification Logic
-    let type = "Misc/Unknown";
-
-    if (isExplicitPathBuds) {
-        type = "TWS & Earbuds";
-    } else if (isExplicitPathHP || (item.includes('(hp)') && !isKnownIEMBrand)) {
-        // Since isListener is now part of isExplicitPathHP, 
-        // it will flow here. 
-        // It will correctly label as "Over-Ear (711)" because 
-        // Listener's domain doesn't trigger the is5128 logic in Section 4.
-        type = is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
-    } else if (isExplicitPathIEM || isKnownIEMBrand || isLeaningReviewer || item.includes('(iem)')) {
-        type = is5128 ? "IEM (5128)" : "IEM (711)";
-    }
-
-    return type;
-}
-        // 2. Known IEM Reviewer List (Used as fallback)
-      const iemLeaningReviewers = [
-    'audiosense', 'super*review', 'superreview', 'bad guy good audio reviews', 'bgga', 
-    'precogvision', 'timmy', 'gizaudio', 'vortex reviews', 
-    'flare', 'silicagel', 'bangbeucmas', 'clover' // Added these for better coverage
-];
+        // 2. Known IEM Reviewer List
+        const iemLeaningReviewers = [
+            'audiosense', 'super*review', 'superreview', 'bad guy good audio reviews', 'bgga', 
+            'precogvision', 'timmy', 'gizaudio', 'vortex reviews', 
+            'flare', 'silicagel', 'bangbeucmas', 'clover'
+        ];
 
         // 3. Known IEM Brand Protection
         const knownIEMs = [
@@ -212,17 +193,17 @@
         const is5128 = !isExplicit711 && (isEA || is5128Domain || is5128Explicit);
 
         // 5. Final Classification Logic
-        let type = "Misc/Unknown";
-
-        if (isExplicitPathBuds) {
-            type = "TWS & Earbuds";
-        } else if (isExplicitPathHP || (item.includes('(hp)') && !isKnownIEMBrand)) {
-            type = is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
-        } else if (isExplicitPathIEM || isKnownIEMBrand || isLeaningReviewer || item.includes('(iem)')) {
-            type = is5128 ? "IEM (5128)" : "IEM (711)";
+        if (isExplicitPathBuds) return "TWS & Earbuds";
+        
+        if (isExplicitPathHP || (item.includes('(hp)') && !isKnownIEMBrand)) {
+            return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
+        }
+        
+        if (isExplicitPathIEM || isKnownIEMBrand || isLeaningReviewer || item.includes('(iem)')) {
+            return is5128 ? "IEM (5128)" : "IEM (711)";
         }
 
-        return type;
+        return "Misc/Unknown";
     }
 
     function expandCategory(cat) {
@@ -424,5 +405,3 @@
 </script>
 </body>
 </html>
-
-
