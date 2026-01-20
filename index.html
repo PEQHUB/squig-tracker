@@ -189,12 +189,11 @@
         document.getElementById('stat-sources').innerText = Math.max(0, Object.keys(databaseData).length - 1);
     }
 
-  function renderStats() {
+    function renderStats() {
         const statsContainer = document.getElementById('stats');
         const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (Legacy/Other)": 0, "TWS & Earbuds": 0 };
         const contributors = {};
         
-        // Tracking lists for all standards
         const latest5128_IEM = [];
         const latest711_IEM = [];
         const latest5128_OE = [];
@@ -204,13 +203,11 @@
             const cat = getEntryMetadata(entry);
             if (counts[cat] !== undefined) counts[cat]++;
             
-            // Contributor Stats (5128 only)
             if (cat.includes("5128")) {
                 if (!contributors[entry.reviewer]) contributors[entry.reviewer] = 0;
                 contributors[entry.reviewer]++;
             }
 
-            // Populate Latest Lists
             if (cat === "IEM (5128)" && latest5128_IEM.length < statsRecentLimit) latest5128_IEM.push(entry);
             if (cat === "IEM (711)" && latest711_IEM.length < statsRecentLimit) latest711_IEM.push(entry);
             if (cat === "Over-Ear (5128)" && latest5128_OE.length < statsRecentLimit) latest5128_OE.push(entry);
@@ -257,30 +254,6 @@
                     </div>
                 </div>
 
-                <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">5128 Contributors</span>
-                    <table class="contributor-table mono">
-                        <thead><tr><th>Reviewer</th><th class="text-right">Total</th></tr></thead>
-                        <tbody>
-                            ${sortedContributors.map(([name, count]) => `<tr><td>${name}</td><td class="text-right text-white">${count}</td></tr>`).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            </div>`;
-    }
-
-        statsContainer.innerHTML = `
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">IEM Standards</span>
-                    <div class="mt-4">${renderBar("5128", counts["IEM (5128)"], totalIEM, "bg-white")} ${renderBar("711", counts["IEM (711)"], totalIEM, "bg-zinc-800")}</div>
-                    ${renderRecent("Latest 5128 Measurements", latest5128_IEM)}
-                </div>
-                <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">Over-Ear Standards</span>
-                    <div class="mt-4">${renderBar("5128", counts["Over-Ear (5128)"], totalOE, "bg-white")} ${renderBar("Legacy", counts["Over-Ear (Legacy/Other)"], totalOE, "bg-zinc-800")}</div>
-                    ${renderRecent("Latest 5128 Measurements", latest5128_OE)}
-                </div>
                 <div class="stat-card">
                     <span class="text-[10px] uppercase mono text-zinc-500 font-bold">5128 Contributors</span>
                     <table class="contributor-table mono">
@@ -362,4 +335,3 @@
 </script>
 </body>
 </html>
-
