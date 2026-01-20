@@ -3,65 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Squig Tracker | Feed</title>
+    <title>SQUIG.LINK // TRACKER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #000; color: #fff; font-family: ui-sans-serif, system-ui, sans-serif; }
-        /* Smooth scrolling for mobile */
-        html { scroll-behavior: smooth; }
-        /* Hide scrollbar but keep functionality */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap');
+        body { font-family: 'JetBrains Mono', monospace; background-color: #09090b; color: #e4e4e7; }
+        /* Scanline effect */
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0,0,0,0) 100%);
+            opacity: 0.1;
+            position: absolute;
+            bottom: 100%;
+            animation: scanline 10s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes scanline {
+            0% { bottom: 100%; }
+            100% { bottom: -100%; }
+        }
     </style>
 </head>
-<body class="selection:bg-zinc-800 selection:text-white">
+<body class="min-h-screen flex flex-col items-center selection:bg-white selection:text-black">
+    <div class="scanline fixed top-0 left-0 w-full h-full pointer-events-none"></div>
 
-    <div class="max-w-xl mx-auto px-6 py-20">
+    <main class="w-full max-w-2xl px-6 py-12 z-20">
         
-        <header class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-md z-10 border-b border-zinc-900">
-            <div class="max-w-xl mx-auto px-6 py-4 flex justify-between items-center">
-                <h1 class="text-xs font-bold tracking-[0.3em] uppercase">Squig_Live_Feed</h1>
-                <div class="flex items-center gap-2">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                    </span>
-                    <span id="update-time" class="text-[10px] font-mono text-zinc-500">POLLING...</span>
+        <header class="mb-16 border-b border-zinc-800 pb-8">
+            <h1 class="text-xs font-bold tracking-[0.3em] text-zinc-500 mb-6">SQUIG.NETWORK // STATUS</h1>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="stats-grid">
+                <div>
+                    <div class="text-[10px] text-zinc-600 uppercase tracking-wider mb-1">Total Graphs</div>
+                    <div class="text-2xl font-light text-white" id="stat-total">----</div>
+                </div>
+                <div>
+                    <div class="text-[10px] text-zinc-600 uppercase tracking-wider mb-1">Unique Models</div>
+                    <div class="text-2xl font-light text-white" id="stat-unique">----</div>
+                </div>
+                <div>
+                    <div class="text-[10px] text-zinc-600 uppercase tracking-wider mb-1">Sources</div>
+                    <div class="text-2xl font-light text-white" id="stat-sources">----</div>
+                </div>
+                <div>
+                    <div class="text-[10px] text-zinc-600 uppercase tracking-wider mb-1">Last Sync</div>
+                    <div class="text-2xl font-light text-white" id="stat-time">--:--</div>
                 </div>
             </div>
         </header>
 
-        <div id="feed" class="mt-8 space-y-0">
-            </div>
+        <div class="flex justify-between items-end mb-4 border-b border-zinc-900 pb-2">
+            <span class="text-[10px] text-zinc-500 uppercase tracking-widest">Incoming Transmission</span>
+            <span class="text-[10px] text-zinc-600 animate-pulse">● LIVE</span>
+        </div>
 
-        <footer class="mt-20 py-10 border-t border-zinc-900 text-center">
-            <p class="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">End of Recent History</p>
+        <div id="feed" class="flex flex-col">
+            <div class="text-center py-12 text-zinc-700 text-xs animate-pulse">INITIALIZING DATA STREAM...</div>
+        </div>
+
+        <footer class="mt-24 text-center">
+            <p class="text-[10px] text-zinc-800 uppercase tracking-widest">End of Line</p>
         </footer>
-    </div>
+    </main>
 
     <script>
-        async function loadFeed() {
-            try {
-                const response = await fetch('history.json');
-                const data = await response.json();
-                
-                // Update the "Last Updated" timestamp using the most recent item's date
-                if (data.length > 0) {
-                    document.getElementById('update-time').innerText = `UPDATED: ${data[0].date}`;
-                }
+        // Fetch both history (feed) and database (stats) in parallel
+        Promise.all([
+            fetch('history.json').then(res => res.json()),
+            fetch('database.json').then(res => res.json())
+        ])
+        .then(([historyData, dbData]) => {
+            renderFeed(historyData);
+            renderStats(dbData);
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('feed').innerHTML = 
+                '<div class="text-center py-12 text-red-900 text-xs font-mono">CONNECTION LOST. RETRYING...</div>';
+        });
 
-                const feed = document.getElementById('feed');
-                
-                if (data.length === 0) {
-                    feed.innerHTML = '<p class="text-zinc-500 font-mono text-xs">NO MEASUREMENTS RECORDED.</p>';
-                    return;
-                }
+        function renderStats(db) {
+            // 1. Count Sources (Keys in the JSON object)
+            const sources = Object.keys(db).length;
 
-                feed.innerHTML = data.map((item, index) => `
-                    <div class="group py-8 border-b border-zinc-900 flex flex-col gap-1">
-                        <div class="flex justify-between items-baseline">
-                            <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-tighter">${item.reviewer}</span>
-                            <span class="text-[10px] font-mono text-zinc-700">${item.date}</span>
-                        </div>
-                        <a href="${item.link}" target="_blank" class="block">
-                            <h2 class="text-lg font-light leading-snug text-zinc-200 group-hover:text-white transition-colors break-words">
+            // 2. Count Total Measurements & Unique Models
+            let totalGraphs = 0;
+            let uniqueModels = new Set();
+
+            for (const reviewer in db) {
+                const measurements = db[reviewer];
+                totalGraphs += measurements.length;
+                
+                measurements.forEach(item => {
+                    // Normalize name to avoid minor casing duplicates
+                    uniqueModels.add(item.toLowerCase().trim());
+                });
+            }
+
+            // 3. Animate Numbers (Simple Counter Effect)
+            animateValue("stat-total", 0, totalGraphs, 1000);
+            animateValue("stat-unique", 0, uniqueModels.size, 1000);
+            document.getElementById('stat-sources').innerText = sources;
+            
+            // 4. Set Time
+            const now = new Date();
+            document.getElementById('stat-time').innerText = 
+                `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        }
+
+        function renderFeed(data) {
+            const feed = document.getElementById('feed');
+            
+            if (data.length === 0) {
+                feed.innerHTML = '<div class="py-8 text-zinc-600 text-xs text-center">NO NEW SIGNALS DETECTED.</div>';
+                return;
+            }
+
+            feed.innerHTML = data.reverse().map((item, index) => `
+                <div class="group py-6 border-b border-zinc-900/50 flex flex-col gap-2 hover:bg-zinc-900/20 transition-colors px-2 -mx-2">
+                    <div class="flex justify-between items-baseline opacity-50 group-hover:opacity-100 transition-opacity">
+                        <span class="text-[9px] font-mono text-zinc-400 uppercase tracking-widest">[ ${item.reviewer} ]</span>
+                        <span class="text-[9px] font-mono text-zinc-600">${item.date}</span>
+                    </div>
+                    <div class="flex justify-between items-center gap-4">
+                        <h2 class="text-sm md:text-base font-light text-zinc-300 break-words flex-1 group-hover:text-white transition-colors">
+                            ${item.item}
+                        </h2>
+                        <a href="${item.link}" target="_blank" 
+                           class="text-[9px] font-mono border border-zinc-800 text-zinc-500 px-3 py-1.5 
+                                  hover:bg-white hover:text-black hover:border-white transition-all 
+                                  uppercase tracking-widest shrink-0">
+                            View_Graph
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Helper for number animation
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start).
