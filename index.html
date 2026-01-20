@@ -71,7 +71,6 @@
 
         <div class="flex gap-4 mb-8 border-b border-zinc-900">
             <button onclick="switchTab('feed')" id="tab-feed" class="tab-btn active mono">Live Feed</button>
-            <button onclick="switchTab('advanced')" id="tab-advanced" class="tab-btn mono">Advanced View</button>
             <button onclick="switchTab('stats')" id="tab-stats" class="tab-btn mono">Statistics</button>
         </div>
 
@@ -80,7 +79,6 @@
     </header>
 
     <main id="feed" class="flex flex-col"></main>
-    <main id="advanced" class="hidden flex flex-col"></main>
     <main id="stats" class="hidden flex flex-col py-10 space-y-16"></main>
     
     <button id="load-all-btn" class="mono uppercase hidden">Load More</button>
@@ -156,26 +154,17 @@
     function renderStats() {
         const statsContainer = document.getElementById('stats');
         const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (Legacy/Other)": 0, "TWS & Earbuds": 0 };
-        
-        // Lists for the standard displays
         const recentLists = { "IEM": [], "Over-Ear": [], "TWS": [] };
-        
-        // New explicit lists for 5128 only
         const latest5128_IEM = [];
         const latest5128_OE = [];
 
         fullHistory.forEach(entry => {
             const cat = getEntryMetadata(entry);
-            
-            // Count for bars
             if (counts[cat] !== undefined) counts[cat]++;
-            
-            // Populate standard recent lists
             if (cat.includes("IEM") && recentLists["IEM"].length < statsRecentLimit) recentLists["IEM"].push(entry);
             if (cat.includes("Over-Ear") && recentLists["Over-Ear"].length < statsRecentLimit) recentLists["Over-Ear"].push(entry);
             if (cat.includes("TWS") && recentLists["TWS"].length < statsRecentLimit) recentLists["TWS"].push(entry);
 
-            // Specifically track the latest 5128 items
             if (cat === "IEM (5128)" && latest5128_IEM.length < statsRecentLimit) latest5128_IEM.push(entry);
             if (cat === "Over-Ear (5128)" && latest5128_OE.length < statsRecentLimit) latest5128_OE.push(entry);
         });
@@ -249,17 +238,15 @@
 
     function switchTab(tab) {
         currentTab = tab;
-        ['feed', 'advanced', 'stats'].forEach(t => {
+        ['feed', 'stats'].forEach(t => {
             document.getElementById(t).classList.toggle('hidden', t !== tab);
             document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
         });
         if (tab === 'stats') {
             renderStats();
             document.getElementById('load-all-btn').classList.remove('hidden');
-        } else if (tab === 'feed') {
-            document.getElementById('load-all-btn').classList.toggle('hidden', currentIndex >= fullHistory.length);
         } else {
-            document.getElementById('load-all-btn').classList.add('hidden');
+            document.getElementById('load-all-btn').classList.toggle('hidden', currentIndex >= fullHistory.length);
         }
     }
 
@@ -281,7 +268,7 @@
     document.getElementById('search').addEventListener('input', (e) => {
         const val = e.target.value.toLowerCase();
         const filtered = fullHistory.filter(h => resolveName(h.item).toLowerCase().includes(val) || h.reviewer.toLowerCase().includes(val));
-        renderItems(filtered, currentTab === 'stats' || currentTab === 'feed' ? 'feed' : currentTab);
+        renderItems(filtered, 'feed');
     });
 
     fetchData();
