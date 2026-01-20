@@ -6,83 +6,101 @@
     <title>SQUIGLINK MONITOR</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        :root { --bg: #000000; --card: #0a0a0a; --border: #222222; --text: #e4e4e7; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; border-radius: 2px; }
-        .item-row { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
-        .item-row:hover { background: #080808; }
-        
-        .time-divider {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 2.5rem 0 1rem 0;
-            color: #3f3f46;
-            font-size: 10px;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-        }
-        .time-divider::after {
-            content: "";
-            height: 1px;
-            flex-grow: 1;
-            background: linear-gradient(90deg, #222222 0%, transparent 100%);
-        }
-
-        #load-all-btn {
-            margin: 4rem auto;
-            display: block;
-            border: 1px solid #27272a;
-            padding: 0.75rem 2rem;
-            font-size: 10px;
-            letter-spacing: 0.1em;
-            color: #71717a;
-            transition: all 0.2s;
-        }
-        #load-all-btn:hover {
-            border-color: #52525b;
-            color: #ffffff;
-            background: #0a0a0a;
-        }
-
-        input::placeholder { color: #3f3f46; }
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
-    </style>
-</head>
-<body class="max-w-5xl mx-auto px-6 py-12">
-
-    <header class="mb-12">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">New Hits</span>
-                <span id="stat-total" class="text-xl font-medium mono text-white">0</span>
-            </div>
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Total DB</span>
-                <span id="stat-db-total" class="text-xl font-medium mono text-white">0</span>
-            </div>
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Reviewers</span>
-                <span id="stat-sources" class="text-xl font-medium mono text-white">0</span>
-            </div>
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last Refresh</span>
-                <span id="stat-time" class="text-xl font-medium mono text-white">--:--</span>
-            </div>
-        </div>
-
-        <input type="text" id="search" placeholder="Search Filter..." 
-            class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
-    </header>
-
-    <main id="feed" class="flex flex-col"></main>
+ <style>
+    :root { --bg: #000000; --card: #0a0a0a; --border: #222222; --text: #e4e4e7; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; border-radius: 2px; }
+    .item-row { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
+    .item-row:hover { background: #080808; }
     
-    <button id="load-all-btn" class="mono uppercase hidden">Load Entire History</button>
+    /* IMPROVED READABILITY */
+    .time-divider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 3rem 0 1rem 0;
+        color: #52525b; /* Slightly lighter for visibility */
+        font-size: 0.75rem; /* Increased from 10px */
+        font-family: 'JetBrains Mono', monospace;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+    }
+    
+    .meta-text {
+        font-size: 0.7rem; /* Larger than previous 10px */
+        letter-spacing: 0.05em;
+    }
 
-    <script>
+    /* ... rest of your existing button styles ... */
+</style>
+
+<script>
+    // --- UPDATED DATE PARSER ---
+    function toLocalTime(dateStr) {
+        if (!dateStr) return null;
+        try {
+            // Standardizes formats like "Jan 20, 14:30" 
+            // Most mobile browsers fail on custom strings, so we clean it.
+            const parts = dateStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
+            if (!parts) return new Date(dateStr); // Fallback to native
+
+            const [_, month, day, hour, min] = parts;
+            const year = new Date().getFullYear();
+            
+            // Format into a more standard string: "Jan 20 2026 14:30 UTC"
+            const cleanStr = `${month} ${day} ${year} ${hour}:${min} UTC`;
+            const d = new Date(cleanStr);
+            
+            return isNaN(d.getTime()) ? null : d;
+        } catch (e) { return null; }
+    }
+
+    function renderItems(data) {
+        const container = document.getElementById('feed');
+        if (!data || data.length === 0) {
+            container.innerHTML = `<div class="py-20 text-zinc-600 mono text-xs uppercase tracking-widest text-center">Monitoring for new measurements...</div>`;
+            return;
+        }
+
+        let lastHourLabel = "";
+        let htmlContent = "";
+
+        data.forEach(entry => {
+            const model = resolveName(entry.item);
+            const dateObj = toLocalTime(entry.date);
+            
+            // Fallback for failed dates
+            const localStr = dateObj 
+                ? dateObj.toLocaleTimeString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })
+                : "Date Pending";
+            
+            const currentHourLabel = localStr.includes(':') ? localStr.split(':')[0] : "Recent";
+
+            if (currentHourLabel !== lastHourLabel) {
+                htmlContent += `<div class="time-divider">${currentHourLabel}:00 Block</div>`;
+                lastHourLabel = currentHourLabel;
+            }
+
+            htmlContent += `
+            <div class="item-row py-6 flex justify-between items-center group">
+                <div class="min-w-0 pr-4">
+                    <div class="flex items-center gap-3 mb-1.5">
+                        <span class="meta-text font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
+                        <span class="meta-text text-zinc-500 font-medium mono uppercase">${localStr}</span>
+                    </div>
+                    <h2 class="text-lg md:text-xl font-normal text-zinc-200 truncate">${model}</h2>
+                </div>
+                <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 group-hover:border-zinc-500 text-zinc-600 group-hover:text-white transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+            `;
+        });
+        container.innerHTML = htmlContent;
+    }
+    // ... existing fetchData and event listeners ...
+</script>
         let fullHistory = [];
         let filteredHistory = [];
         let databaseData = {};
@@ -209,5 +227,6 @@ const CUTOFF_DATE = new Date("2026-01-21T00:00:00Z");
     </script>
 </body>
 </html>
+
 
 
