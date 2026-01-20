@@ -23,10 +23,7 @@
             border-bottom: 2px solid transparent;
             transition: all 0.2s;
         }
-        .tab-btn.active {
-            color: #ffffff;
-            border-bottom-color: #ffffff;
-        }
+        .tab-btn.active { color: #ffffff; border-bottom-color: #ffffff; }
 
         .chart-bar-container { background: #111; height: 8px; border-radius: 1px; overflow: hidden; margin: 10px 0; }
         .chart-bar-fill { height: 100%; transition: width 1s ease-out; }
@@ -138,9 +135,7 @@
             fullHistory.sort((a,b) => (toLocalTime(b.date) - toLocalTime(a.date)));
             updateDashboard();
             loadMore();
-        } catch (e) { 
-            console.error("Sync Error", e);
-        }
+        } catch (e) { console.error("Sync Error", e); }
     }
 
     function updateDashboard() {
@@ -219,12 +214,16 @@
         container.innerHTML = data.map(entry => {
             const date = toLocalTime(entry.date);
             const isNew = (new Date() - date) < NEW_BADGE_MS;
+            const rigType = getEntryMetadata(entry);
+            const rigColor = rigType.includes("5128") ? "text-white border-zinc-600" : "text-zinc-500 border-zinc-900";
+            
             return `
                 <div class="item-row py-6 flex justify-between items-center group">
                     <div class="min-w-0 pr-4">
                         <div class="flex items-center gap-3 mb-1">
                             ${isNew ? '<span class="bg-white text-black px-1 py-0.5 text-[8px] font-black uppercase rounded-sm">New</span>' : ''}
                             <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
+                            <span class="text-[9px] mono px-2 py-0.5 border ${rigColor} uppercase tracking-tighter rounded-sm">${rigType}</span>
                             <span class="text-[11px] text-zinc-500 mono uppercase">${getRelativeTime(date)}</span>
                         </div>
                         <h2 class="text-[17px] font-normal text-zinc-200 truncate tracking-tight">${resolveName(entry.item)}</h2>
