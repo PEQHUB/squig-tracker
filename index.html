@@ -85,12 +85,12 @@
     
     <button id="load-all-btn" class="mono uppercase hidden">Load More</button>
 
-<script>
-    let fullHistory = [];
+let fullHistory = [];
     let displayedHistory = [];
     let databaseData = {};
     let currentIndex = 0;
     let currentTab = 'feed';
+    let statsRecentLimit = 5; // Global state for stats pagination
     const PAGE_SIZE = 50;
     const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
@@ -118,93 +118,53 @@
         return typeof data === 'string' ? data : (data.name || "Unknown Device");
     }
 
-   // Enhanced metadata detection for 5128 and category standards
-function getEntryMetadata(entry) {
-    const link = (entry.link || "").toLowerCase();
-    // Identifies 5128 based on specific known high-end measurement domains or path markers
-    const is5128 = link.includes('5128') || 
-                   link.includes('hangout.audio') || 
-                   link.includes('listener800.github.io') ||
-                   entry.reviewer.toLowerCase().includes('5128');
+    function getEntryMetadata(entry) {
+        const link = (entry.link || "").toLowerCase();
+        const is5128 = link.includes('5128') || link.includes('hangout.audio') || 
+                       link.includes('listener800.github.io') || entry.reviewer.toLowerCase().includes('5128');
 
-    if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
-    
-    if (link.includes('type=headphone') || link.includes('/headphones/')) {
-        return is5128 ? "Over-Ear (5128)" : "Over-Ear (Legacy/Other)";
-    }
-    
-    return is5128 ? "IEM (5128)" : "IEM (711)";
-}
-
-// Global state for stats pagination
-let statsRecentLimit = 5; 
-
-function loadMore() {
-    if (currentTab === 'stats') {
-        // Increases the 'Recent' list size in the Statistics tab
-        statsRecentLimit += 10;
-        renderStats();
-        // Hide button if we've shown everything in the most populated category
-        if (statsRecentLimit >= fullHistory.length) {
-            document.getElementById('load-all-btn').classList.add('hidden');
+        if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
+        if (link.includes('type=headphone') || link.includes('/headphones/')) {
+            return is5128 ? "Over-Ear (5128)" : "Over-Ear (Legacy/Other)";
         }
-    } else {
-        // Standard feed pagination
-        const nextBatch = fullHistory.slice(currentIndex, currentIndex + PAGE_SIZE);
-        displayedHistory = [...displayedHistory, ...nextBatch];
-        currentIndex += PAGE_SIZE;
-        renderItems(displayedHistory, 'feed');
-        if (currentIndex >= fullHistory.length) {
-            document.getElementById('load-all-btn').classList.add('hidden');
+        return is5128 ? "IEM (5128)" : "IEM (711)";
+    }
+
+    async function fetchData() {
+        try {
+            const [hReq, dReq] = await Promise.all([fetch('history.json'), fetch('database.json')]);
+            if (!hReq.ok || !dReq.ok) throw new Error("JSON files missing.");
+            fullHistory = await hReq.json();
+            databaseData = await dReq.json();
+            fullHistory.sort((a,b) => (toLocalTime(b.date) - toLocalTime(a.date)));
+            updateDashboard();
+            loadMore();
+        } catch (e) { 
+            console.error("Sync Error", e);
         }
     }
-}
 
-function switchTab(tab) {
-    currentTab = tab;
-    ['feed', 'advanced', 'stats'].forEach(t => {
-        document.getElementById(t).classList.toggle('hidden', t !== tab);
-        document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
-    });
-
-    if (tab === 'stats') {
-        renderStats();
-        // Ensure "Load More" is visible if there are more than current limit
-        document.getElementById('load-all-btn').classList.remove('hidden');
-    } else if (tab === 'feed') {
-        document.getElementById('load-all-btn').classList.toggle('hidden', currentIndex >= fullHistory.length);
-    } else {
-        document.getElementById('load-all-btn').classList.add('hidden');
+    function updateDashboard() {
+        const now = new Date().getTime();
+        const last12h = fullHistory.filter(e => (now - toLocalTime(e.date).getTime() < 12*60*60*1000)).length;
+        document.getElementById('stat-total').innerText = last12h;
+        document.getElementById('stat-db-total').innerText = fullHistory.length.toLocaleString();
+        document.getElementById('stat-sources').innerText = Math.max(0, Object.keys(databaseData).length - 1);
     }
-}
 
-// Update renderStats to use the dynamic statsRecentLimit
-function renderStats() {
-    const statsContainer = document.getElementById('stats');
-    const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (Legacy/Other)": 0, "TWS & Earbuds": 0 };
-    const recentLists = { "IEM": [], "Over-Ear": [], "TWS": [] };
+    function renderStats() {
+        const statsContainer = document.getElementById('stats');
+        const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (Legacy/Other)": 0, "TWS & Earbuds": 0 };
+        const recentLists = { "IEM": [], "Over-Ear": [], "TWS": [] };
 
-    fullHistory.forEach(entry => {
-        const cat = getEntryMetadata(entry);
-        if (counts[cat] !== undefined) counts[cat]++;
-        
-        // Use the dynamic limit for the mini-lists
-        if (cat.includes("IEM") && recentLists["IEM"].length < statsRecentLimit) recentLists["IEM"].push(entry);
-        if (cat.includes("Over-Ear") && recentLists["Over-Ear"].length < statsRecentLimit) recentLists["Over-Ear"].push(entry);
-        if (cat.includes("TWS") && recentLists["TWS"].length < statsRecentLimit) recentLists["TWS"].push(entry);
-    });
-
-    // ... (rest of your existing renderStats innerHTML logic)
-}
         fullHistory.forEach(entry => {
             const cat = getEntryMetadata(entry);
             if (counts[cat] !== undefined) counts[cat]++;
-            if (cat.includes("IEM") && recentLists["IEM"].length < 5) recentLists["IEM"].push(entry);
-            if (cat.includes("Over-Ear") && recentLists["Over-Ear"].length < 5) recentLists["Over-Ear"].push(entry);
-            if (cat.includes("TWS") && recentLists["TWS"].length < 5) recentLists["TWS"].push(entry);
+            if (cat.includes("IEM") && recentLists["IEM"].length < statsRecentLimit) recentLists["IEM"].push(entry);
+            if (cat.includes("Over-Ear") && recentLists["Over-Ear"].length < statsRecentLimit) recentLists["Over-Ear"].push(entry);
+            if (cat.includes("TWS") && recentLists["TWS"].length < statsRecentLimit) recentLists["TWS"].push(entry);
         });
 
-        // SAFETY: Avoid division by zero to prevent NaN errors
         const totalIEM = (counts["IEM (711)"] + counts["IEM (5128)"]) || 1;
         const totalOE = (counts["Over-Ear (5128)"] + counts["Over-Ear (Legacy/Other)"]) || 1;
 
@@ -270,31 +230,39 @@ function renderStats() {
             document.getElementById(t).classList.toggle('hidden', t !== tab);
             document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
         });
-        if (tab === 'stats') renderStats();
-        document.getElementById('load-all-btn').classList.toggle('hidden', tab !== 'feed' || currentIndex >= fullHistory.length);
+        if (tab === 'stats') {
+            renderStats();
+            document.getElementById('load-all-btn').classList.remove('hidden');
+        } else if (tab === 'feed') {
+            document.getElementById('load-all-btn').classList.toggle('hidden', currentIndex >= fullHistory.length);
+        } else {
+            document.getElementById('load-all-btn').classList.add('hidden');
+        }
     }
 
     function loadMore() {
-        const nextBatch = fullHistory.slice(currentIndex, currentIndex + PAGE_SIZE);
-        displayedHistory = [...displayedHistory, ...nextBatch];
-        currentIndex += PAGE_SIZE;
-        renderItems(displayedHistory, 'feed');
-        if (currentIndex >= fullHistory.length) document.getElementById('load-all-btn').classList.add('hidden');
+        if (currentTab === 'stats') {
+            statsRecentLimit += 10;
+            renderStats();
+            if (statsRecentLimit >= fullHistory.length) document.getElementById('load-all-btn').classList.add('hidden');
+        } else {
+            const nextBatch = fullHistory.slice(currentIndex, currentIndex + PAGE_SIZE);
+            displayedHistory = [...displayedHistory, ...nextBatch];
+            currentIndex += PAGE_SIZE;
+            renderItems(displayedHistory, 'feed');
+            if (currentIndex >= fullHistory.length) document.getElementById('load-all-btn').classList.add('hidden');
+        }
     }
 
     document.getElementById('load-all-btn').addEventListener('click', loadMore);
     document.getElementById('search').addEventListener('input', (e) => {
         const val = e.target.value.toLowerCase();
-        if (!val) {
-            renderItems(displayedHistory, 'feed');
-            return;
-        }
         const filtered = fullHistory.filter(h => resolveName(h.item).toLowerCase().includes(val) || h.reviewer.toLowerCase().includes(val));
         renderItems(filtered, currentTab === 'stats' ? 'feed' : currentTab);
     });
 
     fetchData();
-</script>
 </body>
 </html>
+
 
