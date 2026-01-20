@@ -117,6 +117,7 @@
     function getEntryMetadata(entry) {
         const link = (entry.link || "").toLowerCase();
         const reviewer = (entry.reviewer || "").toLowerCase();
+        const item = resolveName(entry.item).toLowerCase();
         
         // 1. Explicit Path Markers
         const isExplicit711 = link.includes('/711') || link.includes('type=711');
@@ -130,7 +131,23 @@
                        link.includes('listener800.github.io') || 
                        reviewer.includes('5128'));
 
-        // 3. Classification
+        // 3. Listener 5128 Custom Multi-Factor Filter
+        if (link.includes('listener800.github.io')) {
+            // Common Over-Ear Brands in Listener's DB
+            const oeBrands = ['sennheiser', 'hifiman', 'audeze', 'focal', 'beyerdynamic', 'zmf', 'audio-technica', 'akg', 'meze', 'dan clark', 'dca', 'stax', 'koss', 'abyss', 'denon', 'fostex'];
+            // Common Attributes
+            const oeAttributes = ['+oe', '(oe)', 'over-ear', 'headphone', '(hp)', 'open-back', 'closed-back'];
+            
+            const isKnownOEBrand = oeBrands.some(brand => item.includes(brand));
+            const hasOEAttribute = oeAttributes.some(attr => item.includes(attr));
+
+            if (isExplicitHP || isKnownOEBrand || hasOEAttribute) {
+                return "Over-Ear (5128)";
+            }
+            return "IEM (5128)";
+        }
+
+        // 4. Classification
         
         // Crinacle or Explicit IEM paths on a 5128 rig take top priority
         if (is5128) {
@@ -141,7 +158,7 @@
         // TWS
         if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
 
-        // Headphone Logic (Only if not already caught by IEM logic)
+        // Headphone Logic (Only if not already caught by IEM/Listener logic)
         if (isExplicitHP) {
             return is5128 ? "Over-Ear (5128)" : "Over-Ear (Legacy/Other)";
         }
