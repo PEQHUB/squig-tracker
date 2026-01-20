@@ -14,12 +14,11 @@
         .item-row { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
         .item-row:hover { background: #080808; }
         
-        /* Time Divider Styling */
         .time-divider {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 2rem 0 1rem 0;
+            padding: 2.5rem 0 1rem 0;
             color: #3f3f46;
             font-size: 10px;
             font-family: 'JetBrains Mono', monospace;
@@ -33,6 +32,22 @@
             background: linear-gradient(90deg, #222222 0%, transparent 100%);
         }
 
+        #load-all-btn {
+            margin: 4rem auto;
+            display: block;
+            border: 1px solid #27272a;
+            padding: 0.75rem 2rem;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: #71717a;
+            transition: all 0.2s;
+        }
+        #load-all-btn:hover {
+            border-color: #52525b;
+            color: #ffffff;
+            background: #0a0a0a;
+        }
+
         input::placeholder { color: #3f3f46; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
@@ -42,12 +57,12 @@
     <header class="mb-12">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
             <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Total Measurements</span>
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">New Hits</span>
                 <span id="stat-total" class="text-xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Unique Models</span>
-                <span id="stat-unique" class="text-xl font-medium mono text-white">0</span>
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Total DB</span>
+                <span id="stat-db-total" class="text-xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
                 <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Reviewers</span>
@@ -59,28 +74,28 @@
             </div>
         </div>
 
-        <input type="text" id="search" placeholder="Search..." 
+        <input type="text" id="search" placeholder="Search Filter..." 
             class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
     </header>
 
     <main id="feed" class="flex flex-col"></main>
+    
+    <button id="load-all-btn" class="mono uppercase hidden">Load Entire History</button>
 
     <script>
-        let historyData = [];
+        let fullHistory = [];
+        let filteredHistory = [];
         let databaseData = {};
+        
+        // --- CONFIGURATION ---
+        // Items before this date are hidden by default
+        const CUTOFF_DATE = new Date("2026-01-20T00:00:00Z"); 
 
         function toLocalTime(dateStr) {
             try {
                 const year = new Date().getFullYear();
-                const utcDate = new Date(`${dateStr}, ${year} UTC`);
-                return utcDate.toLocaleTimeString([], { 
-                    month: 'short', 
-                    day: 'numeric', 
-                    hour: '2-digit', 
-                    minute: '2-digit', 
-                    hour12: false 
-                });
-            } catch (e) { return dateStr; }
+                return new Date(`${dateStr}, ${year} UTC`);
+            } catch (e) { return null; }
         }
 
         function resolveName(data) {
@@ -88,7 +103,6 @@
             if (typeof data === 'string') return data;
             if (typeof data === 'object') {
                 if (data.name && typeof data.name === 'string') return data.name;
-                if (Array.isArray(data)) return resolveName(data[0]);
                 return Object.values(data)[0] || "Unknown";
             }
             return "Unknown";
@@ -101,31 +115,34 @@
                     fetch(`./history.json?t=${t}`),
                     fetch(`./database.json?t=${t}`)
                 ]);
-                historyData = await hReq.json();
+                
+                fullHistory = await hReq.json();
                 databaseData = await dReq.json();
+
+                // Initial Filter
+                filteredHistory = fullHistory.filter(entry => {
+                    const d = toLocalTime(entry.date);
+                    return d && d >= CUTOFF_DATE;
+                });
+
+                if (fullHistory.length > filteredHistory.length) {
+                    document.getElementById('load-all-btn').classList.remove('hidden');
+                }
+
                 updateDashboard();
-                renderItems(historyData);
+                renderItems(filteredHistory);
             } catch (err) {
                 document.getElementById('feed').innerHTML = `<div class="py-10 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Connection Lost</div>`;
             }
         }
 
         function updateDashboard() {
-            let totalCount = 0;
-            const uniqueSet = new Set();
             const reviewers = Object.keys(databaseData).filter(k => k !== 'last_sync');
-
-            Object.values(databaseData).forEach(list => {
-                if (Array.isArray(list)) {
-                    list.forEach(item => {
-                        totalCount++;
-                        uniqueSet.add(resolveName(item).toLowerCase().trim());
-                    });
-                }
-            });
-
-            document.getElementById('stat-total').innerText = totalCount.toLocaleString();
-            document.getElementById('stat-unique').innerText = uniqueSet.size.toLocaleString();
+            
+            // "New Hits" counts items post-cutoff
+            document.getElementById('stat-total').innerText = filteredHistory.length;
+            // "Total DB" counts everything in history.json
+            document.getElementById('stat-db-total').innerText = fullHistory.length.toLocaleString();
             document.getElementById('stat-sources').innerText = reviewers.length;
             document.getElementById('stat-time').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
         }
@@ -133,7 +150,7 @@
         function renderItems(data) {
             const container = document.getElementById('feed');
             if (!data || data.length === 0) {
-                container.innerHTML = `<div class="py-10 text-zinc-600 mono text-xs uppercase tracking-widest text-center">No results</div>`;
+                container.innerHTML = `<div class="py-20 text-zinc-600 mono text-xs uppercase tracking-widest text-center">Monitoring for new measurements...</div>`;
                 return;
             }
 
@@ -142,10 +159,9 @@
 
             data.forEach(entry => {
                 const model = resolveName(entry.item);
-                const localDate = toLocalTime(entry.date);
-                
-                // Extract "Oct 24, 14" from "Oct 24, 14:30" to group by hour
-                const currentHourLabel = localDate.split(':')[0];
+                const dateObj = toLocalTime(entry.date);
+                const localStr = dateObj.toLocaleTimeString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+                const currentHourLabel = localStr.split(':')[0];
 
                 if (currentHourLabel !== lastHourLabel) {
                     htmlContent += `<div class="time-divider">${currentHourLabel}:00 Block</div>`;
@@ -157,7 +173,7 @@
                     <div class="min-w-0 pr-4">
                         <div class="flex items-center gap-3 mb-1.5">
                             <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
-                            <span class="text-[10px] text-zinc-500 font-medium mono uppercase">${localDate}</span>
+                            <span class="text-[10px] text-zinc-500 font-medium mono uppercase">${localStr}</span>
                         </div>
                         <h2 class="text-[17px] font-normal text-zinc-200 truncate">${model}</h2>
                     </div>
@@ -167,13 +183,22 @@
                 </div>
                 `;
             });
-
             container.innerHTML = htmlContent;
         }
 
+        // --- EVENTS ---
+        document.getElementById('load-all-btn').addEventListener('click', () => {
+            renderItems(fullHistory);
+            document.getElementById('load-all-btn').classList.add('hidden');
+            // Update "New Hits" to match full history so stats don't look broken
+            document.getElementById('stat-total').innerText = fullHistory.length.toLocaleString();
+        });
+
         document.getElementById('search').addEventListener('input', (e) => {
             const val = e.target.value.toLowerCase();
-            const filtered = historyData.filter(h => 
+            // Search will look through whatever is currently rendered
+            const source = (fullHistory.length === filteredHistory.length) ? fullHistory : filteredHistory;
+            const filtered = source.filter(h => 
                 resolveName(h.item).toLowerCase().includes(val) || 
                 h.reviewer.toLowerCase().includes(val)
             );
