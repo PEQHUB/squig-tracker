@@ -32,10 +32,14 @@ def fetch_data(url):
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
         response = requests.get(url, headers=headers, timeout=10)
+
+        if response.status_code != 200:
+            print(f"Status {response.status_code} for {url}")
+            
         if response.status_code == 200:
             return response.json()
-    except:
-        pass
+    except Exception as e:
+        print(f"Error fetching {url}: {e}")
     return None
 
 def process_item(link_domain, name, share_id, database, sub_key, new_finds):
@@ -120,3 +124,4 @@ def run_check():
 
 if __name__ == "__main__":
     run_check()
+
