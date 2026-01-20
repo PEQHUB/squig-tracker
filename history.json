@@ -1,1 +1,1202 @@
-[]
+[
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': '64 Audio', 'phones': [{'name': 'Tia Fourte', 'file': '64 Audio Tia Fourte'}, {'name': 'Tia Trio', 'file': '64 Audio Tia Trio'}, {'name': 'VOLUR', 'file': '64 Volur'}, {'name': 'SOLO', 'file': '64 Solo'}, {'name': 'DUO', 'file': '64 Audio Duo'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%2764%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Tia%20Fourte%27%2C%20%27file%27%3A%20%2764%20Audio%20Tia%20Fourte%27%7D%2C%20%7B%27name%27%3A%20%27Tia%20Trio%27%2C%20%27file%27%3A%20%2764%20Audio%20Tia%20Trio%27%7D%2C%20%7B%27name%27%3A%20%27VOLUR%27%2C%20%27file%27%3A%20%2764%20Volur%27%7D%2C%20%7B%27name%27%3A%20%27SOLO%27%2C%20%27file%27%3A%20%2764%20Solo%27%7D%2C%20%7B%27name%27%3A%20%27DUO%27%2C%20%27file%27%3A%20%2764%20Audio%20Duo%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': '7th Acoustic', 'phones': [{'name': 'Supernova', 'file': '7th Acoustic Supernova'}, {'name': 'ASTERIA', 'file': '7 Asteria'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%277th%20Acoustic%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Supernova%27%2C%20%27file%27%3A%20%277th%20Acoustic%20Supernova%27%7D%2C%20%7B%27name%27%3A%20%27ASTERIA%27%2C%20%27file%27%3A%20%277%20Asteria%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': '7Hz', 'phones': [{'name': 'i99', 'file': '7Hz i77'}, {'name': 'i882', 'file': '7Hz i88 2'}, {'name': 'DIABLO', 'file': '7hz Dia'}, {'name': 'DIVINE', 'file': '7hz Div'}, {'name': 'i88 mini', 'file': '7Hz i88 Mini'}, {'name': 'Timeless', 'file': '7Hz Planar'}, {'name': 'Timeless AE', 'file': '7Hz Timeless AE'}, {'name': 'X Crinacle Dioko', 'file': '7Hz Dioko'}, {'name': 'ZERO', 'file': '7hz Zero'}, {'name': 'G1', 'file': '7 G1'}, {'name': 'Timeless (no filter)', 'file': '7Hz Timeless (no filter)'}, {'name': 'Timeless II', 'file': '7 Time2'}, {'name': 'Timeless II Silver filter', 'file': '7 Time 2 Sil'}, {'name': 'LEGATO', 'file': '7Hz Legato'}, {'name': 'SONUS', 'file': '7hz Sonus'}, {'name': 'ZERO 2', 'file': '7hz 2'}, {'name': 'Eternal', 'file': '7Hz Eternal'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%277Hz%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27i99%27%2C%20%27file%27%3A%20%277Hz%20i77%27%7D%2C%20%7B%27name%27%3A%20%27i882%27%2C%20%27file%27%3A%20%277Hz%20i88%202%27%7D%2C%20%7B%27name%27%3A%20%27DIABLO%27%2C%20%27file%27%3A%20%277hz%20Dia%27%7D%2C%20%7B%27name%27%3A%20%27DIVINE%27%2C%20%27file%27%3A%20%277hz%20Div%27%7D%2C%20%7B%27name%27%3A%20%27i88%20mini%27%2C%20%27file%27%3A%20%277Hz%20i88%20Mini%27%7D%2C%20%7B%27name%27%3A%20%27Timeless%27%2C%20%27file%27%3A%20%277Hz%20Planar%27%7D%2C%20%7B%27name%27%3A%20%27Timeless%20AE%27%2C%20%27file%27%3A%20%277Hz%20Timeless%20AE%27%7D%2C%20%7B%27name%27%3A%20%27X%20Crinacle%20Dioko%27%2C%20%27file%27%3A%20%277Hz%20Dioko%27%7D%2C%20%7B%27name%27%3A%20%27ZERO%27%2C%20%27file%27%3A%20%277hz%20Zero%27%7D%2C%20%7B%27name%27%3A%20%27G1%27%2C%20%27file%27%3A%20%277%20G1%27%7D%2C%20%7B%27name%27%3A%20%27Timeless%20%28no%20filter%29%27%2C%20%27file%27%3A%20%277Hz%20Timeless%20%28no%20filter%29%27%7D%2C%20%7B%27name%27%3A%20%27Timeless%20II%27%2C%20%27file%27%3A%20%277%20Time2%27%7D%2C%20%7B%27name%27%3A%20%27Timeless%20II%20Silver%20filter%27%2C%20%27file%27%3A%20%277%20Time%202%20Sil%27%7D%2C%20%7B%27name%27%3A%20%27LEGATO%27%2C%20%27file%27%3A%20%277Hz%20Legato%27%7D%2C%20%7B%27name%27%3A%20%27SONUS%27%2C%20%27file%27%3A%20%277hz%20Sonus%27%7D%2C%20%7B%27name%27%3A%20%27ZERO%202%27%2C%20%27file%27%3A%20%277hz%202%27%7D%2C%20%7B%27name%27%3A%20%27Eternal%27%2C%20%27file%27%3A%20%277Hz%20Eternal%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'AAW', 'phones': [{'name': 'Mockingbird', 'file': 'AAW Mockingbird'}, {'name': 'Halycon', 'file': 'AAW Halycon'}, {'name': 'Halycon Bass', 'file': 'Halycon Bass'}, {'name': 'Halycon Vocal', 'file': 'Halycon Vocal'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27AAW%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Mockingbird%27%2C%20%27file%27%3A%20%27AAW%20Mockingbird%27%7D%2C%20%7B%27name%27%3A%20%27Halycon%27%2C%20%27file%27%3A%20%27AAW%20Halycon%27%7D%2C%20%7B%27name%27%3A%20%27Halycon%20Bass%27%2C%20%27file%27%3A%20%27Halycon%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27Halycon%20Vocal%27%2C%20%27file%27%3A%20%27Halycon%20Vocal%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Acoustune', 'phones': [{'name': 'RS ONE', 'file': 'Acoustune RS ONE'}, {'name': 'RS ONE (Foam mod)', 'file': 'Acoustine RS ONE (Foam)'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Acoustune%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27RS%20ONE%27%2C%20%27file%27%3A%20%27Acoustune%20RS%20ONE%27%7D%2C%20%7B%27name%27%3A%20%27RS%20ONE%20%28Foam%20mod%29%27%2C%20%27file%27%3A%20%27Acoustine%20RS%20ONE%20%28Foam%29%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'AFUL', 'phones': [{'name': 'Performer 5', 'file': 'Aful New'}, {'name': 'Band Pro 5', 'file': 'Aful Band 5'}, {'name': '5+2', 'file': 'Aful 52'}, {'name': 'Band Pro 8', 'file': 'Aful Band 8'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27AFUL%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Performer%205%27%2C%20%27file%27%3A%20%27Aful%20New%27%7D%2C%20%7B%27name%27%3A%20%27Band%20Pro%205%27%2C%20%27file%27%3A%20%27Aful%20Band%205%27%7D%2C%20%7B%27name%27%3A%20%275%2B2%27%2C%20%27file%27%3A%20%27Aful%2052%27%7D%2C%20%7B%27name%27%3A%20%27Band%20Pro%208%27%2C%20%27file%27%3A%20%27Aful%20Band%208%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'AKG', 'phones': [{'name': '371', 'file': 'AKG 371'}, {'name': 'S8 EO', 'file': 'AKG EO'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27AKG%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27371%27%2C%20%27file%27%3A%20%27AKG%20371%27%7D%2C%20%7B%27name%27%3A%20%27S8%20EO%27%2C%20%27file%27%3A%20%27AKG%20EO%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'ALPHA OMEGA', 'phones': [{'name': 'OMEGA UUU', 'file': 'Ao Uuu'}, {'name': 'OMEGA UUD', 'file': 'Ao Uud'}, {'name': 'OMEGA DUU', 'file': 'Ao Duu'}, {'name': 'RA', 'file': 'Alpha Omega Ra'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27ALPHA%20OMEGA%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27OMEGA%20UUU%27%2C%20%27file%27%3A%20%27Ao%20Uuu%27%7D%2C%20%7B%27name%27%3A%20%27OMEGA%20UUD%27%2C%20%27file%27%3A%20%27Ao%20Uud%27%7D%2C%20%7B%27name%27%3A%20%27OMEGA%20DUU%27%2C%20%27file%27%3A%20%27Ao%20Duu%27%7D%2C%20%7B%27name%27%3A%20%27RA%27%2C%20%27file%27%3A%20%27Alpha%20Omega%20Ra%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'APEVOIX', 'phones': [{'name': 'GRIT', 'file': 'Apevoix Grit'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27APEVOIX%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27GRIT%27%2C%20%27file%27%3A%20%27Apevoix%20Grit%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'AROMA AUDIO', 'phones': [{'name': 'JEWEL', 'file': 'Aroma Jewel'}, {'name': 'FEI WAN', 'file': 'Aroma FeiWan'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27AROMA%20AUDIO%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27JEWEL%27%2C%20%27file%27%3A%20%27Aroma%20Jewel%27%7D%2C%20%7B%27name%27%3A%20%27FEI%20WAN%27%2C%20%27file%27%3A%20%27Aroma%20FeiWan%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'APPLE', 'phones': [{'name': 'Airpods PRO 2', 'file': 'Apple Airpods Pro 2'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27APPLE%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Airpods%20PRO%202%27%2C%20%27file%27%3A%20%27Apple%20Airpods%20Pro%202%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Audio', 'phones': [{'name': 'LOKAHI', 'file': 'Lokahi'}, {'name': 'Hekili', 'file': 'Audio Lokahi 8+1'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27LOKAHI%27%2C%20%27file%27%3A%20%27Lokahi%27%7D%2C%20%7B%27name%27%3A%20%27Hekili%27%2C%20%27file%27%3A%20%27Audio%20Lokahi%208%2B1%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Aur Audio', 'phones': [{'name': 'Neon PRO', 'file': 'Aur Audio Neon Pro'}, {'name': 'Neon PRO Bass switch', 'file': 'Aur Audio Neon Pro Bass on'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Aur%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Neon%20PRO%27%2C%20%27file%27%3A%20%27Aur%20Audio%20Neon%20Pro%27%7D%2C%20%7B%27name%27%3A%20%27Neon%20PRO%20Bass%20switch%27%2C%20%27file%27%3A%20%27Aur%20Audio%20Neon%20Pro%20Bass%20on%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Aurisonics', 'phones': [{'name': 'ASG 2.5', 'file': 'ASG 25'}, {'name': 'ASG 2.0', 'file': 'Aurisonics ASG 2'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Aurisonics%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27ASG%202.5%27%2C%20%27file%27%3A%20%27ASG%2025%27%7D%2C%20%7B%27name%27%3A%20%27ASG%202.0%27%2C%20%27file%27%3A%20%27Aurisonics%20ASG%202%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Astell & Kern', 'phones': [{'name': 'Solaris X', 'file': 'Astell & Kern Solaris X'}, {'name': 'AURA', 'file': 'Ve T'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Astell%20%26%20Kern%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Solaris%20X%27%2C%20%27file%27%3A%20%27Astell%20%26%20Kern%20Solaris%20X%27%7D%2C%20%7B%27name%27%3A%20%27AURA%27%2C%20%27file%27%3A%20%27Ve%20T%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Aune', 'phones': [{'name': 'Jasper', 'file': 'Aune Jasper'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Aune%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Jasper%27%2C%20%27file%27%3A%20%27Aune%20Jasper%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Beats', 'phones': [{'name': 'Power Beats PRO', 'file': 'Beats Powerbeats Pro'}, {'name': 'Beats Fit Pro', 'file': 'Beats Fit Pro'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Beats%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Power%20Beats%20PRO%27%2C%20%27file%27%3A%20%27Beats%20Powerbeats%20Pro%27%7D%2C%20%7B%27name%27%3A%20%27Beats%20Fit%20Pro%27%2C%20%27file%27%3A%20%27Beats%20Fit%20Pro%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Binary Acoustic', 'phones': [{'name': 'X Gizaudio CHOPIN', 'file': 'Giz Chopin'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Binary%20Acoustic%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27X%20Gizaudio%20CHOPIN%27%2C%20%27file%27%3A%20%27Giz%20Chopin%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'BLON', 'phones': [{'name': '01', 'file': 'BLON 01'}, {'name': ' 03', 'file': 'BLON 03'}, {'name': '03 II', 'file': 'Blon 2'}, {'name': '05', 'file': 'BLON 05'}, {'name': 'mini', 'file': 'BLON mini'}, {'name': 'A8', 'file': 'BLON A8'}, {'name': 'Sa', 'file': 'Blon Xa'}, {'name': 'Sb', 'file': 'Blon Xb'}, {'name': 'BL-MAX', 'file': 'BLON bb'}, {'name': 'A7a', 'file': 'BLON 07A'}, {'name': 'B60', 'file': 'BLON B60'}, {'name': 'B50', 'file': 'Blon BL50'}, {'name': 'B60 Taped', 'file': 'BLON B60 Tape'}, {'name': 'A7a1', 'file': 'Blon A72'}, {'name': 'A7b1', 'file': 'Blon B72'}, {'name': 'Fat Girl', 'file': 'BLON Fat Girl'}, {'name': 'X ZEOS jojo', 'file': 'Blon jojo'}, {'name': ' X HBB Z300 ', 'file': 'Sample BL'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27BLON%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%2701%27%2C%20%27file%27%3A%20%27BLON%2001%27%7D%2C%20%7B%27name%27%3A%20%27%2003%27%2C%20%27file%27%3A%20%27BLON%2003%27%7D%2C%20%7B%27name%27%3A%20%2703%20II%27%2C%20%27file%27%3A%20%27Blon%202%27%7D%2C%20%7B%27name%27%3A%20%2705%27%2C%20%27file%27%3A%20%27BLON%2005%27%7D%2C%20%7B%27name%27%3A%20%27mini%27%2C%20%27file%27%3A%20%27BLON%20mini%27%7D%2C%20%7B%27name%27%3A%20%27A8%27%2C%20%27file%27%3A%20%27BLON%20A8%27%7D%2C%20%7B%27name%27%3A%20%27Sa%27%2C%20%27file%27%3A%20%27Blon%20Xa%27%7D%2C%20%7B%27name%27%3A%20%27Sb%27%2C%20%27file%27%3A%20%27Blon%20Xb%27%7D%2C%20%7B%27name%27%3A%20%27BL-MAX%27%2C%20%27file%27%3A%20%27BLON%20bb%27%7D%2C%20%7B%27name%27%3A%20%27A7a%27%2C%20%27file%27%3A%20%27BLON%2007A%27%7D%2C%20%7B%27name%27%3A%20%27B60%27%2C%20%27file%27%3A%20%27BLON%20B60%27%7D%2C%20%7B%27name%27%3A%20%27B50%27%2C%20%27file%27%3A%20%27Blon%20BL50%27%7D%2C%20%7B%27name%27%3A%20%27B60%20Taped%27%2C%20%27file%27%3A%20%27BLON%20B60%20Tape%27%7D%2C%20%7B%27name%27%3A%20%27A7a1%27%2C%20%27file%27%3A%20%27Blon%20A72%27%7D%2C%20%7B%27name%27%3A%20%27A7b1%27%2C%20%27file%27%3A%20%27Blon%20B72%27%7D%2C%20%7B%27name%27%3A%20%27Fat%20Girl%27%2C%20%27file%27%3A%20%27BLON%20Fat%20Girl%27%7D%2C%20%7B%27name%27%3A%20%27X%20ZEOS%20jojo%27%2C%20%27file%27%3A%20%27Blon%20jojo%27%7D%2C%20%7B%27name%27%3A%20%27%20X%20HBB%20Z300%20%27%2C%20%27file%27%3A%20%27Sample%20BL%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'BGVP', 'phones': [{'name': 'DM7', 'file': 'BGVP DM7'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27BGVP%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27DM7%27%2C%20%27file%27%3A%20%27BGVP%20DM7%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'BQEYZ', 'phones': [{'name': 'Summer', 'file': 'BQEYZ Summer'}, {'name': 'Autumn', 'file': 'BQEYZ Autumn'}, {'name': 'Autumn Bass', 'file': 'BQEYZ Autumn Bass'}, {'name': 'Autumn Treble', 'file': 'BQEYZ Autumn Treble'}, {'name': 'Winter', 'file': 'Bqeyz Winter'}, {'name': 'Topaz', 'file': 'BQEYZ Topaz'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27BQEYZ%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Summer%27%2C%20%27file%27%3A%20%27BQEYZ%20Summer%27%7D%2C%20%7B%27name%27%3A%20%27Autumn%27%2C%20%27file%27%3A%20%27BQEYZ%20Autumn%27%7D%2C%20%7B%27name%27%3A%20%27Autumn%20Bass%27%2C%20%27file%27%3A%20%27BQEYZ%20Autumn%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27Autumn%20Treble%27%2C%20%27file%27%3A%20%27BQEYZ%20Autumn%20Treble%27%7D%2C%20%7B%27name%27%3A%20%27Winter%27%2C%20%27file%27%3A%20%27Bqeyz%20Winter%27%7D%2C%20%7B%27name%27%3A%20%27Topaz%27%2C%20%27file%27%3A%20%27BQEYZ%20Topaz%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Cat Ears', 'phones': [{'name': 'Mia', 'file': 'Cat Ears Mia'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Cat%20Ears%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Mia%27%2C%20%27file%27%3A%20%27Cat%20Ears%20Mia%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'CANPUR', 'phones': [{'name': 'CP622b', 'file': 'Canpur Cp622b'}, {'name': 'CP622b Ti', 'file': 'Canpur Cp622b Ti'}, {'name': 'CP752b', 'file': 'Cany'}, {'name': 'Silver Flash', 'file': 'Canpur Silver Flash'}, {'name': 'Deep Blue RE', 'file': 'Canpur Deep Blue RE'}, {'name': 'CP74E', 'file': 'Cp 74'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27CANPUR%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27CP622b%27%2C%20%27file%27%3A%20%27Canpur%20Cp622b%27%7D%2C%20%7B%27name%27%3A%20%27CP622b%20Ti%27%2C%20%27file%27%3A%20%27Canpur%20Cp622b%20Ti%27%7D%2C%20%7B%27name%27%3A%20%27CP752b%27%2C%20%27file%27%3A%20%27Cany%27%7D%2C%20%7B%27name%27%3A%20%27Silver%20Flash%27%2C%20%27file%27%3A%20%27Canpur%20Silver%20Flash%27%7D%2C%20%7B%27name%27%3A%20%27Deep%20Blue%20RE%27%2C%20%27file%27%3A%20%27Canpur%20Deep%20Blue%20RE%27%7D%2C%20%7B%27name%27%3A%20%27CP74E%27%2C%20%27file%27%3A%20%27Cp%2074%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'CCA', 'phones': [{'name': 'CA16', 'file': 'CCA CA16'}, {'name': 'C10', 'file': 'CCA C10'}, {'name': 'NRA', 'file': 'CCA NRA'}, {'name': 'PHOENIX', 'file': 'Cca Phoenix'}, {'name': 'HM20', 'file': 'CCA HM20'}, {'name': 'CA24', 'file': 'CCA CA24'}, {'name': 'CRA', 'file': 'CCA CRA'}, {'name': 'CRA +', 'file': 'CCA CRA +'}, {'name': 'PLA', 'file': 'CCA PLA'}, {'name': 'PLA Silicon', 'file': 'CCA PLA S'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27CCA%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27CA16%27%2C%20%27file%27%3A%20%27CCA%20CA16%27%7D%2C%20%7B%27name%27%3A%20%27C10%27%2C%20%27file%27%3A%20%27CCA%20C10%27%7D%2C%20%7B%27name%27%3A%20%27NRA%27%2C%20%27file%27%3A%20%27CCA%20NRA%27%7D%2C%20%7B%27name%27%3A%20%27PHOENIX%27%2C%20%27file%27%3A%20%27Cca%20Phoenix%27%7D%2C%20%7B%27name%27%3A%20%27HM20%27%2C%20%27file%27%3A%20%27CCA%20HM20%27%7D%2C%20%7B%27name%27%3A%20%27CA24%27%2C%20%27file%27%3A%20%27CCA%20CA24%27%7D%2C%20%7B%27name%27%3A%20%27CRA%27%2C%20%27file%27%3A%20%27CCA%20CRA%27%7D%2C%20%7B%27name%27%3A%20%27CRA%20%2B%27%2C%20%27file%27%3A%20%27CCA%20CRA%20%2B%27%7D%2C%20%7B%27name%27%3A%20%27PLA%27%2C%20%27file%27%3A%20%27CCA%20PLA%27%7D%2C%20%7B%27name%27%3A%20%27PLA%20Silicon%27%2C%20%27file%27%3A%20%27CCA%20PLA%20S%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Celest', 'phones': [{'name': 'Yaksha', 'file': 'Yaky'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Celest%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Yaksha%27%2C%20%27file%27%3A%20%27Yaky%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'COZOY', 'phones': [{'name': 'D1', 'file': 'Cozoy D1'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27COZOY%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27D1%27%2C%20%27file%27%3A%20%27Cozoy%20D1%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'CrinEar', 'phones': [{'name': 'META', 'file': 'Crin Meta'}, {'name': 'DayBreak', 'file': 'Crinear Daybreak'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27CrinEar%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27META%27%2C%20%27file%27%3A%20%27Crin%20Meta%27%7D%2C%20%7B%27name%27%3A%20%27DayBreak%27%2C%20%27file%27%3A%20%27Crinear%20Daybreak%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Custom Art', 'phones': [{'name': 'Fibae 5', 'file': 'Custom Art Fibae 5'}, {'name': 'Fibae 7U', 'file': 'Custom Art Fibae 7U'}, {'name': '3x3', 'file': 'Custom Art Fibae 3x3'}, {'name': 'Go 1', 'file': 'Custom Art Fibae Go 1'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Custom%20Art%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Fibae%205%27%2C%20%27file%27%3A%20%27Custom%20Art%20Fibae%205%27%7D%2C%20%7B%27name%27%3A%20%27Fibae%207U%27%2C%20%27file%27%3A%20%27Custom%20Art%20Fibae%207U%27%7D%2C%20%7B%27name%27%3A%20%273x3%27%2C%20%27file%27%3A%20%27Custom%20Art%20Fibae%203x3%27%7D%2C%20%7B%27name%27%3A%20%27Go%201%27%2C%20%27file%27%3A%20%27Custom%20Art%20Fibae%20Go%201%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Brand', 'phones': [{'name': 'Hybrid', 'file': 'Product'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Brand%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Hybrid%27%2C%20%27file%27%3A%20%27Product%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'CVJ', 'phones': [{'name': 'Freedom', 'file': 'Cvj Fre'}, {'name': 'Kanji', 'file': 'Cvj Kanji'}, {'name': 'TXS', 'file': 'Cvj Txs'}, {'name': 'Konoka', 'file': 'Cvj Konoka'}, {'name': 'Kumo', 'file': 'Cvj Kumo'}, {'name': 'Kumo 2', 'file': 'Cvj Kumo 2'}, {'name': 'Unknown', 'file': 'Cvj Un'}, {'name': 'Assassin', 'file': 'Cvj As'}, {'name': 'KES', 'file': 'Cvj Kes'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27CVJ%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Freedom%27%2C%20%27file%27%3A%20%27Cvj%20Fre%27%7D%2C%20%7B%27name%27%3A%20%27Kanji%27%2C%20%27file%27%3A%20%27Cvj%20Kanji%27%7D%2C%20%7B%27name%27%3A%20%27TXS%27%2C%20%27file%27%3A%20%27Cvj%20Txs%27%7D%2C%20%7B%27name%27%3A%20%27Konoka%27%2C%20%27file%27%3A%20%27Cvj%20Konoka%27%7D%2C%20%7B%27name%27%3A%20%27Kumo%27%2C%20%27file%27%3A%20%27Cvj%20Kumo%27%7D%2C%20%7B%27name%27%3A%20%27Kumo%202%27%2C%20%27file%27%3A%20%27Cvj%20Kumo%202%27%7D%2C%20%7B%27name%27%3A%20%27Unknown%27%2C%20%27file%27%3A%20%27Cvj%20Un%27%7D%2C%20%7B%27name%27%3A%20%27Assassin%27%2C%20%27file%27%3A%20%27Cvj%20As%27%7D%2C%20%7B%27name%27%3A%20%27KES%27%2C%20%27file%27%3A%20%27Cvj%20Kes%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'DDHiFi', 'phones': [{'name': 'Janus', 'file': 'DDhifi Janus'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27DDHiFi%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Janus%27%2C%20%27file%27%3A%20%27DDhifi%20Janus%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Dethonray', 'phones': [{'name': 'Tender 1', 'file': 'Dethonray Tender 1'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Dethonray%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Tender%201%27%2C%20%27file%27%3A%20%27Dethonray%20Tender%201%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'DUNU', 'phones': [{'name': 'SA6', 'file': 'DUNU SA6'}, {'name': 'SA6 Ultra', 'file': 'Dunu SA6 Ultra'}, {'name': 'SA6 Ultra Bass', 'file': 'Duna SA6 Ultra Bass'}, {'name': 'KIMA', 'file': 'Dunu Kima'}, {'name': 'EST 112', 'file': 'DUNU EST112'}, {'name': 'Falcon PRO', 'file': 'Dunu Falcon PRO'}, {'name': 'Titan S', 'file': 'Dunu Titan S'}, {'name': 'Talos', 'file': 'Dunu Talos'}, {'name': 'Talos BA', 'file': 'Dunu Talos BA'}, {'name': 'SA6 MK2', 'file': 'Dunu Sa6 MkII'}, {'name': 'SA6 MK2 Bass', 'file': 'Dunu Sa6 MkII Bass'}, {'name': 'X Giz DaVinci', 'file': 'Du Dav'}, {'name': 'VULKAN 2', 'file': 'Dunu Vulkan 2'}, {'name': 'VULKAN', 'file': 'Dunu Vulkan'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27DUNU%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27SA6%27%2C%20%27file%27%3A%20%27DUNU%20SA6%27%7D%2C%20%7B%27name%27%3A%20%27SA6%20Ultra%27%2C%20%27file%27%3A%20%27Dunu%20SA6%20Ultra%27%7D%2C%20%7B%27name%27%3A%20%27SA6%20Ultra%20Bass%27%2C%20%27file%27%3A%20%27Duna%20SA6%20Ultra%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27KIMA%27%2C%20%27file%27%3A%20%27Dunu%20Kima%27%7D%2C%20%7B%27name%27%3A%20%27EST%20112%27%2C%20%27file%27%3A%20%27DUNU%20EST112%27%7D%2C%20%7B%27name%27%3A%20%27Falcon%20PRO%27%2C%20%27file%27%3A%20%27Dunu%20Falcon%20PRO%27%7D%2C%20%7B%27name%27%3A%20%27Titan%20S%27%2C%20%27file%27%3A%20%27Dunu%20Titan%20S%27%7D%2C%20%7B%27name%27%3A%20%27Talos%27%2C%20%27file%27%3A%20%27Dunu%20Talos%27%7D%2C%20%7B%27name%27%3A%20%27Talos%20BA%27%2C%20%27file%27%3A%20%27Dunu%20Talos%20BA%27%7D%2C%20%7B%27name%27%3A%20%27SA6%20MK2%27%2C%20%27file%27%3A%20%27Dunu%20Sa6%20MkII%27%7D%2C%20%7B%27name%27%3A%20%27SA6%20MK2%20Bass%27%2C%20%27file%27%3A%20%27Dunu%20Sa6%20MkII%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27X%20Giz%20DaVinci%27%2C%20%27file%27%3A%20%27Du%20Dav%27%7D%2C%20%7B%27name%27%3A%20%27VULKAN%202%27%2C%20%27file%27%3A%20%27Dunu%20Vulkan%202%27%7D%2C%20%7B%27name%27%3A%20%27VULKAN%27%2C%20%27file%27%3A%20%27Dunu%20Vulkan%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'EarAcoustic', 'phones': [{'name': 'STA High End MAX', 'file': 'Earacoustic Sta High End Max'}, {'name': 'SPA PRO MAX', 'file': 'Earstudio Spa Pro Max'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27EarAcoustic%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27STA%20High%20End%20MAX%27%2C%20%27file%27%3A%20%27Earacoustic%20Sta%20High%20End%20Max%27%7D%2C%20%7B%27name%27%3A%20%27SPA%20PRO%20MAX%27%2C%20%27file%27%3A%20%27Earstudio%20Spa%20Pro%20Max%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'EDIFIER', 'phones': [{'name': 'NeoBuds PRO Low Noise', 'file': 'Edifier NeoBuds Pro'}, {'name': 'NeoBuds PRO High Noise', 'file': 'Edifier High Noise'}, {'name': 'NeoBuds PRO Ambient', 'file': 'Edifier Ambient'}, {'name': 'NeoBuds PRO Normal', 'file': 'Edifier Normal'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27EDIFIER%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27NeoBuds%20PRO%20Low%20Noise%27%2C%20%27file%27%3A%20%27Edifier%20NeoBuds%20Pro%27%7D%2C%20%7B%27name%27%3A%20%27NeoBuds%20PRO%20High%20Noise%27%2C%20%27file%27%3A%20%27Edifier%20High%20Noise%27%7D%2C%20%7B%27name%27%3A%20%27NeoBuds%20PRO%20Ambient%27%2C%20%27file%27%3A%20%27Edifier%20Ambient%27%7D%2C%20%7B%27name%27%3A%20%27NeoBuds%20PRO%20Normal%27%2C%20%27file%27%3A%20%27Edifier%20Normal%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Elysian Acoustic', 'phones': [{'name': 'X', 'file': 'Elysian Annihilator X'}, {'name': 'DIVA min', 'file': 'Elysian Diva Treb'}, {'name': 'DIVA mid', 'file': 'Elysian Diva Mid'}, {'name': 'DIVA max', 'file': 'Elysian Diva Bass'}, {'name': 'X Effect Audio Gaea', 'file': 'ELy x'}, {'name': 'X Effect Audio PILGRIM', 'file': 'Ely Pilgrim'}, {'name': 'X Effect Audio NOIR', 'file': 'Ely Noir'}, {'name': 'Annihilator 2021', 'file': 'Elysian Accoustic Annihilator 2021'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Elysian%20Acoustic%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27X%27%2C%20%27file%27%3A%20%27Elysian%20Annihilator%20X%27%7D%2C%20%7B%27name%27%3A%20%27DIVA%20min%27%2C%20%27file%27%3A%20%27Elysian%20Diva%20Treb%27%7D%2C%20%7B%27name%27%3A%20%27DIVA%20mid%27%2C%20%27file%27%3A%20%27Elysian%20Diva%20Mid%27%7D%2C%20%7B%27name%27%3A%20%27DIVA%20max%27%2C%20%27file%27%3A%20%27Elysian%20Diva%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27X%20Effect%20Audio%20Gaea%27%2C%20%27file%27%3A%20%27ELy%20x%27%7D%2C%20%7B%27name%27%3A%20%27X%20Effect%20Audio%20PILGRIM%27%2C%20%27file%27%3A%20%27Ely%20Pilgrim%27%7D%2C%20%7B%27name%27%3A%20%27X%20Effect%20Audio%20NOIR%27%2C%20%27file%27%3A%20%27Ely%20Noir%27%7D%2C%20%7B%27name%27%3A%20%27Annihilator%202021%27%2C%20%27file%27%3A%20%27Elysian%20Accoustic%20Annihilator%202021%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Empire Ears', 'phones': [{'name': 'Legend X', 'file': 'Empire Ears Legend X'}, {'name': 'ODIN', 'file': 'Empire Ears ODIN'}, {'name': 'RAVEN', 'file': 'Ee Raven'}, {'name': 'EVO', 'file': 'Empire Ears EVO'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Empire%20Ears%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Legend%20X%27%2C%20%27file%27%3A%20%27Empire%20Ears%20Legend%20X%27%7D%2C%20%7B%27name%27%3A%20%27ODIN%27%2C%20%27file%27%3A%20%27Empire%20Ears%20ODIN%27%7D%2C%20%7B%27name%27%3A%20%27RAVEN%27%2C%20%27file%27%3A%20%27Ee%20Raven%27%7D%2C%20%7B%27name%27%3A%20%27EVO%27%2C%20%27file%27%3A%20%27Empire%20Ears%20EVO%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'EPZ', 'phones': [{'name': 'K5', 'file': 'Epz K5'}, {'name': 'Q5', 'file': 'Epz Q5'}, {'name': 'K9 Deep', 'file': 'Epz K9 Deep'}, {'name': 'K9 Shallow', 'file': 'Epz K9 Shallow'}, {'name': 'P50', 'file': 'Epz P50'}, {'name': '530', 'file': 'Epz 530'}, {'name': 'X Tipsy', 'file': 'Epz X Tipsy'}, {'name': 'G10', 'file': 'Epz G10'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27EPZ%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27K5%27%2C%20%27file%27%3A%20%27Epz%20K5%27%7D%2C%20%7B%27name%27%3A%20%27Q5%27%2C%20%27file%27%3A%20%27Epz%20Q5%27%7D%2C%20%7B%27name%27%3A%20%27K9%20Deep%27%2C%20%27file%27%3A%20%27Epz%20K9%20Deep%27%7D%2C%20%7B%27name%27%3A%20%27K9%20Shallow%27%2C%20%27file%27%3A%20%27Epz%20K9%20Shallow%27%7D%2C%20%7B%27name%27%3A%20%27P50%27%2C%20%27file%27%3A%20%27Epz%20P50%27%7D%2C%20%7B%27name%27%3A%20%27530%27%2C%20%27file%27%3A%20%27Epz%20530%27%7D%2C%20%7B%27name%27%3A%20%27X%20Tipsy%27%2C%20%27file%27%3A%20%27Epz%20X%20Tipsy%27%7D%2C%20%7B%27name%27%3A%20%27G10%27%2C%20%27file%27%3A%20%27Epz%20G10%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Fat freq', 'phones': [{'name': 'Maestro mini', 'file': 'Fat Freq'}, {'name': 'Scarlet mini', 'file': 'Fat Scar'}, {'name': 'Grand Maestro', 'file': 'FF GM 1'}, {'name': 'Grand Maestro Black 2', 'file': 'FF GM 2'}, {'name': 'Grand Maestro Blue 1', 'file': 'FF GM 3'}, {'name': 'Grand Maestro Blue 2', 'file': 'FF GM 4'}, {'name': 'Grand Maestro AE SS V on', 'file': 'Gra Ma Swith'}, {'name': 'Grand Maestro AE SS V off', 'file': 'Grama'}, {'name': 'X HBB IO', 'file': 'Ffxx'}, {'name': 'X HBB', 'file': 'Fats F'}, {'name': 'Maestro SE', 'file': 'Fat Freq Meastro Se'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Fat%20freq%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Maestro%20mini%27%2C%20%27file%27%3A%20%27Fat%20Freq%27%7D%2C%20%7B%27name%27%3A%20%27Scarlet%20mini%27%2C%20%27file%27%3A%20%27Fat%20Scar%27%7D%2C%20%7B%27name%27%3A%20%27Grand%20Maestro%27%2C%20%27file%27%3A%20%27FF%20GM%201%27%7D%2C%20%7B%27name%27%3A%20%27Grand%20Maestro%20Black%202%27%2C%20%27file%27%3A%20%27FF%20GM%202%27%7D%2C%20%7B%27name%27%3A%20%27Grand%20Maestro%20Blue%201%27%2C%20%27file%27%3A%20%27FF%20GM%203%27%7D%2C%20%7B%27name%27%3A%20%27Grand%20Maestro%20Blue%202%27%2C%20%27file%27%3A%20%27FF%20GM%204%27%7D%2C%20%7B%27name%27%3A%20%27Grand%20Maestro%20AE%20SS%20V%20on%27%2C%20%27file%27%3A%20%27Gra%20Ma%20Swith%27%7D%2C%20%7B%27name%27%3A%20%27Grand%20Maestro%20AE%20SS%20V%20off%27%2C%20%27file%27%3A%20%27Grama%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20IO%27%2C%20%27file%27%3A%20%27Ffxx%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%27%2C%20%27file%27%3A%20%27Fats%20F%27%7D%2C%20%7B%27name%27%3A%20%27Maestro%20SE%27%2C%20%27file%27%3A%20%27Fat%20Freq%20Meastro%20Se%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'FiiO', 'phones': [{'name': 'FD5', 'file': 'Fiio FD5'}, {'name': 'FH5s Standard', 'file': 'FH5s Standard'}, {'name': 'FH5s Bass', 'file': 'FH5s Bass'}, {'name': 'FH5s Mids', 'file': 'FH5s Mids'}, {'name': 'FH5s Treble', 'file': 'FH5s Treble'}, {'name': 'FD3', 'file': 'Fiio FD3 Stock'}, {'name': 'FD3 2nd nozzle', 'file': 'Fiio FD3'}, {'name': 'FD7', 'file': 'Fiio FD7 Stock'}, {'name': 'FD7 small noz', 'file': 'Fiio FD7 Tiny Noz'}, {'name': 'FD7 large noz', 'file': 'Fiio FD7 Treb'}, {'name': 'FHE', 'file': 'Fiio X Crinacle FHE'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27FiiO%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27FD5%27%2C%20%27file%27%3A%20%27Fiio%20FD5%27%7D%2C%20%7B%27name%27%3A%20%27FH5s%20Standard%27%2C%20%27file%27%3A%20%27FH5s%20Standard%27%7D%2C%20%7B%27name%27%3A%20%27FH5s%20Bass%27%2C%20%27file%27%3A%20%27FH5s%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27FH5s%20Mids%27%2C%20%27file%27%3A%20%27FH5s%20Mids%27%7D%2C%20%7B%27name%27%3A%20%27FH5s%20Treble%27%2C%20%27file%27%3A%20%27FH5s%20Treble%27%7D%2C%20%7B%27name%27%3A%20%27FD3%27%2C%20%27file%27%3A%20%27Fiio%20FD3%20Stock%27%7D%2C%20%7B%27name%27%3A%20%27FD3%202nd%20nozzle%27%2C%20%27file%27%3A%20%27Fiio%20FD3%27%7D%2C%20%7B%27name%27%3A%20%27FD7%27%2C%20%27file%27%3A%20%27Fiio%20FD7%20Stock%27%7D%2C%20%7B%27name%27%3A%20%27FD7%20small%20noz%27%2C%20%27file%27%3A%20%27Fiio%20FD7%20Tiny%20Noz%27%7D%2C%20%7B%27name%27%3A%20%27FD7%20large%20noz%27%2C%20%27file%27%3A%20%27Fiio%20FD7%20Treb%27%7D%2C%20%7B%27name%27%3A%20%27FHE%27%2C%20%27file%27%3A%20%27Fiio%20X%20Crinacle%20FHE%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Fearless Audio', 'phones': [{'name': 'S8P', 'file': 'Fearless S8P'}, {'name': 'DAWN', 'file': 'Fearless Audio Dawn'}, {'name': 'S6v2', 'file': 'Fearless Audio S6 v2'}, {'name': 'S8F', 'file': 'Fearless Audio S8F'}, {'name': 'ACME 10', 'file': 'Fearless Audio ACME 10'}, {'name': 'Provence', 'file': 'Fearless Provence'}, {'name': 'Barcelona', 'file': 'Fearless Barcelona'}, {'name': 'Shangrila', 'file': 'Fearless Shangrila'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Fearless%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27S8P%27%2C%20%27file%27%3A%20%27Fearless%20S8P%27%7D%2C%20%7B%27name%27%3A%20%27DAWN%27%2C%20%27file%27%3A%20%27Fearless%20Audio%20Dawn%27%7D%2C%20%7B%27name%27%3A%20%27S6v2%27%2C%20%27file%27%3A%20%27Fearless%20Audio%20S6%20v2%27%7D%2C%20%7B%27name%27%3A%20%27S8F%27%2C%20%27file%27%3A%20%27Fearless%20Audio%20S8F%27%7D%2C%20%7B%27name%27%3A%20%27ACME%2010%27%2C%20%27file%27%3A%20%27Fearless%20Audio%20ACME%2010%27%7D%2C%20%7B%27name%27%3A%20%27Provence%27%2C%20%27file%27%3A%20%27Fearless%20Provence%27%7D%2C%20%7B%27name%27%3A%20%27Barcelona%27%2C%20%27file%27%3A%20%27Fearless%20Barcelona%27%7D%2C%20%7B%27name%27%3A%20%27Shangrila%27%2C%20%27file%27%3A%20%27Fearless%20Shangrila%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Final Audio', 'phones': [{'name': 'ZE3000 TWS', 'file': 'Final ZE3000'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Final%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27ZE3000%20TWS%27%2C%20%27file%27%3A%20%27Final%20ZE3000%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'FIR Audio', 'phones': [{'name': 'XENON XE6', 'file': 'FIR Audio Xenon XE6'}, {'name': 'KRYPTON 5 BLK', 'file': 'Fir Bk Kry'}, {'name': 'KRYPTON 5 SLV', 'file': 'Fir Sil Kry'}, {'name': 'KRYPTON 5 GLD', 'file': 'Fir Goil'}, {'name': 'RN6 Gold Filter', 'file': 'Fir Gol'}, {'name': 'RN6', 'file': 'Fir'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27FIR%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27XENON%20XE6%27%2C%20%27file%27%3A%20%27FIR%20Audio%20Xenon%20XE6%27%7D%2C%20%7B%27name%27%3A%20%27KRYPTON%205%20BLK%27%2C%20%27file%27%3A%20%27Fir%20Bk%20Kry%27%7D%2C%20%7B%27name%27%3A%20%27KRYPTON%205%20SLV%27%2C%20%27file%27%3A%20%27Fir%20Sil%20Kry%27%7D%2C%20%7B%27name%27%3A%20%27KRYPTON%205%20GLD%27%2C%20%27file%27%3A%20%27Fir%20Goil%27%7D%2C%20%7B%27name%27%3A%20%27RN6%20Gold%20Filter%27%2C%20%27file%27%3A%20%27Fir%20Gol%27%7D%2C%20%7B%27name%27%3A%20%27RN6%27%2C%20%27file%27%3A%20%27Fir%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'FlipEars', 'phones': [{'name': 'LEGION', 'file': 'Fliears Legion'}, {'name': 'AEGIS', 'file': 'Flip Aegis'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27FlipEars%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27LEGION%27%2C%20%27file%27%3A%20%27Fliears%20Legion%27%7D%2C%20%7B%27name%27%3A%20%27AEGIS%27%2C%20%27file%27%3A%20%27Flip%20Aegis%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'FOCUS', 'phones': [{'name': 'EDM', 'file': 'Focus EDM'}, {'name': 'Vocal', 'file': 'Focus Audio Vocal'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27FOCUS%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27EDM%27%2C%20%27file%27%3A%20%27Focus%20EDM%27%7D%2C%20%7B%27name%27%3A%20%27Vocal%27%2C%20%27file%27%3A%20%27Focus%20Audio%20Vocal%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Geek Wold', 'phones': [{'name': 'GK10', 'file': 'Geek Wold GK10'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Geek%20Wold%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27GK10%27%2C%20%27file%27%3A%20%27Geek%20Wold%20GK10%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'GK', 'phones': [{'name': 'GS10', 'file': 'GK GS10'}, {'name': 'GST', 'file': 'GK GST'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27GK%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27GS10%27%2C%20%27file%27%3A%20%27GK%20GS10%27%7D%2C%20%7B%27name%27%3A%20%27GST%27%2C%20%27file%27%3A%20%27GK%20GST%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Goldplanar', 'phones': [{'name': 'GL20', 'file': 'Goldplanar GL20'}, {'name': 'AMT 16', 'file': 'Goldplanar AMT Stock'}, {'name': 'AMT 16 Filter 1', 'file': 'Goldpl Filt 1'}, {'name': 'AMT 16 Filter 2', 'file': 'Goldpla Filt 2'}, {'name': 'AMT 16 Filter 3', 'file': 'Goldplan Filt 3'}, {'name': 'AMT 16 Filter 4', 'file': 'Goldplan Filt 4'}, {'name': 'AMT 16 Filter 5', 'file': 'Goldpl Cus'}, {'name': 'GL12', 'file': 'Goldplanar GL12'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Goldplanar%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27GL20%27%2C%20%27file%27%3A%20%27Goldplanar%20GL20%27%7D%2C%20%7B%27name%27%3A%20%27AMT%2016%27%2C%20%27file%27%3A%20%27Goldplanar%20AMT%20Stock%27%7D%2C%20%7B%27name%27%3A%20%27AMT%2016%20Filter%201%27%2C%20%27file%27%3A%20%27Goldpl%20Filt%201%27%7D%2C%20%7B%27name%27%3A%20%27AMT%2016%20Filter%202%27%2C%20%27file%27%3A%20%27Goldpla%20Filt%202%27%7D%2C%20%7B%27name%27%3A%20%27AMT%2016%20Filter%203%27%2C%20%27file%27%3A%20%27Goldplan%20Filt%203%27%7D%2C%20%7B%27name%27%3A%20%27AMT%2016%20Filter%204%27%2C%20%27file%27%3A%20%27Goldplan%20Filt%204%27%7D%2C%20%7B%27name%27%3A%20%27AMT%2016%20Filter%205%27%2C%20%27file%27%3A%20%27Goldpl%20Cus%27%7D%2C%20%7B%27name%27%3A%20%27GL12%27%2C%20%27file%27%3A%20%27Goldplanar%20GL12%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'GEEKFLY', 'phones': [{'name': 'Legend 6', 'file': 'Geekfly Legend 6'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27GEEKFLY%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Legend%206%27%2C%20%27file%27%3A%20%27Geekfly%20Legend%206%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'GuideRay', 'phones': [{'name': 'GR-i18', 'file': 'GR-i18'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27GuideRay%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27GR-i18%27%2C%20%27file%27%3A%20%27GR-i18%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Little Dot', 'phones': [{'name': 'GYFU (Raw)', 'file': 'Little Dot GYFU Raw'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Little%20Dot%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27GYFU%20%28Raw%29%27%2C%20%27file%27%3A%20%27Little%20Dot%20GYFU%20Raw%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'HarmonicDyne', 'phones': [{'name': 'P.D1', 'file': 'Sample 1'}, {'name': 'BAROQUE', 'file': 'Harm Baroque'}, {'name': 'ZEUS', 'file': 'HarmonicDyne ZEUS'}, {'name': 'ZEUS Elite', 'file': 'Harzu'}, {'name': 'DEVIL', 'file': 'Harmonicdyne Devil'}, {'name': 'ATHENA', 'file': 'Harmonicdyne Athena Raw'}, {'name': 'Planar (raw)', 'file': 'Harmonicdyne New'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27HarmonicDyne%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27P.D1%27%2C%20%27file%27%3A%20%27Sample%201%27%7D%2C%20%7B%27name%27%3A%20%27BAROQUE%27%2C%20%27file%27%3A%20%27Harm%20Baroque%27%7D%2C%20%7B%27name%27%3A%20%27ZEUS%27%2C%20%27file%27%3A%20%27HarmonicDyne%20ZEUS%27%7D%2C%20%7B%27name%27%3A%20%27ZEUS%20Elite%27%2C%20%27file%27%3A%20%27Harzu%27%7D%2C%20%7B%27name%27%3A%20%27DEVIL%27%2C%20%27file%27%3A%20%27Harmonicdyne%20Devil%27%7D%2C%20%7B%27name%27%3A%20%27ATHENA%27%2C%20%27file%27%3A%20%27Harmonicdyne%20Athena%20Raw%27%7D%2C%20%7B%27name%27%3A%20%27Planar%20%28raw%29%27%2C%20%27file%27%3A%20%27Harmonicdyne%20New%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Heartfield', 'phones': [{'name': 'DEER', 'file': 'Deer'}, {'name': 'ELEPHANT', 'file': 'Heart Ele'}, {'name': 'CU8', 'file': 'Heartfield Cu8'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Heartfield%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27DEER%27%2C%20%27file%27%3A%20%27Deer%27%7D%2C%20%7B%27name%27%3A%20%27ELEPHANT%27%2C%20%27file%27%3A%20%27Heart%20Ele%27%7D%2C%20%7B%27name%27%3A%20%27CU8%27%2C%20%27file%27%3A%20%27Heartfield%20Cu8%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Hiby', 'phones': [{'name': 'Seeds 1', 'file': 'Hiby Seeds'}, {'name': 'XOE', 'file': 'Hib X'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Hiby%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Seeds%201%27%2C%20%27file%27%3A%20%27Hiby%20Seeds%27%7D%2C%20%7B%27name%27%3A%20%27XOE%27%2C%20%27file%27%3A%20%27Hib%20X%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Hidizs', 'phones': [{'name': 'MS4', 'file': 'Hidizs MS4'}, {'name': 'MP145', 'file': 'Hid MP145'}, {'name': 'X DucBloke MK12', 'file': 'Hid Mk12 Ducbloke'}, {'name': 'MS5', 'file': 'Hidizs Ms5'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Hidizs%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27MS4%27%2C%20%27file%27%3A%20%27Hidizs%20MS4%27%7D%2C%20%7B%27name%27%3A%20%27MP145%27%2C%20%27file%27%3A%20%27Hid%20MP145%27%7D%2C%20%7B%27name%27%3A%20%27X%20DucBloke%20MK12%27%2C%20%27file%27%3A%20%27Hid%20Mk12%20Ducbloke%27%7D%2C%20%7B%27name%27%3A%20%27MS5%27%2C%20%27file%27%3A%20%27Hidizs%20Ms5%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Hifiman', 'phones': [{'name': 'Susvara', 'file': 'Hifiman Susvara'}, {'name': 'He6seV2', 'file': 'Hifiman HEseV2'}, {'name': 'HE400se', 'file': 'Hifiman HE400se'}, {'name': 'Arya Stealth', 'file': 'Hifiman Arya Stealth'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Hifiman%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Susvara%27%2C%20%27file%27%3A%20%27Hifiman%20Susvara%27%7D%2C%20%7B%27name%27%3A%20%27He6seV2%27%2C%20%27file%27%3A%20%27Hifiman%20HEseV2%27%7D%2C%20%7B%27name%27%3A%20%27HE400se%27%2C%20%27file%27%3A%20%27Hifiman%20HE400se%27%7D%2C%20%7B%27name%27%3A%20%27Arya%20Stealth%27%2C%20%27file%27%3A%20%27Hifiman%20Arya%20Stealth%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'HiSenior', 'phones': [{'name': 'Mega 5 EST 7th anniversary', 'file': 'Hisenior m'}, {'name': 'Mega7', 'file': 'Mega 7'}, {'name': 'Cristales', 'file': 'Hisenior Cristales'}, {'name': 'Mega 5 EST-B', 'file': 'Mega 5 B'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27HiSenior%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Mega%205%20EST%207th%20anniversary%27%2C%20%27file%27%3A%20%27Hisenior%20m%27%7D%2C%20%7B%27name%27%3A%20%27Mega7%27%2C%20%27file%27%3A%20%27Mega%207%27%7D%2C%20%7B%27name%27%3A%20%27Cristales%27%2C%20%27file%27%3A%20%27Hisenior%20Cristales%27%7D%2C%20%7B%27name%27%3A%20%27Mega%205%20EST-B%27%2C%20%27file%27%3A%20%27Mega%205%20B%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'HS Audio Tech', 'phones': [{'name': 'HSAT', 'file': 'HS Audio Tech'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27HS%20Audio%20Tech%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27HSAT%27%2C%20%27file%27%3A%20%27HS%20Audio%20Tech%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Huawei', 'phones': [{'name': 'Freebuds Pro 2', 'file': 'Huawei Freebuds Pro 2'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Huawei%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Freebuds%20Pro%202%27%2C%20%27file%27%3A%20%27Huawei%20Freebuds%20Pro%202%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Humka', 'phones': [{'name': 'Hamlet', 'file': 'Humka Hamlet'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Humka%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Hamlet%27%2C%20%27file%27%3A%20%27Humka%20Hamlet%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'HZ SOUND', 'phones': [{'name': 'Mirror PRO', 'file': 'HZ sound pro'}, {'name': 'ZERO', 'file': 'Hz Sound Zero'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27HZ%20SOUND%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Mirror%20PRO%27%2C%20%27file%27%3A%20%27HZ%20sound%20pro%27%7D%2C%20%7B%27name%27%3A%20%27ZERO%27%2C%20%27file%27%3A%20%27Hz%20Sound%20Zero%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'IBasso', 'phones': [{'name': 'iT04', 'file': 'IBasso iT04'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27IBasso%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27iT04%27%2C%20%27file%27%3A%20%27IBasso%20iT04%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'iF AUDIO', 'phones': [{'name': 'D2', 'file': 'IF Audio D2'}, {'name': '31', 'file': 'iF Audio 31'}, {'name': '11', 'file': 'iF Audio 11'}, {'name': '51', 'file': 'iF Audio 51'}, {'name': 'D5', 'file': 'iF Audio D5'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27iF%20AUDIO%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27D2%27%2C%20%27file%27%3A%20%27IF%20Audio%20D2%27%7D%2C%20%7B%27name%27%3A%20%2731%27%2C%20%27file%27%3A%20%27iF%20Audio%2031%27%7D%2C%20%7B%27name%27%3A%20%2711%27%2C%20%27file%27%3A%20%27iF%20Audio%2011%27%7D%2C%20%7B%27name%27%3A%20%2751%27%2C%20%27file%27%3A%20%27iF%20Audio%2051%27%7D%2C%20%7B%27name%27%3A%20%27D5%27%2C%20%27file%27%3A%20%27iF%20Audio%20D5%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Ikko', 'phones': [{'name': 'OH10', 'file': 'Ikko OH10'}, {'name': 'OH1s Gems', 'file': 'Ikko Gems OH1s'}, {'name': 'OH5', 'file': 'Ikko OH5'}, {'name': 'OH2 Opal', 'file': 'Ikko OH2'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Ikko%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27OH10%27%2C%20%27file%27%3A%20%27Ikko%20OH10%27%7D%2C%20%7B%27name%27%3A%20%27OH1s%20Gems%27%2C%20%27file%27%3A%20%27Ikko%20Gems%20OH1s%27%7D%2C%20%7B%27name%27%3A%20%27OH5%27%2C%20%27file%27%3A%20%27Ikko%20OH5%27%7D%2C%20%7B%27name%27%3A%20%27OH2%20Opal%27%2C%20%27file%27%3A%20%27Ikko%20OH2%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Inawaken', 'phones': [{'name': 'TWILIGHT DS', 'file': 'Ina Twilight'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Inawaken%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27TWILIGHT%20DS%27%2C%20%27file%27%3A%20%27Ina%20Twilight%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'In time', 'phones': [{'name': 'SORA 2019', 'file': 'Intime Sora 2019'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27In%20time%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27SORA%202019%27%2C%20%27file%27%3A%20%27Intime%20Sora%202019%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'INTUARA', 'phones': [{'name': 'Uniqueness', 'file': 'Intuare Uniqueness'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27INTUARA%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Uniqueness%27%2C%20%27file%27%3A%20%27Intuare%20Uniqueness%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'IO', 'phones': [{'name': 'VOLARE', 'file': 'IO Volour'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27IO%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27VOLARE%27%2C%20%27file%27%3A%20%27IO%20Volour%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'JH Audio', 'phones': [{'name': 'Jolene', 'file': 'JH Jolene'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27JH%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Jolene%27%2C%20%27file%27%3A%20%27JH%20Jolene%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'JoyAudio', 'phones': [{'name': 'Shine', 'file': 'Joyaudio Shine'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27JoyAudio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Shine%27%2C%20%27file%27%3A%20%27Joyaudio%20Shine%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'JUZEAR', 'phones': [{'name': 'Defiant', 'file': 'Juzear Defiant'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27JUZEAR%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Defiant%27%2C%20%27file%27%3A%20%27Juzear%20Defiant%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'JVC', 'phones': [{'name': 'FDX1', 'file': 'JVC FDX1'}, {'name': 'Extreme Bass XC62T', 'file': 'Jvc Bass'}, {'name': 'FX1100', 'file': 'JVC 1100'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27JVC%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27FDX1%27%2C%20%27file%27%3A%20%27JVC%20FDX1%27%7D%2C%20%7B%27name%27%3A%20%27Extreme%20Bass%20XC62T%27%2C%20%27file%27%3A%20%27Jvc%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27FX1100%27%2C%20%27file%27%3A%20%27JVC%201100%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'JQ Audio', 'phones': [{'name': 'White Knight', 'file': 'JQ Audio White Knight'}, {'name': 'Hua Jiang', 'file': 'JQ Audio Hua Jiang'}, {'name': '4U PRO', 'file': 'JQ Audio 4U PRO'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27JQ%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27White%20Knight%27%2C%20%27file%27%3A%20%27JQ%20Audio%20White%20Knight%27%7D%2C%20%7B%27name%27%3A%20%27Hua%20Jiang%27%2C%20%27file%27%3A%20%27JQ%20Audio%20Hua%20Jiang%27%7D%2C%20%7B%27name%27%3A%20%274U%20PRO%27%2C%20%27file%27%3A%20%27JQ%20Audio%204U%20PRO%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'KBear', 'phones': [{'name': 'KS1', 'file': 'KBear KS1'}, {'name': 'BElieve', 'file': 'KBear Q'}, {'name': 'KB02', 'file': 'Kbear Kb02'}, {'name': 'Cepheus', 'file': 'Kbear Cepheus'}, {'name': 'Little Q', 'file': 'KBear BElieve'}, {'name': 'KS2', 'file': 'KBear KS2'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27KBear%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27KS1%27%2C%20%27file%27%3A%20%27KBear%20KS1%27%7D%2C%20%7B%27name%27%3A%20%27BElieve%27%2C%20%27file%27%3A%20%27KBear%20Q%27%7D%2C%20%7B%27name%27%3A%20%27KB02%27%2C%20%27file%27%3A%20%27Kbear%20Kb02%27%7D%2C%20%7B%27name%27%3A%20%27Cepheus%27%2C%20%27file%27%3A%20%27Kbear%20Cepheus%27%7D%2C%20%7B%27name%27%3A%20%27Little%20Q%27%2C%20%27file%27%3A%20%27KBear%20BElieve%27%7D%2C%20%7B%27name%27%3A%20%27KS2%27%2C%20%27file%27%3A%20%27KBear%20KS2%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'KEFINE', 'phones': [{'name': 'KLEAN', 'file': 'Kefine Klean'}, {'name': 'DELCI', 'file': 'Kefine Delci'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27KEFINE%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27KLEAN%27%2C%20%27file%27%3A%20%27Kefine%20Klean%27%7D%2C%20%7B%27name%27%3A%20%27DELCI%27%2C%20%27file%27%3A%20%27Kefine%20Delci%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'KINERA', 'phones': [{'name': 'BD0005', 'file': 'Kinera BD0005'}, {'name': 'NORN', 'file': 'Kinera NORN'}, {'name': 'Freya', 'file': 'Kinera Freya'}, {'name': 'IDUN 2 Golden', 'file': 'Kinera IDUN Golden'}, {'name': 'HODUR', 'file': 'Kinera Hodur'}, {'name': 'URD', 'file': 'Kinera URD'}, {'name': ' X Z', 'file': 'Sample 42'}, {'name': 'Pandamon', 'file': 'Kinera Pandamon'}, {'name': 'Imperial Loki Emerald', 'file': 'Kinera Imp'}, {'name': 'Celeste Wyvern PRO', 'file': 'Celesr Wyvern'}, {'name': 'CELEST', 'file': 'Kinera Celest Foam'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27KINERA%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27BD0005%27%2C%20%27file%27%3A%20%27Kinera%20BD0005%27%7D%2C%20%7B%27name%27%3A%20%27NORN%27%2C%20%27file%27%3A%20%27Kinera%20NORN%27%7D%2C%20%7B%27name%27%3A%20%27Freya%27%2C%20%27file%27%3A%20%27Kinera%20Freya%27%7D%2C%20%7B%27name%27%3A%20%27IDUN%202%20Golden%27%2C%20%27file%27%3A%20%27Kinera%20IDUN%20Golden%27%7D%2C%20%7B%27name%27%3A%20%27HODUR%27%2C%20%27file%27%3A%20%27Kinera%20Hodur%27%7D%2C%20%7B%27name%27%3A%20%27URD%27%2C%20%27file%27%3A%20%27Kinera%20URD%27%7D%2C%20%7B%27name%27%3A%20%27%20X%20Z%27%2C%20%27file%27%3A%20%27Sample%2042%27%7D%2C%20%7B%27name%27%3A%20%27Pandamon%27%2C%20%27file%27%3A%20%27Kinera%20Pandamon%27%7D%2C%20%7B%27name%27%3A%20%27Imperial%20Loki%20Emerald%27%2C%20%27file%27%3A%20%27Kinera%20Imp%27%7D%2C%20%7B%27name%27%3A%20%27Celeste%20Wyvern%20PRO%27%2C%20%27file%27%3A%20%27Celesr%20Wyvern%27%7D%2C%20%7B%27name%27%3A%20%27CELEST%27%2C%20%27file%27%3A%20%27Kinera%20Celest%20Foam%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Kiwi Ears', 'phones': [{'name': 'AIROSO', 'file': 'Kiwi Airoso'}, {'name': 'Orchestra', 'file': 'Kiwi Ears'}, {'name': 'Orchestra II', 'file': 'Ki O2'}, {'name': 'AETHER', 'reviewScore': '0', 'reviewLink': 'https://www.youtube.com/watch?v=Lfu0Ca9u-3E', 'price': '$100', 'shopLink': 'https://www.linsoul.com/products/kiwi-ears-aether', 'file': 'Kiwi Aether'}, {'name': 'ETUDE', 'file': 'Kiwi Etude'}, {'name': 'Orchestra Lite', 'file': 'Kiwi Ears New'}, {'name': 'Quartet', 'file': 'Kiwi Ears Quartet Bass'}, {'name': 'Dolce', 'file': 'Kiwi Dolce'}, {'name': 'Cadenza', 'file': 'Kiwi Ears Cadenza'}, {'name': 'Melody', 'file': 'Ki sa'}, {'name': 'Forteza', 'file': 'Ki Forteza'}, {'name': 'Quintet', 'file': '55 Ki'}, {'name': 'DIVISION HP', 'file': 'Kiwi Division'}, {'name': 'ELLIPSE HP', 'file': 'Kiwi Ears Ellipse'}, {'name': 'X HBB PUNCH', 'file': 'K HBB Punch'}, {'name': 'Singolo', 'file': 'Ki Singolo'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Kiwi%20Ears%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27AIROSO%27%2C%20%27file%27%3A%20%27Kiwi%20Airoso%27%7D%2C%20%7B%27name%27%3A%20%27Orchestra%27%2C%20%27file%27%3A%20%27Kiwi%20Ears%27%7D%2C%20%7B%27name%27%3A%20%27Orchestra%20II%27%2C%20%27file%27%3A%20%27Ki%20O2%27%7D%2C%20%7B%27name%27%3A%20%27AETHER%27%2C%20%27reviewScore%27%3A%20%270%27%2C%20%27reviewLink%27%3A%20%27https%3A//www.youtube.com/watch%3Fv%3DLfu0Ca9u-3E%27%2C%20%27price%27%3A%20%27%24100%27%2C%20%27shopLink%27%3A%20%27https%3A//www.linsoul.com/products/kiwi-ears-aether%27%2C%20%27file%27%3A%20%27Kiwi%20Aether%27%7D%2C%20%7B%27name%27%3A%20%27ETUDE%27%2C%20%27file%27%3A%20%27Kiwi%20Etude%27%7D%2C%20%7B%27name%27%3A%20%27Orchestra%20Lite%27%2C%20%27file%27%3A%20%27Kiwi%20Ears%20New%27%7D%2C%20%7B%27name%27%3A%20%27Quartet%27%2C%20%27file%27%3A%20%27Kiwi%20Ears%20Quartet%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27Dolce%27%2C%20%27file%27%3A%20%27Kiwi%20Dolce%27%7D%2C%20%7B%27name%27%3A%20%27Cadenza%27%2C%20%27file%27%3A%20%27Kiwi%20Ears%20Cadenza%27%7D%2C%20%7B%27name%27%3A%20%27Melody%27%2C%20%27file%27%3A%20%27Ki%20sa%27%7D%2C%20%7B%27name%27%3A%20%27Forteza%27%2C%20%27file%27%3A%20%27Ki%20Forteza%27%7D%2C%20%7B%27name%27%3A%20%27Quintet%27%2C%20%27file%27%3A%20%2755%20Ki%27%7D%2C%20%7B%27name%27%3A%20%27DIVISION%20HP%27%2C%20%27file%27%3A%20%27Kiwi%20Division%27%7D%2C%20%7B%27name%27%3A%20%27ELLIPSE%20HP%27%2C%20%27file%27%3A%20%27Kiwi%20Ears%20Ellipse%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20PUNCH%27%2C%20%27file%27%3A%20%27K%20HBB%20Punch%27%7D%2C%20%7B%27name%27%3A%20%27Singolo%27%2C%20%27file%27%3A%20%27Ki%20Singolo%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'KZ', 'phones': [{'name': 'PR3', 'file': 'Kz Pr3'}, {'name': 'Unknown', 'file': 'Kz Un'}, {'name': 'ASX', 'file': 'KZ ASX'}, {'name': 'ZST X', 'file': 'KZ ZST X'}, {'name': 'ZSN', 'file': 'KZ ZSN X'}, {'name': 'SONATA', 'file': 'Kz Sonata'}, {'name': 'AM16', 'file': 'Kz Am16'}, {'name': 'DQ6', 'file': 'KZ DQ6'}, {'name': 'ZST', 'file': 'KZ ZST'}, {'name': 'ZAS', 'file': 'KZ ZAS'}, {'name': 'AST', 'file': 'KZ AST'}, {'name': 'EDX PRO', 'file': 'KZ EDX PRO'}, {'name': 'ZEX', 'file': 'KZ ZEX'}, {'name': 'ZEX PRO', 'file': 'KZ ZEX PRO'}, {'name': 'T10 ANC ON', 'file': 'KZ TC10 A'}, {'name': 'T10', 'file': 'KZ TC10'}, {'name': 'X HBB DQ6s', 'file': 'KZ DQ6 R Xf'}, {'name': 'EDA BASS', 'file': 'KZ EDA Bass'}, {'name': 'EDA BALANCED', 'file': 'KZ EDA Balanced'}, {'name': 'EDA RESOLUTION', 'file': 'KZ EDA Resolution'}, {'name': 'ESX', 'file': 'KZ ESX'}, {'name': 'ZS10 PRO X Silicon', 'file': 'KZ ZS10 PRO X Sil'}, {'name': 'ZS10 PRO X Foam', 'file': 'KZ ZS10 PRO Foam'}, {'name': 'PR1', 'file': 'KZ PR1'}, {'name': 'EDCX', 'file': 'KZ Edcx'}, {'name': 'AS16 PRO', 'file': 'KZ AS16 Pro'}, {'name': 'ZVX', 'file': 'Kz Zvx'}, {'name': 'Castor', 'file': 'Kz Castor'}, {'name': 'Xtra', 'file': 'Kzxtra'}, {'name': 'X HBB PR2', 'file': 'KZ X HBB PR2'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27KZ%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27PR3%27%2C%20%27file%27%3A%20%27Kz%20Pr3%27%7D%2C%20%7B%27name%27%3A%20%27Unknown%27%2C%20%27file%27%3A%20%27Kz%20Un%27%7D%2C%20%7B%27name%27%3A%20%27ASX%27%2C%20%27file%27%3A%20%27KZ%20ASX%27%7D%2C%20%7B%27name%27%3A%20%27ZST%20X%27%2C%20%27file%27%3A%20%27KZ%20ZST%20X%27%7D%2C%20%7B%27name%27%3A%20%27ZSN%27%2C%20%27file%27%3A%20%27KZ%20ZSN%20X%27%7D%2C%20%7B%27name%27%3A%20%27SONATA%27%2C%20%27file%27%3A%20%27Kz%20Sonata%27%7D%2C%20%7B%27name%27%3A%20%27AM16%27%2C%20%27file%27%3A%20%27Kz%20Am16%27%7D%2C%20%7B%27name%27%3A%20%27DQ6%27%2C%20%27file%27%3A%20%27KZ%20DQ6%27%7D%2C%20%7B%27name%27%3A%20%27ZST%27%2C%20%27file%27%3A%20%27KZ%20ZST%27%7D%2C%20%7B%27name%27%3A%20%27ZAS%27%2C%20%27file%27%3A%20%27KZ%20ZAS%27%7D%2C%20%7B%27name%27%3A%20%27AST%27%2C%20%27file%27%3A%20%27KZ%20AST%27%7D%2C%20%7B%27name%27%3A%20%27EDX%20PRO%27%2C%20%27file%27%3A%20%27KZ%20EDX%20PRO%27%7D%2C%20%7B%27name%27%3A%20%27ZEX%27%2C%20%27file%27%3A%20%27KZ%20ZEX%27%7D%2C%20%7B%27name%27%3A%20%27ZEX%20PRO%27%2C%20%27file%27%3A%20%27KZ%20ZEX%20PRO%27%7D%2C%20%7B%27name%27%3A%20%27T10%20ANC%20ON%27%2C%20%27file%27%3A%20%27KZ%20TC10%20A%27%7D%2C%20%7B%27name%27%3A%20%27T10%27%2C%20%27file%27%3A%20%27KZ%20TC10%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20DQ6s%27%2C%20%27file%27%3A%20%27KZ%20DQ6%20R%20Xf%27%7D%2C%20%7B%27name%27%3A%20%27EDA%20BASS%27%2C%20%27file%27%3A%20%27KZ%20EDA%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27EDA%20BALANCED%27%2C%20%27file%27%3A%20%27KZ%20EDA%20Balanced%27%7D%2C%20%7B%27name%27%3A%20%27EDA%20RESOLUTION%27%2C%20%27file%27%3A%20%27KZ%20EDA%20Resolution%27%7D%2C%20%7B%27name%27%3A%20%27ESX%27%2C%20%27file%27%3A%20%27KZ%20ESX%27%7D%2C%20%7B%27name%27%3A%20%27ZS10%20PRO%20X%20Silicon%27%2C%20%27file%27%3A%20%27KZ%20ZS10%20PRO%20X%20Sil%27%7D%2C%20%7B%27name%27%3A%20%27ZS10%20PRO%20X%20Foam%27%2C%20%27file%27%3A%20%27KZ%20ZS10%20PRO%20Foam%27%7D%2C%20%7B%27name%27%3A%20%27PR1%27%2C%20%27file%27%3A%20%27KZ%20PR1%27%7D%2C%20%7B%27name%27%3A%20%27EDCX%27%2C%20%27file%27%3A%20%27KZ%20Edcx%27%7D%2C%20%7B%27name%27%3A%20%27AS16%20PRO%27%2C%20%27file%27%3A%20%27KZ%20AS16%20Pro%27%7D%2C%20%7B%27name%27%3A%20%27ZVX%27%2C%20%27file%27%3A%20%27Kz%20Zvx%27%7D%2C%20%7B%27name%27%3A%20%27Castor%27%2C%20%27file%27%3A%20%27Kz%20Castor%27%7D%2C%20%7B%27name%27%3A%20%27Xtra%27%2C%20%27file%27%3A%20%27Kzxtra%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20PR2%27%2C%20%27file%27%3A%20%27KZ%20X%20HBB%20PR2%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Leisurely Audio', 'phones': [{'name': 'L8', 'file': 'Leisurely Audio L8'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Leisurely%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27L8%27%2C%20%27file%27%3A%20%27Leisurely%20Audio%20L8%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'LetShuoer', 'phones': [{'name': 'EJ09', 'file': 'Shuoer ej09'}, {'name': 'Conductor', 'file': 'Shuoer Conductor'}, {'name': 'TAPE', 'file': 'Shuoer TAPE'}, {'name': 'EJ07', 'file': 'Shuoer EJ07 OG'}, {'name': 'EJ07M', 'file': 'Shuoer EJ07M'}, {'name': 'S12', 'file': 'Shuoer S12'}, {'name': 'S12 ULTRA', 'file': 'Let S12 Ult'}, {'name': 'Z12', 'file': 'Shu z12'}, {'name': 'S12 PRO', 'file': 'Shuoer s12 pro'}, {'name': 'SB S12', 'file': 'Shuoer SB S12'}, {'name': 'Soloist', 'file': 'Shuoer Soloist'}, {'name': 'X HBB EJ07M', 'file': '7Hz i88 2'}, {'name': 'X HBB EJ07M 2', 'file': 'Shuoer KL 3'}, {'name': 'Mystic 8', 'reviewScore': '4', 'reviewLink': '', 'price': '$989', 'shopLink': 'https://letshuoer.net/products/letshuoer-mystic-8-wired-iem-hifi-earphones-8-ba-drivers-in-ear-monitor', 'file': 'Myst R'}, {'name': 'Galileo', 'file': 'Letshuoer Galileo'}, {'name': 'DX1', 'file': 'Let Dx'}, {'name': 'DZ4', 'file': 'Lets DZ4'}, {'name': 'DZ4 PR pulled blocked', 'file': 'Rascal'}, {'name': 'S15', 'file': 'Lets S15'}, {'name': 'EMBER', 'file': 'Let Emb'}, {'name': 'S08', 'file': 'Let S08'}, {'name': 'CADENZA 12', 'file': 'Letshuoer 12'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27LetShuoer%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27EJ09%27%2C%20%27file%27%3A%20%27Shuoer%20ej09%27%7D%2C%20%7B%27name%27%3A%20%27Conductor%27%2C%20%27file%27%3A%20%27Shuoer%20Conductor%27%7D%2C%20%7B%27name%27%3A%20%27TAPE%27%2C%20%27file%27%3A%20%27Shuoer%20TAPE%27%7D%2C%20%7B%27name%27%3A%20%27EJ07%27%2C%20%27file%27%3A%20%27Shuoer%20EJ07%20OG%27%7D%2C%20%7B%27name%27%3A%20%27EJ07M%27%2C%20%27file%27%3A%20%27Shuoer%20EJ07M%27%7D%2C%20%7B%27name%27%3A%20%27S12%27%2C%20%27file%27%3A%20%27Shuoer%20S12%27%7D%2C%20%7B%27name%27%3A%20%27S12%20ULTRA%27%2C%20%27file%27%3A%20%27Let%20S12%20Ult%27%7D%2C%20%7B%27name%27%3A%20%27Z12%27%2C%20%27file%27%3A%20%27Shu%20z12%27%7D%2C%20%7B%27name%27%3A%20%27S12%20PRO%27%2C%20%27file%27%3A%20%27Shuoer%20s12%20pro%27%7D%2C%20%7B%27name%27%3A%20%27SB%20S12%27%2C%20%27file%27%3A%20%27Shuoer%20SB%20S12%27%7D%2C%20%7B%27name%27%3A%20%27Soloist%27%2C%20%27file%27%3A%20%27Shuoer%20Soloist%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20EJ07M%27%2C%20%27file%27%3A%20%277Hz%20i88%202%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20EJ07M%202%27%2C%20%27file%27%3A%20%27Shuoer%20KL%203%27%7D%2C%20%7B%27name%27%3A%20%27Mystic%208%27%2C%20%27reviewScore%27%3A%20%274%27%2C%20%27reviewLink%27%3A%20%27%27%2C%20%27price%27%3A%20%27%24989%27%2C%20%27shopLink%27%3A%20%27https%3A//letshuoer.net/products/letshuoer-mystic-8-wired-iem-hifi-earphones-8-ba-drivers-in-ear-monitor%27%2C%20%27file%27%3A%20%27Myst%20R%27%7D%2C%20%7B%27name%27%3A%20%27Galileo%27%2C%20%27file%27%3A%20%27Letshuoer%20Galileo%27%7D%2C%20%7B%27name%27%3A%20%27DX1%27%2C%20%27file%27%3A%20%27Let%20Dx%27%7D%2C%20%7B%27name%27%3A%20%27DZ4%27%2C%20%27file%27%3A%20%27Lets%20DZ4%27%7D%2C%20%7B%27name%27%3A%20%27DZ4%20PR%20pulled%20blocked%27%2C%20%27file%27%3A%20%27Rascal%27%7D%2C%20%7B%27name%27%3A%20%27S15%27%2C%20%27file%27%3A%20%27Lets%20S15%27%7D%2C%20%7B%27name%27%3A%20%27EMBER%27%2C%20%27file%27%3A%20%27Let%20Emb%27%7D%2C%20%7B%27name%27%3A%20%27S08%27%2C%20%27file%27%3A%20%27Let%20S08%27%7D%2C%20%7B%27name%27%3A%20%27CADENZA%2012%27%2C%20%27file%27%3A%20%27Letshuoer%2012%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'LimeEars', 'phones': [{'name': 'TERRA', 'file': 'Limeears Terra'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27LimeEars%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27TERRA%27%2C%20%27file%27%3A%20%27Limeears%20Terra%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'LZ Hifi', 'phones': [{'name': 'A7 gold', 'file': 'LZ A7 Gold'}, {'name': 'A2 Pro', 'file': 'LZ A2 Pro'}, {'name': 'A4 Pro', 'file': 'LZ A4 PRO'}, {'name': 'A4 Pro RED', 'file': 'LZ A4 PRO Red'}, {'name': 'A4 Pro BLUE', 'file': 'LZ A4 PRO Blue'}, {'name': 'AX Gold', 'file': 'LZ AX Gold'}, {'name': 'AX Gold Off switch', 'file': 'LZ AX Gold Off'}, {'name': 'AX Silver', 'file': 'LZ AX Silver'}, {'name': 'AX Blue', 'file': 'LZ AX Blue'}, {'name': 'AX Red', 'file': 'LZ AX Red'}, {'name': 'AX Black', 'file': 'LZ AX Black'}, {'name': 'AX Black Off Off switch', 'file': 'LZ AX Black Off'}, {'name': 'A4 Pro SILVER', 'file': 'LZ A4 PRO Silver'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27LZ%20Hifi%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27A7%20gold%27%2C%20%27file%27%3A%20%27LZ%20A7%20Gold%27%7D%2C%20%7B%27name%27%3A%20%27A2%20Pro%27%2C%20%27file%27%3A%20%27LZ%20A2%20Pro%27%7D%2C%20%7B%27name%27%3A%20%27A4%20Pro%27%2C%20%27file%27%3A%20%27LZ%20A4%20PRO%27%7D%2C%20%7B%27name%27%3A%20%27A4%20Pro%20RED%27%2C%20%27file%27%3A%20%27LZ%20A4%20PRO%20Red%27%7D%2C%20%7B%27name%27%3A%20%27A4%20Pro%20BLUE%27%2C%20%27file%27%3A%20%27LZ%20A4%20PRO%20Blue%27%7D%2C%20%7B%27name%27%3A%20%27AX%20Gold%27%2C%20%27file%27%3A%20%27LZ%20AX%20Gold%27%7D%2C%20%7B%27name%27%3A%20%27AX%20Gold%20Off%20switch%27%2C%20%27file%27%3A%20%27LZ%20AX%20Gold%20Off%27%7D%2C%20%7B%27name%27%3A%20%27AX%20Silver%27%2C%20%27file%27%3A%20%27LZ%20AX%20Silver%27%7D%2C%20%7B%27name%27%3A%20%27AX%20Blue%27%2C%20%27file%27%3A%20%27LZ%20AX%20Blue%27%7D%2C%20%7B%27name%27%3A%20%27AX%20Red%27%2C%20%27file%27%3A%20%27LZ%20AX%20Red%27%7D%2C%20%7B%27name%27%3A%20%27AX%20Black%27%2C%20%27file%27%3A%20%27LZ%20AX%20Black%27%7D%2C%20%7B%27name%27%3A%20%27AX%20Black%20Off%20Off%20switch%27%2C%20%27file%27%3A%20%27LZ%20AX%20Black%20Off%27%7D%2C%20%7B%27name%27%3A%20%27A4%20Pro%20SILVER%27%2C%20%27file%27%3A%20%27LZ%20A4%20PRO%20Silver%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Madoo', 'phones': [{'name': 'T711', 'file': 'Madoo T711'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Madoo%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27T711%27%2C%20%27file%27%3A%20%27Madoo%20T711%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'M-Audio', 'phones': [{'name': 'Q40', 'file': 'M - Audio Q40'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27M-Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Q40%27%2C%20%27file%27%3A%20%27M%20-%20Audio%20Q40%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'MIM Audio', 'phones': [{'name': 'Dark Magician', 'file': 'MIM Audio Dark Magician'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27MIM%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Dark%20Magician%27%2C%20%27file%27%3A%20%27MIM%20Audio%20Dark%20Magician%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'FOSTEX', 'phones': [{'name': 'T20 stock', 'file': 'T20 Raw'}, {'name': 'T20 lvl 2', 'file': 'T20 Mod1'}, {'name': 'T20 lvl 3', 'file': 'T20 Mod 3'}, {'name': 'Modhouse T50RP', 'file': 'T50RP MKIII'}, {'name': 'Modhouse T60RP', 'file': 'T60RP MkIII'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27FOSTEX%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27T20%20stock%27%2C%20%27file%27%3A%20%27T20%20Raw%27%7D%2C%20%7B%27name%27%3A%20%27T20%20lvl%202%27%2C%20%27file%27%3A%20%27T20%20Mod1%27%7D%2C%20%7B%27name%27%3A%20%27T20%20lvl%203%27%2C%20%27file%27%3A%20%27T20%20Mod%203%27%7D%2C%20%7B%27name%27%3A%20%27Modhouse%20T50RP%27%2C%20%27file%27%3A%20%27T50RP%20MKIII%27%7D%2C%20%7B%27name%27%3A%20%27Modhouse%20T60RP%27%2C%20%27file%27%3A%20%27T60RP%20MkIII%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Melodic Artification', 'phones': [{'name': 'ALTER EGO', 'file': 'Mal Bass'}, {'name': 'ALTER EGO BASS', 'file': 'Mal Neu'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Melodic%20Artification%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27ALTER%20EGO%27%2C%20%27file%27%3A%20%27Mal%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27ALTER%20EGO%20BASS%27%2C%20%27file%27%3A%20%27Mal%20Neu%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Moji Monica', 'phones': [{'name': 'H2O', 'file': 'Moji Monica H2O'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Moji%20Monica%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27H2O%27%2C%20%27file%27%3A%20%27Moji%20Monica%20H2O%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Moondrop', 'phones': [{'name': 'Illumination', 'file': 'Moondrop Illumination'}, {'name': 'Aria', 'file': 'Moondrop Aria'}, {'name': 'SSr', 'file': 'Moondrop ssr'}, {'name': ' X TAGO Harmon SP', 'file': 'Moondrop X Tago'}, {'name': 'Starfield', 'file': 'Moondrop Starfield'}, {'name': 'Variations', 'file': 'Moondrop Variations'}, {'name': 'DUSK', 'file': 'Moondrop Dusk'}, {'name': 'DUSK 2 L (3.5)', 'file': 'Moon Dusk 2 L'}, {'name': 'DUSK 2 R (3.5)', 'file': 'Moon Dusk 2 R'}, {'name': 'DUSK 2 DSP', 'file': 'Dsp'}, {'name': 'DUSK 2 Bass+ DSP', 'file': 'Dsp Bass'}, {'name': 'DUSK 2 Diffuse Tilt DSP', 'file': 'Dsp Dif Tilt'}, {'name': 'DUSK 2 V DSP', 'file': 'Dsp Vv'}, {'name': 'DUSK 2 Harman DSP', 'file': 'Dsp Harmy'}, {'name': 'Blessing 3', 'file': 'Moondrop Blessing 3'}, {'name': 'KATO', 'file': 'Moondrop KATO'}, {'name': 'CHU', 'file': 'Moondrop Chu 3'}, {'name': 'Stellaris Silicon', 'file': 'Moondrop Stellaris Sil'}, {'name': 'Stellaris Foam', 'file': 'Moondrop Stellaris Fo'}, {'name': 'ARIA Snow', 'file': 'Moondrop Aria Snow'}, {'name': 'ALICE TWS', 'file': 'Moondrop Alice TWS'}, {'name': 'Beautiful World', 'file': 'Moon Be'}, {'name': 'SOLIS 2', 'file': 'Moondrop Solis 2'}, {'name': 'Quarks DSP', 'file': 'Moondrop Quarks Dsp'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Moondrop%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Illumination%27%2C%20%27file%27%3A%20%27Moondrop%20Illumination%27%7D%2C%20%7B%27name%27%3A%20%27Aria%27%2C%20%27file%27%3A%20%27Moondrop%20Aria%27%7D%2C%20%7B%27name%27%3A%20%27SSr%27%2C%20%27file%27%3A%20%27Moondrop%20ssr%27%7D%2C%20%7B%27name%27%3A%20%27%20X%20TAGO%20Harmon%20SP%27%2C%20%27file%27%3A%20%27Moondrop%20X%20Tago%27%7D%2C%20%7B%27name%27%3A%20%27Starfield%27%2C%20%27file%27%3A%20%27Moondrop%20Starfield%27%7D%2C%20%7B%27name%27%3A%20%27Variations%27%2C%20%27file%27%3A%20%27Moondrop%20Variations%27%7D%2C%20%7B%27name%27%3A%20%27DUSK%27%2C%20%27file%27%3A%20%27Moondrop%20Dusk%27%7D%2C%20%7B%27name%27%3A%20%27DUSK%202%20L%20%283.5%29%27%2C%20%27file%27%3A%20%27Moon%20Dusk%202%20L%27%7D%2C%20%7B%27name%27%3A%20%27DUSK%202%20R%20%283.5%29%27%2C%20%27file%27%3A%20%27Moon%20Dusk%202%20R%27%7D%2C%20%7B%27name%27%3A%20%27DUSK%202%20DSP%27%2C%20%27file%27%3A%20%27Dsp%27%7D%2C%20%7B%27name%27%3A%20%27DUSK%202%20Bass%2B%20DSP%27%2C%20%27file%27%3A%20%27Dsp%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27DUSK%202%20Diffuse%20Tilt%20DSP%27%2C%20%27file%27%3A%20%27Dsp%20Dif%20Tilt%27%7D%2C%20%7B%27name%27%3A%20%27DUSK%202%20V%20DSP%27%2C%20%27file%27%3A%20%27Dsp%20Vv%27%7D%2C%20%7B%27name%27%3A%20%27DUSK%202%20Harman%20DSP%27%2C%20%27file%27%3A%20%27Dsp%20Harmy%27%7D%2C%20%7B%27name%27%3A%20%27Blessing%203%27%2C%20%27file%27%3A%20%27Moondrop%20Blessing%203%27%7D%2C%20%7B%27name%27%3A%20%27KATO%27%2C%20%27file%27%3A%20%27Moondrop%20KATO%27%7D%2C%20%7B%27name%27%3A%20%27CHU%27%2C%20%27file%27%3A%20%27Moondrop%20Chu%203%27%7D%2C%20%7B%27name%27%3A%20%27Stellaris%20Silicon%27%2C%20%27file%27%3A%20%27Moondrop%20Stellaris%20Sil%27%7D%2C%20%7B%27name%27%3A%20%27Stellaris%20Foam%27%2C%20%27file%27%3A%20%27Moondrop%20Stellaris%20Fo%27%7D%2C%20%7B%27name%27%3A%20%27ARIA%20Snow%27%2C%20%27file%27%3A%20%27Moondrop%20Aria%20Snow%27%7D%2C%20%7B%27name%27%3A%20%27ALICE%20TWS%27%2C%20%27file%27%3A%20%27Moondrop%20Alice%20TWS%27%7D%2C%20%7B%27name%27%3A%20%27Beautiful%20World%27%2C%20%27file%27%3A%20%27Moon%20Be%27%7D%2C%20%7B%27name%27%3A%20%27SOLIS%202%27%2C%20%27file%27%3A%20%27Moondrop%20Solis%202%27%7D%2C%20%7B%27name%27%3A%20%27Quarks%20DSP%27%2C%20%27file%27%3A%20%27Moondrop%20Quarks%20Dsp%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Myer Audio', 'phones': [{'name': 'D62', 'file': 'Cklvx Ckd62'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Myer%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27D62%27%2C%20%27file%27%3A%20%27Cklvx%20Ckd62%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'MX Ray Audio', 'phones': [{'name': 'MF1', 'file': 'Mx Ray Mf1'}, {'name': 'MF1 3 cov', 'file': 'Mx Ray Blocked'}, {'name': 'MX Blocked', 'file': 'Mx All Block'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27MX%20Ray%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27MF1%27%2C%20%27file%27%3A%20%27Mx%20Ray%20Mf1%27%7D%2C%20%7B%27name%27%3A%20%27MF1%203%20cov%27%2C%20%27file%27%3A%20%27Mx%20Ray%20Blocked%27%7D%2C%20%7B%27name%27%3A%20%27MX%20Blocked%27%2C%20%27file%27%3A%20%27Mx%20All%20Block%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'MORITZ', 'phones': [{'name': 'ENZO DD', 'file': 'Moritz Ddd'}, {'name': 'ENZO', 'file': 'Moritz Enzo'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27MORITZ%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27ENZO%20DD%27%2C%20%27file%27%3A%20%27Moritz%20Ddd%27%7D%2C%20%7B%27name%27%3A%20%27ENZO%27%2C%20%27file%27%3A%20%27Moritz%20Enzo%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'MUSE', 'phones': [{'name': 'POWER', 'file': 'Muse Power'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27MUSE%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27POWER%27%2C%20%27file%27%3A%20%27Muse%20Power%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Naga Audio ', 'phones': [{'name': 'SIRIUS', 'file': 'Naga Audio Sirius'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Naga%20Audio%20%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27SIRIUS%27%2C%20%27file%27%3A%20%27Naga%20Audio%20Sirius%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'ND Audio', 'phones': [{'name': 'PLANET', 'file': 'Nd Planet'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27ND%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27PLANET%27%2C%20%27file%27%3A%20%27Nd%20Planet%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Night Oblivion', 'phones': [{'name': 'Butastur DU', 'file': 'No Du'}, {'name': 'Butastur UU', 'file': 'No Uu'}, {'name': 'Butastur DD', 'file': 'No DD'}, {'name': 'Butastur UD', 'file': 'No Ud'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Night%20Oblivion%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Butastur%20DU%27%2C%20%27file%27%3A%20%27No%20Du%27%7D%2C%20%7B%27name%27%3A%20%27Butastur%20UU%27%2C%20%27file%27%3A%20%27No%20Uu%27%7D%2C%20%7B%27name%27%3A%20%27Butastur%20DD%27%2C%20%27file%27%3A%20%27No%20DD%27%7D%2C%20%7B%27name%27%3A%20%27Butastur%20UD%27%2C%20%27file%27%3A%20%27No%20Ud%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Noble Audio', 'phones': [{'name': 'Sultan', 'file': 'Noble Sultan'}, {'name': 'Kublai Khan', 'file': 'Noble Audio Kublai Khan'}, {'name': 'Spartacus', 'file': 'Nob Spar'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Noble%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Sultan%27%2C%20%27file%27%3A%20%27Noble%20Sultan%27%7D%2C%20%7B%27name%27%3A%20%27Kublai%20Khan%27%2C%20%27file%27%3A%20%27Noble%20Audio%20Kublai%20Khan%27%7D%2C%20%7B%27name%27%3A%20%27Spartacus%27%2C%20%27file%27%3A%20%27Nob%20Spar%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'NF Audio ', 'phones': [{'name': 'NA2', 'file': 'NF Audio NA2'}, {'name': 'N2+', 'file': 'NF Audio N2+'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27NF%20Audio%20%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27NA2%27%2C%20%27file%27%3A%20%27NF%20Audio%20NA2%27%7D%2C%20%7B%27name%27%3A%20%27N2%2B%27%2C%20%27file%27%3A%20%27NF%20Audio%20N2%2B%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'NiceHCK', 'phones': [{'name': 'F1', 'file': 'Nice Hck F1'}, {'name': 'F1 Gold Filter', 'file': 'Nice Hck F1 Gold'}, {'name': 'F1 Black Filter', 'file': 'Nice Hck F1 Black'}, {'name': 'TopGuy', 'file': 'NiceHck Topguy'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27NiceHCK%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27F1%27%2C%20%27file%27%3A%20%27Nice%20Hck%20F1%27%7D%2C%20%7B%27name%27%3A%20%27F1%20Gold%20Filter%27%2C%20%27file%27%3A%20%27Nice%20Hck%20F1%20Gold%27%7D%2C%20%7B%27name%27%3A%20%27F1%20Black%20Filter%27%2C%20%27file%27%3A%20%27Nice%20Hck%20F1%20Black%27%7D%2C%20%7B%27name%27%3A%20%27TopGuy%27%2C%20%27file%27%3A%20%27NiceHck%20Topguy%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Nightjar Acoustic', 'phones': [{'name': 'Singularity', 'file': 'Night Sing'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Nightjar%20Acoustic%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Singularity%27%2C%20%27file%27%3A%20%27Night%20Sing%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'OPEN AUDIO', 'phones': [{'name': 'Mercury', 'file': 'Open Audio Mercury'}, {'name': 'Alkaid', 'file': 'Open Audio Alkaid'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27OPEN%20AUDIO%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Mercury%27%2C%20%27file%27%3A%20%27Open%20Audio%20Mercury%27%7D%2C%20%7B%27name%27%3A%20%27Alkaid%27%2C%20%27file%27%3A%20%27Open%20Audio%20Alkaid%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Oriolus', 'phones': [{'name': 'Traillii', 'file': 'Oriolus Trailli'}, {'name': 'Traillii Ti', 'file': 'Orio Ti'}, {'name': 'Monachaa', 'file': 'Or Monachaa'}, {'name': 'Szalayi', 'file': 'Oriolus Szalayi'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Oriolus%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Traillii%27%2C%20%27file%27%3A%20%27Oriolus%20Trailli%27%7D%2C%20%7B%27name%27%3A%20%27Traillii%20Ti%27%2C%20%27file%27%3A%20%27Orio%20Ti%27%7D%2C%20%7B%27name%27%3A%20%27Monachaa%27%2C%20%27file%27%3A%20%27Or%20Monachaa%27%7D%2C%20%7B%27name%27%3A%20%27Szalayi%27%2C%20%27file%27%3A%20%27Oriolus%20Szalayi%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Ovidius', 'phones': [{'name': 'RX 100', 'file': 'Ovidius RX100'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Ovidius%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27RX%20100%27%2C%20%27file%27%3A%20%27Ovidius%20RX100%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'PENON', 'phones': [{'name': 'Serial', 'file': 'Penon Serial'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27PENON%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Serial%27%2C%20%27file%27%3A%20%27Penon%20Serial%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'PMV', 'phones': [{'name': 'PP', 'file': 'PMV PP'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27PMV%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27PP%27%2C%20%27file%27%3A%20%27PMV%20PP%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'PMG AUDIO', 'phones': [{'name': 'APX', 'file': 'Pmg Audio Apx'}, {'name': 'ME', 'file': 'Pmg B'}, {'name': 'APX SE', 'file': 'Pmg Ase'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27PMG%20AUDIO%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27APX%27%2C%20%27file%27%3A%20%27Pmg%20Audio%20Apx%27%7D%2C%20%7B%27name%27%3A%20%27ME%27%2C%20%27file%27%3A%20%27Pmg%20B%27%7D%2C%20%7B%27name%27%3A%20%27APX%20SE%27%2C%20%27file%27%3A%20%27Pmg%20Ase%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'PUNCH AUDIO', 'phones': [{'name': 'MARTILO Silicon', 'file': 'Punch Marti'}, {'name': 'PORTAZO', 'file': 'Pun Port'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27PUNCH%20AUDIO%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27MARTILO%20Silicon%27%2C%20%27file%27%3A%20%27Punch%20Marti%27%7D%2C%20%7B%27name%27%3A%20%27PORTAZO%27%2C%20%27file%27%3A%20%27Pun%20Port%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'QDC', 'phones': [{'name': 'QDC V14', 'file': 'QDC V14 Standard'}, {'name': 'ACG', 'file': 'QDC V14 ACG'}, {'name': 'Classic', 'file': 'QDC V14 classic'}, {'name': 'Overtone', 'file': 'QDC V14 Overtone'}, {'name': 'POP', 'file': 'QDC V14 Pop'}, {'name': 'Rock', 'file': 'QDC V14 Rock'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27QDC%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27QDC%20V14%27%2C%20%27file%27%3A%20%27QDC%20V14%20Standard%27%7D%2C%20%7B%27name%27%3A%20%27ACG%27%2C%20%27file%27%3A%20%27QDC%20V14%20ACG%27%7D%2C%20%7B%27name%27%3A%20%27Classic%27%2C%20%27file%27%3A%20%27QDC%20V14%20classic%27%7D%2C%20%7B%27name%27%3A%20%27Overtone%27%2C%20%27file%27%3A%20%27QDC%20V14%20Overtone%27%7D%2C%20%7B%27name%27%3A%20%27POP%27%2C%20%27file%27%3A%20%27QDC%20V14%20Pop%27%7D%2C%20%7B%27name%27%3A%20%27Rock%27%2C%20%27file%27%3A%20%27QDC%20V14%20Rock%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'QoA', 'phones': [{'name': 'Mojito', 'file': 'QoA Mojito'}, {'name': 'Margarita', 'file': 'QOA Margarita'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27QoA%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Mojito%27%2C%20%27file%27%3A%20%27QoA%20Mojito%27%7D%2C%20%7B%27name%27%3A%20%27Margarita%27%2C%20%27file%27%3A%20%27QOA%20Margarita%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'OCTAVE', 'phones': [{'name': 'Tigerism', 'file': 'Octave Tigerism'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27OCTAVE%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Tigerism%27%2C%20%27file%27%3A%20%27Octave%20Tigerism%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'QKZ', 'phones': [{'name': 'VK4', 'file': 'QKZ VK4'}, {'name': 'ZX3', 'file': 'QKZ ZX3'}, {'name': 'ZXN', 'file': 'QKZ ZXN'}, {'name': 'ZXRx', 'file': 'QKZ ZXR X'}, {'name': 'ZXT', 'file': 'QKZ ZXT'}, {'name': 'ZX2', 'file': 'QKZ ZX2'}, {'name': 'ZAX 2', 'file': 'QKZ ZAX 2'}, {'name': 'ZXD', 'file': 'QKZ ZXD'}, {'name': 'ZXDx', 'file': 'QKZ ZXD x'}, {'name': 'QKZ X HBB', 'file': '55Hz Qkz Sil'}, {'name': 'x HBB HADES', 'file': 'Samyz'}, {'name': ' X HBB KHAN', 'file': 'Sample 42'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27QKZ%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27VK4%27%2C%20%27file%27%3A%20%27QKZ%20VK4%27%7D%2C%20%7B%27name%27%3A%20%27ZX3%27%2C%20%27file%27%3A%20%27QKZ%20ZX3%27%7D%2C%20%7B%27name%27%3A%20%27ZXN%27%2C%20%27file%27%3A%20%27QKZ%20ZXN%27%7D%2C%20%7B%27name%27%3A%20%27ZXRx%27%2C%20%27file%27%3A%20%27QKZ%20ZXR%20X%27%7D%2C%20%7B%27name%27%3A%20%27ZXT%27%2C%20%27file%27%3A%20%27QKZ%20ZXT%27%7D%2C%20%7B%27name%27%3A%20%27ZX2%27%2C%20%27file%27%3A%20%27QKZ%20ZX2%27%7D%2C%20%7B%27name%27%3A%20%27ZAX%202%27%2C%20%27file%27%3A%20%27QKZ%20ZAX%202%27%7D%2C%20%7B%27name%27%3A%20%27ZXD%27%2C%20%27file%27%3A%20%27QKZ%20ZXD%27%7D%2C%20%7B%27name%27%3A%20%27ZXDx%27%2C%20%27file%27%3A%20%27QKZ%20ZXD%20x%27%7D%2C%20%7B%27name%27%3A%20%27QKZ%20X%20HBB%27%2C%20%27file%27%3A%20%2755Hz%20Qkz%20Sil%27%7D%2C%20%7B%27name%27%3A%20%27x%20HBB%20HADES%27%2C%20%27file%27%3A%20%27Samyz%27%7D%2C%20%7B%27name%27%3A%20%27%20X%20HBB%20KHAN%27%2C%20%27file%27%3A%20%27Sample%2042%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Raptgo', 'phones': [{'name': 'GR-2CP', 'file': 'Raptgo GR-2CP'}, {'name': 'GR-40CP', 'file': 'Raptgo-40CP'}, {'name': 'X HBB HOOK X', 'file': '55Hz Hok'}, {'name': 'HOOK X', 'file': 'Raptgo Huk X'}, {'name': 'Leaf', 'file': 'Raptgo Leaf'}, {'name': 'BRIDGE', 'file': 'Raptgo Bridge'}, {'name': 'BRIDGE Dip 1', 'file': 'Raptgo Dip 1'}, {'name': 'BRIDGE Dip 2', 'file': 'Raptgo Dip2'}, {'name': 'BRIDGE HF', 'file': 'Raptgo Bridge HF'}, {'name': 'BRIDGE E', 'file': 'Raptgo Bridge Equallibrium'}, {'name': 'HOOK X Closed Back', 'file': 'Raptgo Hook X Closed Back'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Raptgo%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27GR-2CP%27%2C%20%27file%27%3A%20%27Raptgo%20GR-2CP%27%7D%2C%20%7B%27name%27%3A%20%27GR-40CP%27%2C%20%27file%27%3A%20%27Raptgo-40CP%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20HOOK%20X%27%2C%20%27file%27%3A%20%2755Hz%20Hok%27%7D%2C%20%7B%27name%27%3A%20%27HOOK%20X%27%2C%20%27file%27%3A%20%27Raptgo%20Huk%20X%27%7D%2C%20%7B%27name%27%3A%20%27Leaf%27%2C%20%27file%27%3A%20%27Raptgo%20Leaf%27%7D%2C%20%7B%27name%27%3A%20%27BRIDGE%27%2C%20%27file%27%3A%20%27Raptgo%20Bridge%27%7D%2C%20%7B%27name%27%3A%20%27BRIDGE%20Dip%201%27%2C%20%27file%27%3A%20%27Raptgo%20Dip%201%27%7D%2C%20%7B%27name%27%3A%20%27BRIDGE%20Dip%202%27%2C%20%27file%27%3A%20%27Raptgo%20Dip2%27%7D%2C%20%7B%27name%27%3A%20%27BRIDGE%20HF%27%2C%20%27file%27%3A%20%27Raptgo%20Bridge%20HF%27%7D%2C%20%7B%27name%27%3A%20%27BRIDGE%20E%27%2C%20%27file%27%3A%20%27Raptgo%20Bridge%20Equallibrium%27%7D%2C%20%7B%27name%27%3A%20%27HOOK%20X%20Closed%20Back%27%2C%20%27file%27%3A%20%27Raptgo%20Hook%20X%20Closed%20Back%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Reecho', 'phones': [{'name': 'Insects Awaken', 'file': 'Reecho Insects Awaken'}, {'name': 'Spring 1', 'file': 'Reecho Spring 1'}, {'name': 'SG-03', 'file': 'Reecho SG-03'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Reecho%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Insects%20Awaken%27%2C%20%27file%27%3A%20%27Reecho%20Insects%20Awaken%27%7D%2C%20%7B%27name%27%3A%20%27Spring%201%27%2C%20%27file%27%3A%20%27Reecho%20Spring%201%27%7D%2C%20%7B%27name%27%3A%20%27SG-03%27%2C%20%27file%27%3A%20%27Reecho%20SG-03%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Rose Technics', 'phones': [{'name': 'QT9 MK2', 'file': 'Rose Technics QT9 MK2'}, {'name': 'Aura', 'file': 'Rose Technics Aura'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Rose%20Technics%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27QT9%20MK2%27%2C%20%27file%27%3A%20%27Rose%20Technics%20QT9%20MK2%27%7D%2C%20%7B%27name%27%3A%20%27Aura%27%2C%20%27file%27%3A%20%27Rose%20Technics%20Aura%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'SEEK Real', 'phones': [{'name': 'Airship', 'file': 'SEEK Real Airship'}, {'name': 'Fusion', 'file': 'SEEK Real Fusion'}, {'name': 'Proser', 'file': 'SEEK Real Proser'}, {'name': 'DAWN', 'file': 'Seek Real Dawn'}, {'name': 'DAWN PRO', 'file': 'Seek Real Dawn Pro'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27SEEK%20Real%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Airship%27%2C%20%27file%27%3A%20%27SEEK%20Real%20Airship%27%7D%2C%20%7B%27name%27%3A%20%27Fusion%27%2C%20%27file%27%3A%20%27SEEK%20Real%20Fusion%27%7D%2C%20%7B%27name%27%3A%20%27Proser%27%2C%20%27file%27%3A%20%27SEEK%20Real%20Proser%27%7D%2C%20%7B%27name%27%3A%20%27DAWN%27%2C%20%27file%27%3A%20%27Seek%20Real%20Dawn%27%7D%2C%20%7B%27name%27%3A%20%27DAWN%20PRO%27%2C%20%27file%27%3A%20%27Seek%20Real%20Dawn%20Pro%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'SeeAudio', 'phones': [{'name': 'NEO', 'file': 'Seeaudio Neo'}, {'name': 'YUME', 'file': 'Seeaudio Yume'}, {'name': 'YUME II', 'file': '55Hz See'}, {'name': 'X Zeos', 'file': 'Sample Rin'}, {'name': 'Shimin li Encounter', 'file': 'Tangzu Shiminli Encounter'}, {'name': 'X Crinacle Midnight', 'file': 'SeeAudio X Crinacle Midnight'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27SeeAudio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27NEO%27%2C%20%27file%27%3A%20%27Seeaudio%20Neo%27%7D%2C%20%7B%27name%27%3A%20%27YUME%27%2C%20%27file%27%3A%20%27Seeaudio%20Yume%27%7D%2C%20%7B%27name%27%3A%20%27YUME%20II%27%2C%20%27file%27%3A%20%2755Hz%20See%27%7D%2C%20%7B%27name%27%3A%20%27X%20Zeos%27%2C%20%27file%27%3A%20%27Sample%20Rin%27%7D%2C%20%7B%27name%27%3A%20%27Shimin%20li%20Encounter%27%2C%20%27file%27%3A%20%27Tangzu%20Shiminli%20Encounter%27%7D%2C%20%7B%27name%27%3A%20%27X%20Crinacle%20Midnight%27%2C%20%27file%27%3A%20%27SeeAudio%20X%20Crinacle%20Midnight%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Sample', 'phones': [{'name': 'Sample 1', 'file': 'Sam 2'}, {'name': 'Sam 55', 'file': 'F5'}, {'name': 'Sample 21', 'file': 'Sam21'}, {'name': 'Sam 6R', 'file': 'Fff F'}, {'name': 'Sam 6W', 'file': 'FF Wid'}, {'name': 'Sample Z', 'file': 'Sam Z'}, {'name': 'Sample 42', 'file': 'Sample 42'}, {'name': 'Sample TR B', 'file': 'Sample TR B'}, {'name': 'H Silver', 'file': 'Sample Hs'}, {'name': 'letsgo', 'file': 'S12 Cie'}, {'name': 'Sam Kh', 'file': 'Sam Kh'}, {'name': 'Qb', 'file': 'Sam B'}, {'name': 'Q no fil', 'file': 'Sam No Fil'}, {'name': 'Qn', 'file': 'Sam N'}, {'name': '250', 'file': 'Sam 250'}, {'name': 'Olina dsp', 'file': 'Bra R'}, {'name': 'Olina riku dsp', 'file': 'Oli Riku'}, {'name': 'Riku one dsp', 'file': 'Rik Dsp'}, {'name': 'River', 'file': 'Qa'}, {'name': '1123', 'file': 'Qk'}, {'name': 'Fatty', 'file': 'Fat Sams'}, {'name': '11 ', 'file': '11'}, {'name': '1207', 'file': 'Ealm Sil'}, {'name': '1205', 'file': 'S Pt'}, {'name': 'TANG', 'file': 'San Tang'}, {'name': 'cuek', 'file': 'Qkay R'}, {'name': 'Sim 3', 'file': 'Sim 3'}, {'name': 'Sim 3 B', 'file': 'Sim 3 B'}, {'name': 'FLAG', 'file': ''}, {'name': 'Fatty 2', 'file': 'Fatty 2'}, {'name': 'Fatty 4', 'file': 'Fatty 4'}, {'name': 'Fatty 3', 'file': 'Fatty 3'}, {'name': 'Qb', 'file': 'Qb'}, {'name': 'Canpur Bass+', 'file': 'Canpur Dsp Bass'}, {'name': 'STORM Bass+', 'file': 'Storm Dsp Bass'}, {'name': 'Canpur Diffuse Tilt', 'file': 'Canpur Dif Tilt'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Sample%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Sample%201%27%2C%20%27file%27%3A%20%27Sam%202%27%7D%2C%20%7B%27name%27%3A%20%27Sam%2055%27%2C%20%27file%27%3A%20%27F5%27%7D%2C%20%7B%27name%27%3A%20%27Sample%2021%27%2C%20%27file%27%3A%20%27Sam21%27%7D%2C%20%7B%27name%27%3A%20%27Sam%206R%27%2C%20%27file%27%3A%20%27Fff%20F%27%7D%2C%20%7B%27name%27%3A%20%27Sam%206W%27%2C%20%27file%27%3A%20%27FF%20Wid%27%7D%2C%20%7B%27name%27%3A%20%27Sample%20Z%27%2C%20%27file%27%3A%20%27Sam%20Z%27%7D%2C%20%7B%27name%27%3A%20%27Sample%2042%27%2C%20%27file%27%3A%20%27Sample%2042%27%7D%2C%20%7B%27name%27%3A%20%27Sample%20TR%20B%27%2C%20%27file%27%3A%20%27Sample%20TR%20B%27%7D%2C%20%7B%27name%27%3A%20%27H%20Silver%27%2C%20%27file%27%3A%20%27Sample%20Hs%27%7D%2C%20%7B%27name%27%3A%20%27letsgo%27%2C%20%27file%27%3A%20%27S12%20Cie%27%7D%2C%20%7B%27name%27%3A%20%27Sam%20Kh%27%2C%20%27file%27%3A%20%27Sam%20Kh%27%7D%2C%20%7B%27name%27%3A%20%27Qb%27%2C%20%27file%27%3A%20%27Sam%20B%27%7D%2C%20%7B%27name%27%3A%20%27Q%20no%20fil%27%2C%20%27file%27%3A%20%27Sam%20No%20Fil%27%7D%2C%20%7B%27name%27%3A%20%27Qn%27%2C%20%27file%27%3A%20%27Sam%20N%27%7D%2C%20%7B%27name%27%3A%20%27250%27%2C%20%27file%27%3A%20%27Sam%20250%27%7D%2C%20%7B%27name%27%3A%20%27Olina%20dsp%27%2C%20%27file%27%3A%20%27Bra%20R%27%7D%2C%20%7B%27name%27%3A%20%27Olina%20riku%20dsp%27%2C%20%27file%27%3A%20%27Oli%20Riku%27%7D%2C%20%7B%27name%27%3A%20%27Riku%20one%20dsp%27%2C%20%27file%27%3A%20%27Rik%20Dsp%27%7D%2C%20%7B%27name%27%3A%20%27River%27%2C%20%27file%27%3A%20%27Qa%27%7D%2C%20%7B%27name%27%3A%20%271123%27%2C%20%27file%27%3A%20%27Qk%27%7D%2C%20%7B%27name%27%3A%20%27Fatty%27%2C%20%27file%27%3A%20%27Fat%20Sams%27%7D%2C%20%7B%27name%27%3A%20%2711%20%27%2C%20%27file%27%3A%20%2711%27%7D%2C%20%7B%27name%27%3A%20%271207%27%2C%20%27file%27%3A%20%27Ealm%20Sil%27%7D%2C%20%7B%27name%27%3A%20%271205%27%2C%20%27file%27%3A%20%27S%20Pt%27%7D%2C%20%7B%27name%27%3A%20%27TANG%27%2C%20%27file%27%3A%20%27San%20Tang%27%7D%2C%20%7B%27name%27%3A%20%27cuek%27%2C%20%27file%27%3A%20%27Qkay%20R%27%7D%2C%20%7B%27name%27%3A%20%27Sim%203%27%2C%20%27file%27%3A%20%27Sim%203%27%7D%2C%20%7B%27name%27%3A%20%27Sim%203%20B%27%2C%20%27file%27%3A%20%27Sim%203%20B%27%7D%2C%20%7B%27name%27%3A%20%27FLAG%27%2C%20%27file%27%3A%20%27%27%7D%2C%20%7B%27name%27%3A%20%27Fatty%202%27%2C%20%27file%27%3A%20%27Fatty%202%27%7D%2C%20%7B%27name%27%3A%20%27Fatty%204%27%2C%20%27file%27%3A%20%27Fatty%204%27%7D%2C%20%7B%27name%27%3A%20%27Fatty%203%27%2C%20%27file%27%3A%20%27Fatty%203%27%7D%2C%20%7B%27name%27%3A%20%27Qb%27%2C%20%27file%27%3A%20%27Qb%27%7D%2C%20%7B%27name%27%3A%20%27Canpur%20Bass%2B%27%2C%20%27file%27%3A%20%27Canpur%20Dsp%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27STORM%20Bass%2B%27%2C%20%27file%27%3A%20%27Storm%20Dsp%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27Canpur%20Diffuse%20Tilt%27%2C%20%27file%27%3A%20%27Canpur%20Dif%20Tilt%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Semkarch', 'phones': [{'name': 'CNT1', 'file': 'Semkarch CNT'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Semkarch%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27CNT1%27%2C%20%27file%27%3A%20%27Semkarch%20CNT%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Sendy', 'phones': [{'name': 'Peacock', 'file': 'Sendy Peacock'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Sendy%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Peacock%27%2C%20%27file%27%3A%20%27Sendy%20Peacock%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Sennheiser', 'phones': [{'name': 'IE80', 'file': 'Sennhieser IE80'}, {'name': 'IE900', 'file': 'Sennheiser IE900'}, {'name': 'IE900 Standard foam', 'file': 'Sennheiser IE900 Regular Foams'}, {'name': 'IE600', 'file': 'Sennheiser IE600'}, {'name': 'IE200', 'file': 'Sennheiser ie200'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Sennheiser%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27IE80%27%2C%20%27file%27%3A%20%27Sennhieser%20IE80%27%7D%2C%20%7B%27name%27%3A%20%27IE900%27%2C%20%27file%27%3A%20%27Sennheiser%20IE900%27%7D%2C%20%7B%27name%27%3A%20%27IE900%20Standard%20foam%27%2C%20%27file%27%3A%20%27Sennheiser%20IE900%20Regular%20Foams%27%7D%2C%20%7B%27name%27%3A%20%27IE600%27%2C%20%27file%27%3A%20%27Sennheiser%20IE600%27%7D%2C%20%7B%27name%27%3A%20%27IE200%27%2C%20%27file%27%3A%20%27Sennheiser%20ie200%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Shanling', 'phones': [{'name': 'AE3', 'file': 'Shanling AE3'}, {'name': 'ME800 Balanced', 'file': 'Shanling ME800 Balanced'}, {'name': 'ME800 Clear', 'file': 'Shanling ME800 Clear'}, {'name': 'ME800 Vocal', 'file': 'Shanling ME800 Vocal'}, {'name': 'ME800 Warm', 'file': 'Shanling ME800 Warm'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Shanling%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27AE3%27%2C%20%27file%27%3A%20%27Shanling%20AE3%27%7D%2C%20%7B%27name%27%3A%20%27ME800%20Balanced%27%2C%20%27file%27%3A%20%27Shanling%20ME800%20Balanced%27%7D%2C%20%7B%27name%27%3A%20%27ME800%20Clear%27%2C%20%27file%27%3A%20%27Shanling%20ME800%20Clear%27%7D%2C%20%7B%27name%27%3A%20%27ME800%20Vocal%27%2C%20%27file%27%3A%20%27Shanling%20ME800%20Vocal%27%7D%2C%20%7B%27name%27%3A%20%27ME800%20Warm%27%2C%20%27file%27%3A%20%27Shanling%20ME800%20Warm%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'SGOR', 'phones': [{'name': 'Venus', 'file': 'SGOR Venus'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27SGOR%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Venus%27%2C%20%27file%27%3A%20%27SGOR%20Venus%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'SHOZY', 'phones': [{'name': '1.1', 'file': 'Shozy 11'}, {'name': '1.4', 'file': 'Shozy 14'}, {'name': 'P20', 'file': 'Shozy P20'}, {'name': 'B2', 'file': 'Shozy B2'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27SHOZY%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%271.1%27%2C%20%27file%27%3A%20%27Shozy%2011%27%7D%2C%20%7B%27name%27%3A%20%271.4%27%2C%20%27file%27%3A%20%27Shozy%2014%27%7D%2C%20%7B%27name%27%3A%20%27P20%27%2C%20%27file%27%3A%20%27Shozy%20P20%27%7D%2C%20%7B%27name%27%3A%20%27B2%27%2C%20%27file%27%3A%20%27Shozy%20B2%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Senfer', 'phones': [{'name': 'MT300', 'file': 'Senfer MT300'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Senfer%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27MT300%27%2C%20%27file%27%3A%20%27Senfer%20MT300%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'ShortBus Audio', 'phones': [{'name': 'S12 Prometheus', 'file': 'Shortbus Prometheus'}, {'name': 'Super Cunt', 'file': 'Scu'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27ShortBus%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27S12%20Prometheus%27%2C%20%27file%27%3A%20%27Shortbus%20Prometheus%27%7D%2C%20%7B%27name%27%3A%20%27Super%20Cunt%27%2C%20%27file%27%3A%20%27Scu%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Simgot', 'phones': [{'name': 'EA1000', 'file': 'Sim ea1'}, {'name': 'EA1000 Black', 'file': 'Sim Black'}, {'name': 'EA1000 Gold', 'file': 'Sim Gold'}, {'name': 'EN1000', 'file': 'Simgot EN1000'}, {'name': 'EA2000', 'file': 'Simgot Ea2000 Stock'}, {'name': 'EA2000 Alt Filter', 'file': 'Simgot 2000 Blue'}, {'name': 'EA2000 Tuning filter 450', 'file': ''}, {'name': 'EW100', 'file': 'Simgot EW100'}, {'name': 'EW200', 'file': 'Simgot Ew200'}, {'name': 'LM', 'file': 'Sim LM'}, {'name': 'ET142 X', 'file': 'Sim 142 Red'}, {'name': 'ET142 ', 'file': 'Sim154'}, {'name': 'EG280 ', 'file': 'Simgot EG280'}, {'name': 'EM10', 'file': 'Simy 10'}, {'name': 'Supermix 4', 'file': '4'}, {'name': 'Supermix 5', 'file': 'Simmm'}, {'name': 'EA500', 'file': 'Simgot Ea 500'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Simgot%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27EA1000%27%2C%20%27file%27%3A%20%27Sim%20ea1%27%7D%2C%20%7B%27name%27%3A%20%27EA1000%20Black%27%2C%20%27file%27%3A%20%27Sim%20Black%27%7D%2C%20%7B%27name%27%3A%20%27EA1000%20Gold%27%2C%20%27file%27%3A%20%27Sim%20Gold%27%7D%2C%20%7B%27name%27%3A%20%27EN1000%27%2C%20%27file%27%3A%20%27Simgot%20EN1000%27%7D%2C%20%7B%27name%27%3A%20%27EA2000%27%2C%20%27file%27%3A%20%27Simgot%20Ea2000%20Stock%27%7D%2C%20%7B%27name%27%3A%20%27EA2000%20Alt%20Filter%27%2C%20%27file%27%3A%20%27Simgot%202000%20Blue%27%7D%2C%20%7B%27name%27%3A%20%27EA2000%20Tuning%20filter%20450%27%2C%20%27file%27%3A%20%27%27%7D%2C%20%7B%27name%27%3A%20%27EW100%27%2C%20%27file%27%3A%20%27Simgot%20EW100%27%7D%2C%20%7B%27name%27%3A%20%27EW200%27%2C%20%27file%27%3A%20%27Simgot%20Ew200%27%7D%2C%20%7B%27name%27%3A%20%27LM%27%2C%20%27file%27%3A%20%27Sim%20LM%27%7D%2C%20%7B%27name%27%3A%20%27ET142%20X%27%2C%20%27file%27%3A%20%27Sim%20142%20Red%27%7D%2C%20%7B%27name%27%3A%20%27ET142%20%27%2C%20%27file%27%3A%20%27Sim154%27%7D%2C%20%7B%27name%27%3A%20%27EG280%20%27%2C%20%27file%27%3A%20%27Simgot%20EG280%27%7D%2C%20%7B%27name%27%3A%20%27EM10%27%2C%20%27file%27%3A%20%27Simy%2010%27%7D%2C%20%7B%27name%27%3A%20%27Supermix%204%27%2C%20%27file%27%3A%20%274%27%7D%2C%20%7B%27name%27%3A%20%27Supermix%205%27%2C%20%27file%27%3A%20%27Simmm%27%7D%2C%20%7B%27name%27%3A%20%27EA500%27%2C%20%27file%27%3A%20%27Simgot%20Ea%20500%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Simphonio', 'phones': [{'name': 'Rx 10', 'file': 'Simphonio Rx 10'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Simphonio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Rx%2010%27%2C%20%27file%27%3A%20%27Simphonio%20Rx%2010%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Sivga', 'phones': [{'name': 'PII', 'file': 'Sivga P2'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Sivga%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27PII%27%2C%20%27file%27%3A%20%27Sivga%20P2%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Softears', 'phones': [{'name': 'RSV5', 'file': 'Softears RSV5'}, {'name': 'RSV5II', 'file': 'Rsv2'}, {'name': 'VOLUME', 'file': 'Moondrop Volume'}, {'name': 'VOLUME S', 'file': 'Soft Volu S'}, {'name': 'Turii Ti', 'file': 'Moondrop Turii TI'}, {'name': 'Twilight', 'file': 'Moondrop Twilight'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Softears%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27RSV5%27%2C%20%27file%27%3A%20%27Softears%20RSV5%27%7D%2C%20%7B%27name%27%3A%20%27RSV5II%27%2C%20%27file%27%3A%20%27Rsv2%27%7D%2C%20%7B%27name%27%3A%20%27VOLUME%27%2C%20%27file%27%3A%20%27Moondrop%20Volume%27%7D%2C%20%7B%27name%27%3A%20%27VOLUME%20S%27%2C%20%27file%27%3A%20%27Soft%20Volu%20S%27%7D%2C%20%7B%27name%27%3A%20%27Turii%20Ti%27%2C%20%27file%27%3A%20%27Moondrop%20Turii%20TI%27%7D%2C%20%7B%27name%27%3A%20%27Twilight%27%2C%20%27file%27%3A%20%27Moondrop%20Twilight%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'SORANIK', 'phones': [{'name': 'MEMS 3S 2025', 'file': 'Sora 3S2025'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27SORANIK%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27MEMS%203S%202025%27%2C%20%27file%27%3A%20%27Sora%203S2025%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'SONY', 'phones': [{'name': 'MH755', 'file': 'Sony MH755'}, {'name': 'EX1000', 'file': 'Sony EX1000'}, {'name': 'EX800ST', 'file': 'Sony EX800ST'}, {'name': 'EX800ST Taped vent', 'file': 'Sony EX800 Taped Vent'}, {'name': 'IER Z1R', 'file': 'Sony IER Z1R'}, {'name': 'XBA Z5', 'file': 'Sony Xba Z5'}, {'name': 'XB90EX', 'file': 'Sony Xb90ex'}, {'name': 'XB700 Extra Bass', 'file': 'Xb 700'}, {'name': 'N3AP', 'file': 'Sony N3ap'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27SONY%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27MH755%27%2C%20%27file%27%3A%20%27Sony%20MH755%27%7D%2C%20%7B%27name%27%3A%20%27EX1000%27%2C%20%27file%27%3A%20%27Sony%20EX1000%27%7D%2C%20%7B%27name%27%3A%20%27EX800ST%27%2C%20%27file%27%3A%20%27Sony%20EX800ST%27%7D%2C%20%7B%27name%27%3A%20%27EX800ST%20Taped%20vent%27%2C%20%27file%27%3A%20%27Sony%20EX800%20Taped%20Vent%27%7D%2C%20%7B%27name%27%3A%20%27IER%20Z1R%27%2C%20%27file%27%3A%20%27Sony%20IER%20Z1R%27%7D%2C%20%7B%27name%27%3A%20%27XBA%20Z5%27%2C%20%27file%27%3A%20%27Sony%20Xba%20Z5%27%7D%2C%20%7B%27name%27%3A%20%27XB90EX%27%2C%20%27file%27%3A%20%27Sony%20Xb90ex%27%7D%2C%20%7B%27name%27%3A%20%27XB700%20Extra%20Bass%27%2C%20%27file%27%3A%20%27Xb%20700%27%7D%2C%20%7B%27name%27%3A%20%27N3AP%27%2C%20%27file%27%3A%20%27Sony%20N3ap%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Spirit Torino', 'phones': [{'name': 'TWIN PULSE bass', 'file': 'Sam To'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Spirit%20Torino%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27TWIN%20PULSE%20bass%27%2C%20%27file%27%3A%20%27Sam%20To%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Subtonic', 'phones': [{'name': 'STORM', 'file': 'Subtonic Storm'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Subtonic%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27STORM%27%2C%20%27file%27%3A%20%27Subtonic%20Storm%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Sweear', 'phones': [{'name': 'SR11', 'file': 'Sweear SR11'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Sweear%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27SR11%27%2C%20%27file%27%3A%20%27Sweear%20SR11%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Symphonium Audio', 'phones': [{'name': 'Helios', 'file': 'Simphoniom Helious'}, {'name': 'Helios SE', 'file': 'Symphon Hel'}, {'name': 'TITAN', 'file': 'Sym Titan'}, {'name': 'Meteor', 'file': 'Symphonium Meteor'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Symphonium%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Helios%27%2C%20%27file%27%3A%20%27Simphoniom%20Helious%27%7D%2C%20%7B%27name%27%3A%20%27Helios%20SE%27%2C%20%27file%27%3A%20%27Symphon%20Hel%27%7D%2C%20%7B%27name%27%3A%20%27TITAN%27%2C%20%27file%27%3A%20%27Sym%20Titan%27%7D%2C%20%7B%27name%27%3A%20%27Meteor%27%2C%20%27file%27%3A%20%27Symphonium%20Meteor%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Tanchjim', 'phones': [{'name': 'Hana v2', 'file': 'Tanchjim Hana V2'}, {'name': 'PRISM', 'file': 'Tanchjim Prism'}, {'name': 'OXYGEN 02', 'file': 'Tanchjim 02'}, {'name': 'SODA', 'file': 'Tan Soda'}, {'name': 'ONE', 'file': 'Tan One'}, {'name': 'ONE dsp', 'file': 'Tanchjim One Dsp'}, {'name': 'MINO', 'file': 'Tanch Mino'}, {'name': 'ZERO ULTIMA', 'file': 'Tanch Zero Ultima'}, {'name': 'OLA', 'file': 'Tanchjim OLA'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Tanchjim%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Hana%20v2%27%2C%20%27file%27%3A%20%27Tanchjim%20Hana%20V2%27%7D%2C%20%7B%27name%27%3A%20%27PRISM%27%2C%20%27file%27%3A%20%27Tanchjim%20Prism%27%7D%2C%20%7B%27name%27%3A%20%27OXYGEN%2002%27%2C%20%27file%27%3A%20%27Tanchjim%2002%27%7D%2C%20%7B%27name%27%3A%20%27SODA%27%2C%20%27file%27%3A%20%27Tan%20Soda%27%7D%2C%20%7B%27name%27%3A%20%27ONE%27%2C%20%27file%27%3A%20%27Tan%20One%27%7D%2C%20%7B%27name%27%3A%20%27ONE%20dsp%27%2C%20%27file%27%3A%20%27Tanchjim%20One%20Dsp%27%7D%2C%20%7B%27name%27%3A%20%27MINO%27%2C%20%27file%27%3A%20%27Tanch%20Mino%27%7D%2C%20%7B%27name%27%3A%20%27ZERO%20ULTIMA%27%2C%20%27file%27%3A%20%27Tanch%20Zero%20Ultima%27%7D%2C%20%7B%27name%27%3A%20%27OLA%27%2C%20%27file%27%3A%20%27Tanchjim%20OLA%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TANGZU', 'phones': [{'name': 'Zetian Wu', 'file': 'Tangzu Zetian'}, {'name': 'Zetian Wu HeyDay Demo ', 'file': 'Tangzu Heyday Wu'}, {'name': 'XUAN NV', 'file': 'Tangzu X Hbb Xuan Nv'}, {'name': 'Zetian Wu HeyDay Retail ', 'file': 'Tangzu R'}, {'name': 'Chang Le', 'file': 'Tangzu Chang Le'}, {'name': 'FUDU', 'file': 'Tang Fudu'}, {'name': \"Wan 'Er\", 'file': 'Tangzu Wan Er'}, {'name': \"Wan 'Er 2\", 'file': 'Tang Waner 3'}, {'name': 'XUAN WU GATE', 'file': 'Tang Xuan Wa Gate'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TANGZU%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Zetian%20Wu%27%2C%20%27file%27%3A%20%27Tangzu%20Zetian%27%7D%2C%20%7B%27name%27%3A%20%27Zetian%20Wu%20HeyDay%20Demo%20%27%2C%20%27file%27%3A%20%27Tangzu%20Heyday%20Wu%27%7D%2C%20%7B%27name%27%3A%20%27XUAN%20NV%27%2C%20%27file%27%3A%20%27Tangzu%20X%20Hbb%20Xuan%20Nv%27%7D%2C%20%7B%27name%27%3A%20%27Zetian%20Wu%20HeyDay%20Retail%20%27%2C%20%27file%27%3A%20%27Tangzu%20R%27%7D%2C%20%7B%27name%27%3A%20%27Chang%20Le%27%2C%20%27file%27%3A%20%27Tangzu%20Chang%20Le%27%7D%2C%20%7B%27name%27%3A%20%27FUDU%27%2C%20%27file%27%3A%20%27Tang%20Fudu%27%7D%2C%20%7B%27name%27%3A%20%22Wan%20%27Er%22%2C%20%27file%27%3A%20%27Tangzu%20Wan%20Er%27%7D%2C%20%7B%27name%27%3A%20%22Wan%20%27Er%202%22%2C%20%27file%27%3A%20%27Tang%20Waner%203%27%7D%2C%20%7B%27name%27%3A%20%27XUAN%20WU%20GATE%27%2C%20%27file%27%3A%20%27Tang%20Xuan%20Wa%20Gate%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Tansio Mirai', 'phones': [{'name': 'SPACE', 'file': 'TSMR Space'}, {'name': 'TSMR 5', 'file': 'Tansio Mirai 5'}, {'name': 'TSMR LAND', 'file': 'Tansio Mirai LAND'}, {'name': 'TSMR LAND (Bass)', 'file': 'LAND Bass'}, {'name': 'TSMR LAND (Treble)', 'file': 'LAND Treble'}, {'name': 'TSMR 8 (Mids)', 'file': 'TSMR 8 Mids'}, {'name': 'TSMR 8 (Bass)', 'file': 'TSMR 8 Bass'}, {'name': 'TSMR SANDS (020)', 'file': 'Tansio Mirai Sands 020'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Tansio%20Mirai%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27SPACE%27%2C%20%27file%27%3A%20%27TSMR%20Space%27%7D%2C%20%7B%27name%27%3A%20%27TSMR%205%27%2C%20%27file%27%3A%20%27Tansio%20Mirai%205%27%7D%2C%20%7B%27name%27%3A%20%27TSMR%20LAND%27%2C%20%27file%27%3A%20%27Tansio%20Mirai%20LAND%27%7D%2C%20%7B%27name%27%3A%20%27TSMR%20LAND%20%28Bass%29%27%2C%20%27file%27%3A%20%27LAND%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27TSMR%20LAND%20%28Treble%29%27%2C%20%27file%27%3A%20%27LAND%20Treble%27%7D%2C%20%7B%27name%27%3A%20%27TSMR%208%20%28Mids%29%27%2C%20%27file%27%3A%20%27TSMR%208%20Mids%27%7D%2C%20%7B%27name%27%3A%20%27TSMR%208%20%28Bass%29%27%2C%20%27file%27%3A%20%27TSMR%208%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27TSMR%20SANDS%20%28020%29%27%2C%20%27file%27%3A%20%27Tansio%20Mirai%20Sands%20020%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TFZ', 'phones': [{'name': 'LIVE 3', 'file': 'TFZ LIVE 3'}, {'name': 'KING 2', 'file': 'TFZ King 2'}, {'name': 'LIVE X', 'file': 'TFZ Live X'}, {'name': 'KING RS', 'file': 'TFZ King RS'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TFZ%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27LIVE%203%27%2C%20%27file%27%3A%20%27TFZ%20LIVE%203%27%7D%2C%20%7B%27name%27%3A%20%27KING%202%27%2C%20%27file%27%3A%20%27TFZ%20King%202%27%7D%2C%20%7B%27name%27%3A%20%27LIVE%20X%27%2C%20%27file%27%3A%20%27TFZ%20Live%20X%27%7D%2C%20%7B%27name%27%3A%20%27KING%20RS%27%2C%20%27file%27%3A%20%27TFZ%20King%20RS%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TForce', 'phones': [{'name': 'Yuan Li Sample', 'file': 'TForce Yuan Li'}, {'name': 'Yuan Li Retail', 'file': 'T Force Yuan Li Final'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TForce%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Yuan%20Li%20Sample%27%2C%20%27file%27%3A%20%27TForce%20Yuan%20Li%27%7D%2C%20%7B%27name%27%3A%20%27Yuan%20Li%20Retail%27%2C%20%27file%27%3A%20%27T%20Force%20Yuan%20Li%20Final%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TH HiFi', 'phones': [{'name': 'Face Red', 'file': 'Af 8 pre'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TH%20HiFi%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Face%20Red%27%2C%20%27file%27%3A%20%27Af%208%20pre%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'ThieAudio', 'phones': [{'name': 'Clairvoyance', 'file': 'Clairvoyance'}, {'name': 'Legacy 2', 'file': 'Thieaudio L2'}, {'name': 'Legacy 3', 'file': 'Thieaudio L3'}, {'name': 'Legacy 4', 'file': 'Thieaudio L4'}, {'name': 'Legacy 5', 'file': 'Thieaudio L5'}, {'name': 'Legacy 9', 'file': 'Thieaudio L9'}, {'name': 'Voyager 14', 'file': 'Thieaudio V14'}, {'name': 'Excalibur', 'file': 'Excalibur'}, {'name': 'Oracle', 'file': 'Oracle'}, {'name': 'Oracle MKII', 'file': 'Thieaudio Oracle Mk2'}, {'name': 'Monarch', 'file': 'Thieaudio Monarch'}, {'name': 'Monarch MKII', 'file': 'Thieaudio Monarch MK2'}, {'name': 'Monarch MKIV', 'file': 'Mark4'}, {'name': 'Monarch MKIV RUMBLE', 'file': 'Mark4b'}, {'name': 'Monarch MKIII', 'file': 'Thi Mk3'}, {'name': 'V16 Divinity', 'file': 'Thieaudio V16 Divinity'}, {'name': 'Hype 2', 'file': 'Ta Hype2'}, {'name': 'Hype 4', 'file': 'Hpe 4'}, {'name': 'Hype 4 MK2', 'file': 'Hype22'}, {'name': 'Hype 10', 'file': 'Hype 10'}, {'name': 'PRESTIGE', 'file': 'Thieaudio Prestige'}, {'name': 'PRESTIGE LTD', 'file': 'Prest Ltd'}, {'name': 'VALHALLA', 'reviewScore': '5', 'reviewLink': '', 'price': '$1,999', 'shopLink': 'https://www.linsoul.com/products/thieaudio-valhalla', 'file': 'Thival'}, {'name': 'ELIXIR', 'file': 'Thieaudio Elixir'}, {'name': 'GHOST', 'file': 'Aful 8 sug'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27ThieAudio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Clairvoyance%27%2C%20%27file%27%3A%20%27Clairvoyance%27%7D%2C%20%7B%27name%27%3A%20%27Legacy%202%27%2C%20%27file%27%3A%20%27Thieaudio%20L2%27%7D%2C%20%7B%27name%27%3A%20%27Legacy%203%27%2C%20%27file%27%3A%20%27Thieaudio%20L3%27%7D%2C%20%7B%27name%27%3A%20%27Legacy%204%27%2C%20%27file%27%3A%20%27Thieaudio%20L4%27%7D%2C%20%7B%27name%27%3A%20%27Legacy%205%27%2C%20%27file%27%3A%20%27Thieaudio%20L5%27%7D%2C%20%7B%27name%27%3A%20%27Legacy%209%27%2C%20%27file%27%3A%20%27Thieaudio%20L9%27%7D%2C%20%7B%27name%27%3A%20%27Voyager%2014%27%2C%20%27file%27%3A%20%27Thieaudio%20V14%27%7D%2C%20%7B%27name%27%3A%20%27Excalibur%27%2C%20%27file%27%3A%20%27Excalibur%27%7D%2C%20%7B%27name%27%3A%20%27Oracle%27%2C%20%27file%27%3A%20%27Oracle%27%7D%2C%20%7B%27name%27%3A%20%27Oracle%20MKII%27%2C%20%27file%27%3A%20%27Thieaudio%20Oracle%20Mk2%27%7D%2C%20%7B%27name%27%3A%20%27Monarch%27%2C%20%27file%27%3A%20%27Thieaudio%20Monarch%27%7D%2C%20%7B%27name%27%3A%20%27Monarch%20MKII%27%2C%20%27file%27%3A%20%27Thieaudio%20Monarch%20MK2%27%7D%2C%20%7B%27name%27%3A%20%27Monarch%20MKIV%27%2C%20%27file%27%3A%20%27Mark4%27%7D%2C%20%7B%27name%27%3A%20%27Monarch%20MKIV%20RUMBLE%27%2C%20%27file%27%3A%20%27Mark4b%27%7D%2C%20%7B%27name%27%3A%20%27Monarch%20MKIII%27%2C%20%27file%27%3A%20%27Thi%20Mk3%27%7D%2C%20%7B%27name%27%3A%20%27V16%20Divinity%27%2C%20%27file%27%3A%20%27Thieaudio%20V16%20Divinity%27%7D%2C%20%7B%27name%27%3A%20%27Hype%202%27%2C%20%27file%27%3A%20%27Ta%20Hype2%27%7D%2C%20%7B%27name%27%3A%20%27Hype%204%27%2C%20%27file%27%3A%20%27Hpe%204%27%7D%2C%20%7B%27name%27%3A%20%27Hype%204%20MK2%27%2C%20%27file%27%3A%20%27Hype22%27%7D%2C%20%7B%27name%27%3A%20%27Hype%2010%27%2C%20%27file%27%3A%20%27Hype%2010%27%7D%2C%20%7B%27name%27%3A%20%27PRESTIGE%27%2C%20%27file%27%3A%20%27Thieaudio%20Prestige%27%7D%2C%20%7B%27name%27%3A%20%27PRESTIGE%20LTD%27%2C%20%27file%27%3A%20%27Prest%20Ltd%27%7D%2C%20%7B%27name%27%3A%20%27VALHALLA%27%2C%20%27reviewScore%27%3A%20%275%27%2C%20%27reviewLink%27%3A%20%27%27%2C%20%27price%27%3A%20%27%241%2C999%27%2C%20%27shopLink%27%3A%20%27https%3A//www.linsoul.com/products/thieaudio-valhalla%27%2C%20%27file%27%3A%20%27Thival%27%7D%2C%20%7B%27name%27%3A%20%27ELIXIR%27%2C%20%27file%27%3A%20%27Thieaudio%20Elixir%27%7D%2C%20%7B%27name%27%3A%20%27GHOST%27%2C%20%27file%27%3A%20%27Aful%208%20sug%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TIMSOK', 'phones': [{'name': 'TS 316', 'file': 'Timsok T'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TIMSOK%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27TS%20316%27%2C%20%27file%27%3A%20%27Timsok%20T%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Tinhifi', 'phones': [{'name': 'T2+ pre-retail', 'file': 'Tinhifi T2 +'}, {'name': 'T2+ no filter', 'file': 'Tinhifi T2+ No Filter'}, {'name': 'T2 Evo', 'file': 'Tinhifi T2 Evo'}, {'name': 'T2 DLC', 'file': 'Tinhifi T2D Silicon'}, {'name': 'T4', 'file': 'Tinhifi T4'}, {'name': 'T5', 'file': 'Tinhifi T5'}, {'name': 'T5S', 'file': 'Tinhifi T5S'}, {'name': 'P2', 'file': 'Tinhifi P2'}, {'name': 'P1 Plus', 'file': 'Tinhifi P1 Plus'}, {'name': 'T3 Plus', 'file': 'Tinhifi T3 Plus'}, {'name': 'P1 MAX', 'file': 'Tinhifi P1 Max'}, {'name': 'MECA C2', 'file': 'Tinhifi Meca C2'}, {'name': 'C3', 'file': 'Tinhifi C3'}, {'name': 'T4+', 'file': 'Tinhifi T4+'}, {'name': 'T1S', 'file': 'Tinhifi T1S'}, {'name': 'ELF', 'file': 'Tin Elf'}, {'name': 'C5', 'file': 'Tinhifi C5'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Tinhifi%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27T2%2B%20pre-retail%27%2C%20%27file%27%3A%20%27Tinhifi%20T2%20%2B%27%7D%2C%20%7B%27name%27%3A%20%27T2%2B%20no%20filter%27%2C%20%27file%27%3A%20%27Tinhifi%20T2%2B%20No%20Filter%27%7D%2C%20%7B%27name%27%3A%20%27T2%20Evo%27%2C%20%27file%27%3A%20%27Tinhifi%20T2%20Evo%27%7D%2C%20%7B%27name%27%3A%20%27T2%20DLC%27%2C%20%27file%27%3A%20%27Tinhifi%20T2D%20Silicon%27%7D%2C%20%7B%27name%27%3A%20%27T4%27%2C%20%27file%27%3A%20%27Tinhifi%20T4%27%7D%2C%20%7B%27name%27%3A%20%27T5%27%2C%20%27file%27%3A%20%27Tinhifi%20T5%27%7D%2C%20%7B%27name%27%3A%20%27T5S%27%2C%20%27file%27%3A%20%27Tinhifi%20T5S%27%7D%2C%20%7B%27name%27%3A%20%27P2%27%2C%20%27file%27%3A%20%27Tinhifi%20P2%27%7D%2C%20%7B%27name%27%3A%20%27P1%20Plus%27%2C%20%27file%27%3A%20%27Tinhifi%20P1%20Plus%27%7D%2C%20%7B%27name%27%3A%20%27T3%20Plus%27%2C%20%27file%27%3A%20%27Tinhifi%20T3%20Plus%27%7D%2C%20%7B%27name%27%3A%20%27P1%20MAX%27%2C%20%27file%27%3A%20%27Tinhifi%20P1%20Max%27%7D%2C%20%7B%27name%27%3A%20%27MECA%20C2%27%2C%20%27file%27%3A%20%27Tinhifi%20Meca%20C2%27%7D%2C%20%7B%27name%27%3A%20%27C3%27%2C%20%27file%27%3A%20%27Tinhifi%20C3%27%7D%2C%20%7B%27name%27%3A%20%27T4%2B%27%2C%20%27file%27%3A%20%27Tinhifi%20T4%2B%27%7D%2C%20%7B%27name%27%3A%20%27T1S%27%2C%20%27file%27%3A%20%27Tinhifi%20T1S%27%7D%2C%20%7B%27name%27%3A%20%27ELF%27%2C%20%27file%27%3A%20%27Tin%20Elf%27%7D%2C%20%7B%27name%27%3A%20%27C5%27%2C%20%27file%27%3A%20%27Tinhifi%20C5%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'THOR', 'phones': [{'name': 'Mjolinir', 'file': 'THOR Mojinhor'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27THOR%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Mjolinir%27%2C%20%27file%27%3A%20%27THOR%20Mojinhor%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TIGERISM', 'phones': [{'name': 'OCTAVE', 'file': 'Tiger Octave'}, {'name': 'RABBIT', 'file': 'Tiger Rabbit'}, {'name': 'MONET', 'file': 'Tiger Monet'}, {'name': 'DRAGONFLY', 'reviewScore': '5', 'reviewLink': '', 'price': '$2,100', 'shopLink': 'https://www.linsoul.com/products/tigerism-dragonfly', 'file': 'Tiger Dragon'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TIGERISM%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27OCTAVE%27%2C%20%27file%27%3A%20%27Tiger%20Octave%27%7D%2C%20%7B%27name%27%3A%20%27RABBIT%27%2C%20%27file%27%3A%20%27Tiger%20Rabbit%27%7D%2C%20%7B%27name%27%3A%20%27MONET%27%2C%20%27file%27%3A%20%27Tiger%20Monet%27%7D%2C%20%7B%27name%27%3A%20%27DRAGONFLY%27%2C%20%27reviewScore%27%3A%20%275%27%2C%20%27reviewLink%27%3A%20%27%27%2C%20%27price%27%3A%20%27%242%2C100%27%2C%20%27shopLink%27%3A%20%27https%3A//www.linsoul.com/products/tigerism-dragonfly%27%2C%20%27file%27%3A%20%27Tiger%20Dragon%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TIPSY', 'phones': [{'name': 'Dunmer', 'file': 'Tipsy Dunmer'}, {'name': 'TTROMS', 'file': 'Tipsy TTROMS'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TIPSY%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Dunmer%27%2C%20%27file%27%3A%20%27Tipsy%20Dunmer%27%7D%2C%20%7B%27name%27%3A%20%27TTROMS%27%2C%20%27file%27%3A%20%27Tipsy%20TTROMS%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Toneking', 'phones': [{'name': 'P10', 'file': 'Toneking P10'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Toneking%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27P10%27%2C%20%27file%27%3A%20%27Toneking%20P10%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Tripowin', 'phones': [{'name': 'TC 01', 'file': 'Tripowin'}, {'name': 'X HBB Mele', 'file': 'Tripowin X HBB Mele Blue'}, {'name': 'X HBB Olina', 'file': 'Olina No Filter'}, {'name': 'Olina SE', 'file': 'Olina Se S2'}, {'name': 'Olina SE Foam', 'file': 'Olina Se 2 Foam'}, {'name': 'X HBB Kailua', 'file': '55 K'}, {'name': \"Lea'\", 'file': 'Tripowin Lea'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Tripowin%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27TC%2001%27%2C%20%27file%27%3A%20%27Tripowin%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20Mele%27%2C%20%27file%27%3A%20%27Tripowin%20X%20HBB%20Mele%20Blue%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20Olina%27%2C%20%27file%27%3A%20%27Olina%20No%20Filter%27%7D%2C%20%7B%27name%27%3A%20%27Olina%20SE%27%2C%20%27file%27%3A%20%27Olina%20Se%20S2%27%7D%2C%20%7B%27name%27%3A%20%27Olina%20SE%20Foam%27%2C%20%27file%27%3A%20%27Olina%20Se%202%20Foam%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20Kailua%27%2C%20%27file%27%3A%20%2755%20K%27%7D%2C%20%7B%27name%27%3A%20%22Lea%27%22%2C%20%27file%27%3A%20%27Tripowin%20Lea%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TRN', 'phones': [{'name': 'V90', 'file': 'TRN V90'}, {'name': 'BA5', 'file': 'TRN BA 5'}, {'name': 'X6', 'file': 'TRN X6'}, {'name': 'STARFISH', 'file': 'Tr Sta'}, {'name': 'BA8', 'file': 'TRN BA8'}, {'name': 'MT3', 'file': 'TRN MT3'}, {'name': 'MT1', 'file': 'TRN MT1'}, {'name': 'VX PRO', 'file': 'TRN VX PRO'}, {'name': 'BAX', 'file': 'TRN Bax'}, {'name': 'TA1 Max', 'file': 'TRN TA1 Max'}, {'name': 'ST5', 'file': 'TRN ST5'}, {'name': 'Xuanwu', 'file': 'TRN Xuanwu'}, {'name': 'MT4', 'file': 'Trn Mt4'}, {'name': 'Mars', 'file': 'TRN Mars'}, {'name': 'KIRIN (Reference)', 'file': 'TRN Reference'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TRN%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27V90%27%2C%20%27file%27%3A%20%27TRN%20V90%27%7D%2C%20%7B%27name%27%3A%20%27BA5%27%2C%20%27file%27%3A%20%27TRN%20BA%205%27%7D%2C%20%7B%27name%27%3A%20%27X6%27%2C%20%27file%27%3A%20%27TRN%20X6%27%7D%2C%20%7B%27name%27%3A%20%27STARFISH%27%2C%20%27file%27%3A%20%27Tr%20Sta%27%7D%2C%20%7B%27name%27%3A%20%27BA8%27%2C%20%27file%27%3A%20%27TRN%20BA8%27%7D%2C%20%7B%27name%27%3A%20%27MT3%27%2C%20%27file%27%3A%20%27TRN%20MT3%27%7D%2C%20%7B%27name%27%3A%20%27MT1%27%2C%20%27file%27%3A%20%27TRN%20MT1%27%7D%2C%20%7B%27name%27%3A%20%27VX%20PRO%27%2C%20%27file%27%3A%20%27TRN%20VX%20PRO%27%7D%2C%20%7B%27name%27%3A%20%27BAX%27%2C%20%27file%27%3A%20%27TRN%20Bax%27%7D%2C%20%7B%27name%27%3A%20%27TA1%20Max%27%2C%20%27file%27%3A%20%27TRN%20TA1%20Max%27%7D%2C%20%7B%27name%27%3A%20%27ST5%27%2C%20%27file%27%3A%20%27TRN%20ST5%27%7D%2C%20%7B%27name%27%3A%20%27Xuanwu%27%2C%20%27file%27%3A%20%27TRN%20Xuanwu%27%7D%2C%20%7B%27name%27%3A%20%27MT4%27%2C%20%27file%27%3A%20%27Trn%20Mt4%27%7D%2C%20%7B%27name%27%3A%20%27Mars%27%2C%20%27file%27%3A%20%27TRN%20Mars%27%7D%2C%20%7B%27name%27%3A%20%27KIRIN%20%28Reference%29%27%2C%20%27file%27%3A%20%27TRN%20Reference%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TRI', 'phones': [{'name': 'Starsea', 'file': 'TRI Starsea'}, {'name': 'Starlight', 'file': 'TRI Starlight'}, {'name': 'Starshine', 'file': 'TRI Starshine'}, {'name': 'I3', 'file': 'TRI I3'}, {'name': 'X HBB KAI', 'file': '55Hz X HBB KAI'}, {'name': 'iOne Mic 1', 'file': 'Tri ione'}, {'name': 'iOne Mic 2', 'file': 'TRI ione Mic 2'}, {'name': 'Pecker', 'file': 'Tri Pecker'}, {'name': 'I3 PRO', 'file': 'TRI I3 Pro'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TRI%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Starsea%27%2C%20%27file%27%3A%20%27TRI%20Starsea%27%7D%2C%20%7B%27name%27%3A%20%27Starlight%27%2C%20%27file%27%3A%20%27TRI%20Starlight%27%7D%2C%20%7B%27name%27%3A%20%27Starshine%27%2C%20%27file%27%3A%20%27TRI%20Starshine%27%7D%2C%20%7B%27name%27%3A%20%27I3%27%2C%20%27file%27%3A%20%27TRI%20I3%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20KAI%27%2C%20%27file%27%3A%20%2755Hz%20X%20HBB%20KAI%27%7D%2C%20%7B%27name%27%3A%20%27iOne%20Mic%201%27%2C%20%27file%27%3A%20%27Tri%20ione%27%7D%2C%20%7B%27name%27%3A%20%27iOne%20Mic%202%27%2C%20%27file%27%3A%20%27TRI%20ione%20Mic%202%27%7D%2C%20%7B%27name%27%3A%20%27Pecker%27%2C%20%27file%27%3A%20%27Tri%20Pecker%27%7D%2C%20%7B%27name%27%3A%20%27I3%20PRO%27%2C%20%27file%27%3A%20%27TRI%20I3%20Pro%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TruthEar', 'phones': [{'name': 'X Crinacle ZERO', 'file': 'Truthear Zero 2'}, {'name': 'X Crinacle ZERO RED', 'file': 'Te Crin Zero Red'}, {'name': 'X Crinacle ZERO RED 10 Ohm', 'file': 'Te Crin Bass'}, {'name': 'X Crinacle ZERO RED 75 Ohm', 'file': '75 Ohm'}, {'name': 'X Crinacle ZERO RED 150 Ohm', 'file': '150 2'}, {'name': 'X Crinacle ZERO RED 200 Ohm', 'file': '200 2'}, {'name': 'NOVA', 'file': 'Te Nov'}, {'name': 'HEXA', 'file': 'Truthear Hexa'}, {'name': 'HOLA', 'file': 'Truthear Hola'}, {'name': 'GATE', 'file': 'Te Gare'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TruthEar%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27X%20Crinacle%20ZERO%27%2C%20%27file%27%3A%20%27Truthear%20Zero%202%27%7D%2C%20%7B%27name%27%3A%20%27X%20Crinacle%20ZERO%20RED%27%2C%20%27file%27%3A%20%27Te%20Crin%20Zero%20Red%27%7D%2C%20%7B%27name%27%3A%20%27X%20Crinacle%20ZERO%20RED%2010%20Ohm%27%2C%20%27file%27%3A%20%27Te%20Crin%20Bass%27%7D%2C%20%7B%27name%27%3A%20%27X%20Crinacle%20ZERO%20RED%2075%20Ohm%27%2C%20%27file%27%3A%20%2775%20Ohm%27%7D%2C%20%7B%27name%27%3A%20%27X%20Crinacle%20ZERO%20RED%20150%20Ohm%27%2C%20%27file%27%3A%20%27150%202%27%7D%2C%20%7B%27name%27%3A%20%27X%20Crinacle%20ZERO%20RED%20200%20Ohm%27%2C%20%27file%27%3A%20%27200%202%27%7D%2C%20%7B%27name%27%3A%20%27NOVA%27%2C%20%27file%27%3A%20%27Te%20Nov%27%7D%2C%20%7B%27name%27%3A%20%27HEXA%27%2C%20%27file%27%3A%20%27Truthear%20Hexa%27%7D%2C%20%7B%27name%27%3A%20%27HOLA%27%2C%20%27file%27%3A%20%27Truthear%20Hola%27%7D%2C%20%7B%27name%27%3A%20%27GATE%27%2C%20%27file%27%3A%20%27Te%20Gare%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TRZR', 'phones': [{'name': 'Ouranos', 'file': 'TRZR Ouranos'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TRZR%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Ouranos%27%2C%20%27file%27%3A%20%27TRZR%20Ouranos%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'TWISTURA', 'phones': [{'name': 'WOODnote', 'file': 'Twist Standard'}, {'name': 'BETA', 'file': 'Twist Beta S'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27TWISTURA%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27WOODnote%27%2C%20%27file%27%3A%20%27Twist%20Standard%27%7D%2C%20%7B%27name%27%3A%20%27BETA%27%2C%20%27file%27%3A%20%27Twist%20Beta%20S%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'UNIQUE MELODY', 'phones': [{'name': 'MEST MK II', 'file': 'MEST MK II'}, {'name': 'MEST MK III', 'file': 'Um Mest Mk3'}, {'name': 'Mason FuSang', 'file': 'Graph x'}, {'name': 'MEST INDIGO', 'file': 'Unique Melody MEST Indigo'}, {'name': 'MAVEN PRO', 'file': 'Unique Melody Maven Pro'}, {'name': 'MULTIVERSE', 'file': 'Um Multi'}, {'name': 'MEXT', 'file': 'Unique Melody MEXT'}, {'name': 'AMBER PEARL', 'file': 'Fp'}, {'name': 'AMBER PEARL spinfit cp100', 'file': 'Ab'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27UNIQUE%20MELODY%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27MEST%20MK%20II%27%2C%20%27file%27%3A%20%27MEST%20MK%20II%27%7D%2C%20%7B%27name%27%3A%20%27MEST%20MK%20III%27%2C%20%27file%27%3A%20%27Um%20Mest%20Mk3%27%7D%2C%20%7B%27name%27%3A%20%27Mason%20FuSang%27%2C%20%27file%27%3A%20%27Graph%20x%27%7D%2C%20%7B%27name%27%3A%20%27MEST%20INDIGO%27%2C%20%27file%27%3A%20%27Unique%20Melody%20MEST%20Indigo%27%7D%2C%20%7B%27name%27%3A%20%27MAVEN%20PRO%27%2C%20%27file%27%3A%20%27Unique%20Melody%20Maven%20Pro%27%7D%2C%20%7B%27name%27%3A%20%27MULTIVERSE%27%2C%20%27file%27%3A%20%27Um%20Multi%27%7D%2C%20%7B%27name%27%3A%20%27MEXT%27%2C%20%27file%27%3A%20%27Unique%20Melody%20MEXT%27%7D%2C%20%7B%27name%27%3A%20%27AMBER%20PEARL%27%2C%20%27file%27%3A%20%27Fp%27%7D%2C%20%7B%27name%27%3A%20%27AMBER%20PEARL%20spinfit%20cp100%27%2C%20%27file%27%3A%20%27Ab%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Urbanfun', 'phones': [{'name': 'YBF', 'file': 'Urbanfun Ybf'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Urbanfun%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27YBF%27%2C%20%27file%27%3A%20%27Urbanfun%20Ybf%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Venture Electronics', 'phones': [{'name': 'BONUS IE', 'file': 'VE Bonus IE'}, {'name': 'BONUS IE PRO', 'file': 'Bonus IE PRO'}, {'name': 'BONUS IE PRO  mod', 'file': 'VENTURE IE Mod'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Venture%20Electronics%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27BONUS%20IE%27%2C%20%27file%27%3A%20%27VE%20Bonus%20IE%27%7D%2C%20%7B%27name%27%3A%20%27BONUS%20IE%20PRO%27%2C%20%27file%27%3A%20%27Bonus%20IE%20PRO%27%7D%2C%20%7B%27name%27%3A%20%27BONUS%20IE%20PRO%20%20mod%27%2C%20%27file%27%3A%20%27VENTURE%20IE%20Mod%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Sample unit', 'phones': [{'name': 'Sample unit', 'file': 'Sample'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Sample%20unit%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Sample%20unit%27%2C%20%27file%27%3A%20%27Sample%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'XENNS', 'phones': [{'name': 'TEA', 'file': 'Mangird'}, {'name': 'TEA MKII', 'file': 'Mangird Tea 2'}, {'name': 'TEA PRO', 'file': 'Xens T P'}, {'name': 'TEA PRO SE', 'file': 'X Tpro'}, {'name': 'TOP PRO', 'file': 'Top Pro'}, {'name': 'TOP PRO T1', 'file': 'Top T111'}, {'name': 'TOP PRO Foam', 'file': 'Top Foam'}, {'name': 'UP', 'file': 'Mangird Xenns UP'}, {'name': 'TOP', 'file': 'Mangird Top'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27XENNS%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27TEA%27%2C%20%27file%27%3A%20%27Mangird%27%7D%2C%20%7B%27name%27%3A%20%27TEA%20MKII%27%2C%20%27file%27%3A%20%27Mangird%20Tea%202%27%7D%2C%20%7B%27name%27%3A%20%27TEA%20PRO%27%2C%20%27file%27%3A%20%27Xens%20T%20P%27%7D%2C%20%7B%27name%27%3A%20%27TEA%20PRO%20SE%27%2C%20%27file%27%3A%20%27X%20Tpro%27%7D%2C%20%7B%27name%27%3A%20%27TOP%20PRO%27%2C%20%27file%27%3A%20%27Top%20Pro%27%7D%2C%20%7B%27name%27%3A%20%27TOP%20PRO%20T1%27%2C%20%27file%27%3A%20%27Top%20T111%27%7D%2C%20%7B%27name%27%3A%20%27TOP%20PRO%20Foam%27%2C%20%27file%27%3A%20%27Top%20Foam%27%7D%2C%20%7B%27name%27%3A%20%27UP%27%2C%20%27file%27%3A%20%27Mangird%20Xenns%20UP%27%7D%2C%20%7B%27name%27%3A%20%27TOP%27%2C%20%27file%27%3A%20%27Mangird%20Top%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'Yanyin', 'phones': [{'name': 'Canon 000', 'file': 'Yanyin Canon 000'}, {'name': 'Canon 001', 'file': 'Yanyin Canon 001'}, {'name': 'Canon 010', 'file': 'Yanyin Canon 010'}, {'name': 'Canon 100', 'file': 'Yanyin Canon 100'}, {'name': 'Rosemary 10', 'file': 'Yanyin Rosemary 10'}, {'name': 'Rosemary 11', 'file': 'Yanyin Rosemary 11'}, {'name': 'Rosemary 01', 'file': 'Yanyin Rosemary 01'}, {'name': 'Rosemary 00', 'file': 'Yanyin Rosemary 00'}, {'name': 'Moonlight', 'file': 'Yanyin Moonlight'}, {'name': 'Moonlight Ultra 1', 'file': 'Yanyin Ult 1'}, {'name': 'Moonlight Ultra 2', 'file': 'Yan Ult 2'}, {'name': 'Moonlight Ultra 3', 'file': 'Yan Ult 3'}, {'name': 'BAKER', 'file': 'Yan Baker'}, {'name': 'Canon PRO', 'file': 'Yan Can P'}, {'name': 'Canon PRO UU', 'file': 'Yan C Uu'}, {'name': 'Canon PRO DD', 'file': 'Yan Can Dd'}, {'name': 'Canon 2 UD', 'file': 'Yc UD'}, {'name': 'Canon 2 DU', 'file': 'Yc DU'}, {'name': 'Canon 2 UU', 'file': 'Yc  UU'}, {'name': 'Canon 2 DD', 'file': 'Yanyin Canon DD'}, {'name': 'Sample 2', 'file': 'Yanyin Sample 2'}, {'name': 'X HBB Mahina', 'file': 'Yanyin M'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27Yanyin%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Canon%20000%27%2C%20%27file%27%3A%20%27Yanyin%20Canon%20000%27%7D%2C%20%7B%27name%27%3A%20%27Canon%20001%27%2C%20%27file%27%3A%20%27Yanyin%20Canon%20001%27%7D%2C%20%7B%27name%27%3A%20%27Canon%20010%27%2C%20%27file%27%3A%20%27Yanyin%20Canon%20010%27%7D%2C%20%7B%27name%27%3A%20%27Canon%20100%27%2C%20%27file%27%3A%20%27Yanyin%20Canon%20100%27%7D%2C%20%7B%27name%27%3A%20%27Rosemary%2010%27%2C%20%27file%27%3A%20%27Yanyin%20Rosemary%2010%27%7D%2C%20%7B%27name%27%3A%20%27Rosemary%2011%27%2C%20%27file%27%3A%20%27Yanyin%20Rosemary%2011%27%7D%2C%20%7B%27name%27%3A%20%27Rosemary%2001%27%2C%20%27file%27%3A%20%27Yanyin%20Rosemary%2001%27%7D%2C%20%7B%27name%27%3A%20%27Rosemary%2000%27%2C%20%27file%27%3A%20%27Yanyin%20Rosemary%2000%27%7D%2C%20%7B%27name%27%3A%20%27Moonlight%27%2C%20%27file%27%3A%20%27Yanyin%20Moonlight%27%7D%2C%20%7B%27name%27%3A%20%27Moonlight%20Ultra%201%27%2C%20%27file%27%3A%20%27Yanyin%20Ult%201%27%7D%2C%20%7B%27name%27%3A%20%27Moonlight%20Ultra%202%27%2C%20%27file%27%3A%20%27Yan%20Ult%202%27%7D%2C%20%7B%27name%27%3A%20%27Moonlight%20Ultra%203%27%2C%20%27file%27%3A%20%27Yan%20Ult%203%27%7D%2C%20%7B%27name%27%3A%20%27BAKER%27%2C%20%27file%27%3A%20%27Yan%20Baker%27%7D%2C%20%7B%27name%27%3A%20%27Canon%20PRO%27%2C%20%27file%27%3A%20%27Yan%20Can%20P%27%7D%2C%20%7B%27name%27%3A%20%27Canon%20PRO%20UU%27%2C%20%27file%27%3A%20%27Yan%20C%20Uu%27%7D%2C%20%7B%27name%27%3A%20%27Canon%20PRO%20DD%27%2C%20%27file%27%3A%20%27Yan%20Can%20Dd%27%7D%2C%20%7B%27name%27%3A%20%27Canon%202%20UD%27%2C%20%27file%27%3A%20%27Yc%20UD%27%7D%2C%20%7B%27name%27%3A%20%27Canon%202%20DU%27%2C%20%27file%27%3A%20%27Yc%20DU%27%7D%2C%20%7B%27name%27%3A%20%27Canon%202%20UU%27%2C%20%27file%27%3A%20%27Yc%20%20UU%27%7D%2C%20%7B%27name%27%3A%20%27Canon%202%20DD%27%2C%20%27file%27%3A%20%27Yanyin%20Canon%20DD%27%7D%2C%20%7B%27name%27%3A%20%27Sample%202%27%2C%20%27file%27%3A%20%27Yanyin%20Sample%202%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20Mahina%27%2C%20%27file%27%3A%20%27Yanyin%20M%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Hbb",
+        "item": "{'name': 'ZIIGAAT', 'phones': [{'name': 'ARCANIS', 'file': 'Zi Arcanis'}, {'name': 'X HA ODYSSEY 2', 'file': 'Zii X Hang'}, {'name': 'LUSH', 'file': 'Zi Lush'}, {'name': 'HORIZON', 'file': 'Ziig Hori'}, {'name': 'LUNA foam', 'file': 'Zi Lun Fo'}, {'name': 'LUNA', 'file': 'Zi Luna'}, {'name': 'P sla', 'file': 'P Aud Slap'}, {'name': 'LUNA  Sample 2', 'file': 'Zii LUNa'}, {'name': 'X HBB JUPITER', 'file': 'Sample Flag'}, {'name': 'ESTRELLA', 'file': 'Jay Est'}, {'name': 'Doscinco', 'file': 'Z Doscinco'}, {'name': 'Cinocotres', 'file': 'Z cinocotres'}, {'name': 'NUO', 'file': 'S12 Cie'}, {'name': 'Crescent ', 'file': 'Zii Crescent'}, {'name': 'Crescent Foam', 'file': 'Zii Crescent Foam'}, {'name': 'X HBB Arcadia', 'file': 'Zii Hbar'}, {'name': 'X Fresh Reviews ARETE', 'file': 'Zi Ar B'}, {'name': 'X Fresh Reviews ARETE 2', 'file': 'Fre A'}, {'name': 'X Fresh Reviews ARETE 2 B', 'file': 'Fres B'}, {'name': 'CINNO', 'file': 'Ziigaat Cinno'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://hbb.squig.link/?share=%7B%27name%27%3A%20%27ZIIGAAT%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27ARCANIS%27%2C%20%27file%27%3A%20%27Zi%20Arcanis%27%7D%2C%20%7B%27name%27%3A%20%27X%20HA%20ODYSSEY%202%27%2C%20%27file%27%3A%20%27Zii%20X%20Hang%27%7D%2C%20%7B%27name%27%3A%20%27LUSH%27%2C%20%27file%27%3A%20%27Zi%20Lush%27%7D%2C%20%7B%27name%27%3A%20%27HORIZON%27%2C%20%27file%27%3A%20%27Ziig%20Hori%27%7D%2C%20%7B%27name%27%3A%20%27LUNA%20foam%27%2C%20%27file%27%3A%20%27Zi%20Lun%20Fo%27%7D%2C%20%7B%27name%27%3A%20%27LUNA%27%2C%20%27file%27%3A%20%27Zi%20Luna%27%7D%2C%20%7B%27name%27%3A%20%27P%20sla%27%2C%20%27file%27%3A%20%27P%20Aud%20Slap%27%7D%2C%20%7B%27name%27%3A%20%27LUNA%20%20Sample%202%27%2C%20%27file%27%3A%20%27Zii%20LUNa%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20JUPITER%27%2C%20%27file%27%3A%20%27Sample%20Flag%27%7D%2C%20%7B%27name%27%3A%20%27ESTRELLA%27%2C%20%27file%27%3A%20%27Jay%20Est%27%7D%2C%20%7B%27name%27%3A%20%27Doscinco%27%2C%20%27file%27%3A%20%27Z%20Doscinco%27%7D%2C%20%7B%27name%27%3A%20%27Cinocotres%27%2C%20%27file%27%3A%20%27Z%20cinocotres%27%7D%2C%20%7B%27name%27%3A%20%27NUO%27%2C%20%27file%27%3A%20%27S12%20Cie%27%7D%2C%20%7B%27name%27%3A%20%27Crescent%20%27%2C%20%27file%27%3A%20%27Zii%20Crescent%27%7D%2C%20%7B%27name%27%3A%20%27Crescent%20Foam%27%2C%20%27file%27%3A%20%27Zii%20Crescent%20Foam%27%7D%2C%20%7B%27name%27%3A%20%27X%20HBB%20Arcadia%27%2C%20%27file%27%3A%20%27Zii%20Hbar%27%7D%2C%20%7B%27name%27%3A%20%27X%20Fresh%20Reviews%20ARETE%27%2C%20%27file%27%3A%20%27Zi%20Ar%20B%27%7D%2C%20%7B%27name%27%3A%20%27X%20Fresh%20Reviews%20ARETE%202%27%2C%20%27file%27%3A%20%27Fre%20A%27%7D%2C%20%7B%27name%27%3A%20%27X%20Fresh%20Reviews%20ARETE%202%20B%27%2C%20%27file%27%3A%20%27Fres%20B%27%7D%2C%20%7B%27name%27%3A%20%27CINNO%27%2C%20%27file%27%3A%20%27Ziigaat%20Cinno%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': '64 Audio', 'phones': [{'name': 'Aspire 1', 'file': '64 Audio Aspire 1'}, {'name': 'Aspire 2', 'file': '64 Audio Aspire 2'}, {'name': 'Aspire 3', 'file': '64 Audio Aspire 3'}, {'name': 'A2e', 'file': '64 Audio A2e'}, {'name': 'A3e', 'file': '64 Audio A3e'}, {'name': 'A3t', 'file': ['64 Audio A3t', '64 Audio A3t Precog EQ', '64 Audio A3t Precog EQ (V2)'], 'suffix': ['Stock', 'Precog EQ', 'Precog EQ V2']}, {'name': 'Aspire 4', 'file': '64 Audio Aspire 4'}, {'name': 'A3t (Demo)', 'file': '64 Audio U3t'}, {'name': 'A4s', 'file': ['64 Audio A4s (M20) Attachment', '64 Audio A4s (M20)'], 'suffix': ['M20 w/ 64 Attachment', 'M20 w just putty']}, {'name': 'A12t', 'file': '64 Audio A12t S2'}, {'name': 'Duo', 'file': ['64 Audio Duo', '64 Audio Duo S2', '64 Audio Duo S3'], 'suffix': ['S1', 'S2', 'S3']}, {'name': 'Fourte Blanc', 'file': '64 Audio Fourte Blanc'}, {'name': 'Nio', 'file': ['64 Audio Nio (MX)', '64 Audio Nio (M15)'], 'suffix': ['MX', 'M15']}, {'name': 'Nio S2', 'file': ['64 Audio Nio S2 (MX)', '64 Audio Nio S2 (M15)', '64 Audio Nio S2 (M20)'], 'suffix': ['MX', 'M15', 'M20']}, {'name': 'Solo', 'file': '64 Audio Solo'}, {'name': 'U4s', 'file': ['64A U4s (MX)', '64A U4s (M15)', '64A U4s (M20)', '64A U4s (M12)'], 'suffix': ['MX', 'M15', 'M20', 'M12']}, {'name': 'U6t', 'file': ['64 Audio U6t (MX)', '64 Audio U6t (M15)', '64 Audio U6t (M20)'], 'suffix': ['MX', 'M15', 'M20']}, {'name': 'U12t', 'file': ['64 Audio U12t (MX)', '64 Audio U12t (M15)', '64 Audio U12t (M20)'], 'suffix': ['MX', 'M15', 'M20']}, {'name': 'U12t S2', 'file': '64 Audio U12t S2 M15'}, {'name': 'U12t S3', 'file': ['64 Audio U12t S3 (MX)', '64 Audio U12t S3 (M15)', '64 Audio U12t S3 (M20)'], 'suffix': ['MX', 'M15', 'M20']}, {'name': 'Tia Fourte', 'file': '64 Audio Tia Fourte'}, {'name': 'Tia Trio', 'file': '64 Audio Tia Trio'}, {'name': 'U18s', 'file': ['64 Audio U18s (MX)', '64 Audio U18s (M15)', '64 Audio U18s (M20)'], 'suffix': ['MX', 'M15', 'M20']}, {'name': 'Volur', 'file': '64A Volur'}, {'name': 'U18t', 'file': ['64 Audio U18t (MX)', '64 Audio U18t (M15)', '64 Audio U18t (M20)'], 'suffix': ['MX', 'M15', 'M20']}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%2764%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Aspire%201%27%2C%20%27file%27%3A%20%2764%20Audio%20Aspire%201%27%7D%2C%20%7B%27name%27%3A%20%27Aspire%202%27%2C%20%27file%27%3A%20%2764%20Audio%20Aspire%202%27%7D%2C%20%7B%27name%27%3A%20%27Aspire%203%27%2C%20%27file%27%3A%20%2764%20Audio%20Aspire%203%27%7D%2C%20%7B%27name%27%3A%20%27A2e%27%2C%20%27file%27%3A%20%2764%20Audio%20A2e%27%7D%2C%20%7B%27name%27%3A%20%27A3e%27%2C%20%27file%27%3A%20%2764%20Audio%20A3e%27%7D%2C%20%7B%27name%27%3A%20%27A3t%27%2C%20%27file%27%3A%20%5B%2764%20Audio%20A3t%27%2C%20%2764%20Audio%20A3t%20Precog%20EQ%27%2C%20%2764%20Audio%20A3t%20Precog%20EQ%20%28V2%29%27%5D%2C%20%27suffix%27%3A%20%5B%27Stock%27%2C%20%27Precog%20EQ%27%2C%20%27Precog%20EQ%20V2%27%5D%7D%2C%20%7B%27name%27%3A%20%27Aspire%204%27%2C%20%27file%27%3A%20%2764%20Audio%20Aspire%204%27%7D%2C%20%7B%27name%27%3A%20%27A3t%20%28Demo%29%27%2C%20%27file%27%3A%20%2764%20Audio%20U3t%27%7D%2C%20%7B%27name%27%3A%20%27A4s%27%2C%20%27file%27%3A%20%5B%2764%20Audio%20A4s%20%28M20%29%20Attachment%27%2C%20%2764%20Audio%20A4s%20%28M20%29%27%5D%2C%20%27suffix%27%3A%20%5B%27M20%20w/%2064%20Attachment%27%2C%20%27M20%20w%20just%20putty%27%5D%7D%2C%20%7B%27name%27%3A%20%27A12t%27%2C%20%27file%27%3A%20%2764%20Audio%20A12t%20S2%27%7D%2C%20%7B%27name%27%3A%20%27Duo%27%2C%20%27file%27%3A%20%5B%2764%20Audio%20Duo%27%2C%20%2764%20Audio%20Duo%20S2%27%2C%20%2764%20Audio%20Duo%20S3%27%5D%2C%20%27suffix%27%3A%20%5B%27S1%27%2C%20%27S2%27%2C%20%27S3%27%5D%7D%2C%20%7B%27name%27%3A%20%27Fourte%20Blanc%27%2C%20%27file%27%3A%20%2764%20Audio%20Fourte%20Blanc%27%7D%2C%20%7B%27name%27%3A%20%27Nio%27%2C%20%27file%27%3A%20%5B%2764%20Audio%20Nio%20%28MX%29%27%2C%20%2764%20Audio%20Nio%20%28M15%29%27%5D%2C%20%27suffix%27%3A%20%5B%27MX%27%2C%20%27M15%27%5D%7D%2C%20%7B%27name%27%3A%20%27Nio%20S2%27%2C%20%27file%27%3A%20%5B%2764%20Audio%20Nio%20S2%20%28MX%29%27%2C%20%2764%20Audio%20Nio%20S2%20%28M15%29%27%2C%20%2764%20Audio%20Nio%20S2%20%28M20%29%27%5D%2C%20%27suffix%27%3A%20%5B%27MX%27%2C%20%27M15%27%2C%20%27M20%27%5D%7D%2C%20%7B%27name%27%3A%20%27Solo%27%2C%20%27file%27%3A%20%2764%20Audio%20Solo%27%7D%2C%20%7B%27name%27%3A%20%27U4s%27%2C%20%27file%27%3A%20%5B%2764A%20U4s%20%28MX%29%27%2C%20%2764A%20U4s%20%28M15%29%27%2C%20%2764A%20U4s%20%28M20%29%27%2C%20%2764A%20U4s%20%28M12%29%27%5D%2C%20%27suffix%27%3A%20%5B%27MX%27%2C%20%27M15%27%2C%20%27M20%27%2C%20%27M12%27%5D%7D%2C%20%7B%27name%27%3A%20%27U6t%27%2C%20%27file%27%3A%20%5B%2764%20Audio%20U6t%20%28MX%29%27%2C%20%2764%20Audio%20U6t%20%28M15%29%27%2C%20%2764%20Audio%20U6t%20%28M20%29%27%5D%2C%20%27suffix%27%3A%20%5B%27MX%27%2C%20%27M15%27%2C%20%27M20%27%5D%7D%2C%20%7B%27name%27%3A%20%27U12t%27%2C%20%27file%27%3A%20%5B%2764%20Audio%20U12t%20%28MX%29%27%2C%20%2764%20Audio%20U12t%20%28M15%29%27%2C%20%2764%20Audio%20U12t%20%28M20%29%27%5D%2C%20%27suffix%27%3A%20%5B%27MX%27%2C%20%27M15%27%2C%20%27M20%27%5D%7D%2C%20%7B%27name%27%3A%20%27U12t%20S2%27%2C%20%27file%27%3A%20%2764%20Audio%20U12t%20S2%20M15%27%7D%2C%20%7B%27name%27%3A%20%27U12t%20S3%27%2C%20%27file%27%3A%20%5B%2764%20Audio%20U12t%20S3%20%28MX%29%27%2C%20%2764%20Audio%20U12t%20S3%20%28M15%29%27%2C%20%2764%20Audio%20U12t%20S3%20%28M20%29%27%5D%2C%20%27suffix%27%3A%20%5B%27MX%27%2C%20%27M15%27%2C%20%27M20%27%5D%7D%2C%20%7B%27name%27%3A%20%27Tia%20Fourte%27%2C%20%27file%27%3A%20%2764%20Audio%20Tia%20Fourte%27%7D%2C%20%7B%27name%27%3A%20%27Tia%20Trio%27%2C%20%27file%27%3A%20%2764%20Audio%20Tia%20Trio%27%7D%2C%20%7B%27name%27%3A%20%27U18s%27%2C%20%27file%27%3A%20%5B%2764%20Audio%20U18s%20%28MX%29%27%2C%20%2764%20Audio%20U18s%20%28M15%29%27%2C%20%2764%20Audio%20U18s%20%28M20%29%27%5D%2C%20%27suffix%27%3A%20%5B%27MX%27%2C%20%27M15%27%2C%20%27M20%27%5D%7D%2C%20%7B%27name%27%3A%20%27Volur%27%2C%20%27file%27%3A%20%2764A%20Volur%27%7D%2C%20%7B%27name%27%3A%20%27U18t%27%2C%20%27file%27%3A%20%5B%2764%20Audio%20U18t%20%28MX%29%27%2C%20%2764%20Audio%20U18t%20%28M15%29%27%2C%20%2764%20Audio%20U18t%20%28M20%29%27%5D%2C%20%27suffix%27%3A%20%5B%27MX%27%2C%20%27M15%27%2C%20%27M20%27%5D%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': '7Hz', 'phones': [{'name': 'Dioko (Wrong Filter)', 'file': '7Hz Dioko'}, {'name': 'Dioko', 'file': '7Hz Dioko (Correct)'}, {'name': 'Eternal', 'file': '7Hz Eternal'}, {'name': 'Legato', 'file': '7Hz Legato'}, {'name': 'Timeless', 'file': '7Hz Timeless'}, {'name': 'Zero', 'file': '7Hz Zero'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%277Hz%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Dioko%20%28Wrong%20Filter%29%27%2C%20%27file%27%3A%20%277Hz%20Dioko%27%7D%2C%20%7B%27name%27%3A%20%27Dioko%27%2C%20%27file%27%3A%20%277Hz%20Dioko%20%28Correct%29%27%7D%2C%20%7B%27name%27%3A%20%27Eternal%27%2C%20%27file%27%3A%20%277Hz%20Eternal%27%7D%2C%20%7B%27name%27%3A%20%27Legato%27%2C%20%27file%27%3A%20%277Hz%20Legato%27%7D%2C%20%7B%27name%27%3A%20%27Timeless%27%2C%20%27file%27%3A%20%277Hz%20Timeless%27%7D%2C%20%7B%27name%27%3A%20%27Zero%27%2C%20%27file%27%3A%20%277Hz%20Zero%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': '7th Acoustics', 'phones': [{'name': 'Supernova', 'file': ['7th Acoustics Supernova', '7th Acoustics Supernova S2'], 'suffix': ['S1', 'S2']}, {'name': 'Proxima', 'file': '7th Acoustics Proxima'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%277th%20Acoustics%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Supernova%27%2C%20%27file%27%3A%20%5B%277th%20Acoustics%20Supernova%27%2C%20%277th%20Acoustics%20Supernova%20S2%27%5D%2C%20%27suffix%27%3A%20%5B%27S1%27%2C%20%27S2%27%5D%7D%2C%20%7B%27name%27%3A%20%27Proxima%27%2C%20%27file%27%3A%20%277th%20Acoustics%20Proxima%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Aful', 'phones': [{'name': 'Performer 5', 'file': 'Aful Performer 5'}, {'name': 'Cantor', 'file': 'Aful Cantor'}, {'name': 'Explorer', 'file': 'Aful Explorer'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Aful%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Performer%205%27%2C%20%27file%27%3A%20%27Aful%20Performer%205%27%7D%2C%20%7B%27name%27%3A%20%27Cantor%27%2C%20%27file%27%3A%20%27Aful%20Cantor%27%7D%2C%20%7B%27name%27%3A%20%27Explorer%27%2C%20%27file%27%3A%20%27Aful%20Explorer%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'AKG', 'phones': [{'name': 'Free Buds', 'file': 'AKG Free Buds'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27AKG%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Free%20Buds%27%2C%20%27file%27%3A%20%27AKG%20Free%20Buds%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Apple', 'phones': [{'name': 'AirPods Pro', 'file': ['Apple AirPods Pro', 'Apple AirPods Pro 3E751'], 'suffix': ['OFF Old Firmware', 'OFF 3E751']}, {'name': 'AirPods Pro Gen 2', 'file': ['Apple Airpods Pro Gen 2', 'Apple Airpods Pro Gen 2 70dB', 'Apple Airpods Pro Gen 2 80dB', 'Apple Airpods Pro Gen 2 90dB', 'Apple Airpods Pro Gen 2 97dB', 'Apple Airpods Pro Gen 2 103dB', 'Apple Airpods Pro Gen 2 75dB Spatial Audio'], 'suffix': ['Transparency', '70dB', '80dB', '90dB', '97dB', '103dB', 'Spatial Audio 75dB']}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Apple%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27AirPods%20Pro%27%2C%20%27file%27%3A%20%5B%27Apple%20AirPods%20Pro%27%2C%20%27Apple%20AirPods%20Pro%203E751%27%5D%2C%20%27suffix%27%3A%20%5B%27OFF%20Old%20Firmware%27%2C%20%27OFF%203E751%27%5D%7D%2C%20%7B%27name%27%3A%20%27AirPods%20Pro%20Gen%202%27%2C%20%27file%27%3A%20%5B%27Apple%20Airpods%20Pro%20Gen%202%27%2C%20%27Apple%20Airpods%20Pro%20Gen%202%2070dB%27%2C%20%27Apple%20Airpods%20Pro%20Gen%202%2080dB%27%2C%20%27Apple%20Airpods%20Pro%20Gen%202%2090dB%27%2C%20%27Apple%20Airpods%20Pro%20Gen%202%2097dB%27%2C%20%27Apple%20Airpods%20Pro%20Gen%202%20103dB%27%2C%20%27Apple%20Airpods%20Pro%20Gen%202%2075dB%20Spatial%20Audio%27%5D%2C%20%27suffix%27%3A%20%5B%27Transparency%27%2C%20%2770dB%27%2C%20%2780dB%27%2C%20%2790dB%27%2C%20%2797dB%27%2C%20%27103dB%27%2C%20%27Spatial%20Audio%2075dB%27%5D%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'AstellKern', 'phones': [{'name': 'ZERO1', 'file': 'AK ZERO1'}, {'name': 'x CFA Pathfinder', 'file': 'Campfire Audio Pathfinder'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27AstellKern%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27ZERO1%27%2C%20%27file%27%3A%20%27AK%20ZERO1%27%7D%2C%20%7B%27name%27%3A%20%27x%20CFA%20Pathfinder%27%2C%20%27file%27%3A%20%27Campfire%20Audio%20Pathfinder%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Audio', 'phones': [{'name': 'Hekili', 'file': 'Audio Hekili'}, {'name': 'Lokahi', 'file': 'Audio Lokahi'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Hekili%27%2C%20%27file%27%3A%20%27Audio%20Hekili%27%7D%2C%20%7B%27name%27%3A%20%27Lokahi%27%2C%20%27file%27%3A%20%27Audio%20Lokahi%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Audeze', 'phones': [{'name': 'Euclid', 'file': 'Audeze Euclid'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Audeze%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Euclid%27%2C%20%27file%27%3A%20%27Audeze%20Euclid%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'AudioSense', 'phones': [{'name': 'T800', 'file': 'AudioSense T800'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27AudioSense%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27T800%27%2C%20%27file%27%3A%20%27AudioSense%20T800%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Aya Audio', 'phones': [{'name': 'Siren', 'file': 'Aya Siren'}, {'name': 'Trident', 'file': 'Aya Trident'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Aya%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Siren%27%2C%20%27file%27%3A%20%27Aya%20Siren%27%7D%2C%20%7B%27name%27%3A%20%27Trident%27%2C%20%27file%27%3A%20%27Aya%20Trident%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Beyerdynamic', 'phones': [{'name': 'Xelento', 'file': 'Beyerdynamic Xelento'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Beyerdynamic%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Xelento%27%2C%20%27file%27%3A%20%27Beyerdynamic%20Xelento%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'BGVP', 'phones': [{'name': 'NS9', 'file': 'BGVP NS9'}, {'name': 'DM8', 'file': 'BGVP DM8'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27BGVP%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27NS9%27%2C%20%27file%27%3A%20%27BGVP%20NS9%27%7D%2C%20%7B%27name%27%3A%20%27DM8%27%2C%20%27file%27%3A%20%27BGVP%20DM8%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Binary Acoustics', 'phones': [{'name': 'x Gizaudio Chopin', 'file': 'Binary Acoustics x Gizaudio Chopin'}, {'name': 'EP321 MEMS', 'file': 'Binary Acoustics EP321 MEMS'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Binary%20Acoustics%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27x%20Gizaudio%20Chopin%27%2C%20%27file%27%3A%20%27Binary%20Acoustics%20x%20Gizaudio%20Chopin%27%7D%2C%20%7B%27name%27%3A%20%27EP321%20MEMS%27%2C%20%27file%27%3A%20%27Binary%20Acoustics%20EP321%20MEMS%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Blon', 'phones': [{'name': 'BL03', 'file': 'Blon BL03'}, {'name': 'BL05', 'file': 'Blon BL05'}, {'name': 'A8 Prometheus', 'file': 'Blon A8 Prometheus'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Blon%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27BL03%27%2C%20%27file%27%3A%20%27Blon%20BL03%27%7D%2C%20%7B%27name%27%3A%20%27BL05%27%2C%20%27file%27%3A%20%27Blon%20BL05%27%7D%2C%20%7B%27name%27%3A%20%27A8%20Prometheus%27%2C%20%27file%27%3A%20%27Blon%20A8%20Prometheus%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Bose', 'phones': [{'name': 'QuietComfort Earbuds', 'file': 'Bose QuietComfort Earbuds'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Bose%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27QuietComfort%20Earbuds%27%2C%20%27file%27%3A%20%27Bose%20QuietComfort%20Earbuds%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'BQEYZ', 'phones': [{'name': 'Autumn', 'file': ['BQEYZ Autumn (Normal)', 'BQEYZ Autumn (Bass)', 'BQEYZ Autumn (Treble)'], 'suffix': ['Normal', 'Bass', 'Treble']}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27BQEYZ%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Autumn%27%2C%20%27file%27%3A%20%5B%27BQEYZ%20Autumn%20%28Normal%29%27%2C%20%27BQEYZ%20Autumn%20%28Bass%29%27%2C%20%27BQEYZ%20Autumn%20%28Treble%29%27%5D%2C%20%27suffix%27%3A%20%5B%27Normal%27%2C%20%27Bass%27%2C%20%27Treble%27%5D%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Campfire Audio', 'phones': [{'name': 'Andromeda 2019', 'file': 'Campfire Audio Andromeda 2019'}, {'name': 'Andromeda 2020', 'file': 'Campfire Audio Andromeda 2020'}, {'name': 'Andromeda 2020 w IEMatch', 'file': ['Campfire Audio Andromeda 2020 w IEMatch (High)', 'Campfire Audio Andromeda 2020 w IEMatch (Ultra)'], 'suffix': ['High', 'Ultra']}, {'name': 'Ara', 'file': 'Campfire Ara'}, {'name': 'Atlas', 'file': 'Campfire Audio Atlas'}, {'name': 'Dorado 2020', 'file': 'Campfire Audio Dorado 2020'}, {'name': 'Holocene', 'file': 'Campfire Holocene'}, {'name': 'Honeydew', 'file': 'Campfire Honeydew'}, {'name': 'Mammoth', 'file': 'Campfire Mammoth'}, {'name': 'Saber', 'file': 'Campfire Audio Saber'}, {'name': 'Satsuma', 'file': 'Campfire Satsuma'}, {'name': 'Solaris OG', 'file': 'Campfire Audio Solaris OG'}, {'name': 'Vega 2020', 'file': 'Campfire Audio Vega 2020'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Campfire%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Andromeda%202019%27%2C%20%27file%27%3A%20%27Campfire%20Audio%20Andromeda%202019%27%7D%2C%20%7B%27name%27%3A%20%27Andromeda%202020%27%2C%20%27file%27%3A%20%27Campfire%20Audio%20Andromeda%202020%27%7D%2C%20%7B%27name%27%3A%20%27Andromeda%202020%20w%20IEMatch%27%2C%20%27file%27%3A%20%5B%27Campfire%20Audio%20Andromeda%202020%20w%20IEMatch%20%28High%29%27%2C%20%27Campfire%20Audio%20Andromeda%202020%20w%20IEMatch%20%28Ultra%29%27%5D%2C%20%27suffix%27%3A%20%5B%27High%27%2C%20%27Ultra%27%5D%7D%2C%20%7B%27name%27%3A%20%27Ara%27%2C%20%27file%27%3A%20%27Campfire%20Ara%27%7D%2C%20%7B%27name%27%3A%20%27Atlas%27%2C%20%27file%27%3A%20%27Campfire%20Audio%20Atlas%27%7D%2C%20%7B%27name%27%3A%20%27Dorado%202020%27%2C%20%27file%27%3A%20%27Campfire%20Audio%20Dorado%202020%27%7D%2C%20%7B%27name%27%3A%20%27Holocene%27%2C%20%27file%27%3A%20%27Campfire%20Holocene%27%7D%2C%20%7B%27name%27%3A%20%27Honeydew%27%2C%20%27file%27%3A%20%27Campfire%20Honeydew%27%7D%2C%20%7B%27name%27%3A%20%27Mammoth%27%2C%20%27file%27%3A%20%27Campfire%20Mammoth%27%7D%2C%20%7B%27name%27%3A%20%27Saber%27%2C%20%27file%27%3A%20%27Campfire%20Audio%20Saber%27%7D%2C%20%7B%27name%27%3A%20%27Satsuma%27%2C%20%27file%27%3A%20%27Campfire%20Satsuma%27%7D%2C%20%7B%27name%27%3A%20%27Solaris%20OG%27%2C%20%27file%27%3A%20%27Campfire%20Audio%20Solaris%20OG%27%7D%2C%20%7B%27name%27%3A%20%27Vega%202020%27%2C%20%27file%27%3A%20%27Campfire%20Audio%20Vega%202020%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Cayin', 'phones': [{'name': 'Fantasy', 'file': 'Cayin Fantasy'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Cayin%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Fantasy%27%2C%20%27file%27%3A%20%27Cayin%20Fantasy%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'CCA', 'phones': [{'name': 'CRA', 'file': 'CCA CRA'}, {'name': 'CRA+', 'file': 'CCA CRA+'}, {'name': 'CSN', 'file': 'CCA CSN'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27CCA%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27CRA%27%2C%20%27file%27%3A%20%27CCA%20CRA%27%7D%2C%20%7B%27name%27%3A%20%27CRA%2B%27%2C%20%27file%27%3A%20%27CCA%20CRA%2B%27%7D%2C%20%7B%27name%27%3A%20%27CSN%27%2C%20%27file%27%3A%20%27CCA%20CSN%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'CCZ', 'phones': [{'name': 'Plume', 'file': 'CCZ Plume'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27CCZ%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Plume%27%2C%20%27file%27%3A%20%27CCZ%20Plume%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Clariar', 'phones': [{'name': 'i640', 'file': 'Clariar i640'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Clariar%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27i640%27%2C%20%27file%27%3A%20%27Clariar%20i640%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Colorfly', 'phones': [{'name': 'Quintet', 'file': 'Colorfly Quintet'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Colorfly%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Quintet%27%2C%20%27file%27%3A%20%27Colorfly%20Quintet%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'CraftEars', 'phones': [{'name': 'Aurum', 'file': 'CraftEars Aurum'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27CraftEars%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Aurum%27%2C%20%27file%27%3A%20%27CraftEars%20Aurum%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Custom Art', 'phones': [{'name': 'FIBAE Black', 'file': 'Custom Art FIBAE Black'}, {'name': 'FIBAE 5', 'file': ['Custom Art Fibae 5', 'Custom Art Fibae 5 (Filter)'], 'suffix': ['w/o Filter', 'w/ Filter']}, {'name': 'FIBAE 7U', 'file': 'Custom Art Fibae 7U'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Custom%20Art%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27FIBAE%20Black%27%2C%20%27file%27%3A%20%27Custom%20Art%20FIBAE%20Black%27%7D%2C%20%7B%27name%27%3A%20%27FIBAE%205%27%2C%20%27file%27%3A%20%5B%27Custom%20Art%20Fibae%205%27%2C%20%27Custom%20Art%20Fibae%205%20%28Filter%29%27%5D%2C%20%27suffix%27%3A%20%5B%27w/o%20Filter%27%2C%20%27w/%20Filter%27%5D%7D%2C%20%7B%27name%27%3A%20%27FIBAE%207U%27%2C%20%27file%27%3A%20%27Custom%20Art%20Fibae%207U%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Drop', 'phones': [{'name': 'JVC FWX1', 'file': 'JVC FWX1'}, {'name': 'JVC HAFDX1', 'file': ['JVC HAFDX1 (Blue Filter)', 'JVC HAFDX1 (Green Filter)', 'JVC HAFDX1 (No Filter)'], 'suffix': ['Blue Filter', 'Green Filter', 'No Filter']}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Drop%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27JVC%20FWX1%27%2C%20%27file%27%3A%20%27JVC%20FWX1%27%7D%2C%20%7B%27name%27%3A%20%27JVC%20HAFDX1%27%2C%20%27file%27%3A%20%5B%27JVC%20HAFDX1%20%28Blue%20Filter%29%27%2C%20%27JVC%20HAFDX1%20%28Green%20Filter%29%27%2C%20%27JVC%20HAFDX1%20%28No%20Filter%29%27%5D%2C%20%27suffix%27%3A%20%5B%27Blue%20Filter%27%2C%20%27Green%20Filter%27%2C%20%27No%20Filter%27%5D%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'DUNU', 'phones': [{'name': 'DaVinci', 'file': 'DUNU DaVinci'}, {'name': 'DK-3001 BD', 'file': 'DUNU DK-3001 BD'}, {'name': 'EST112', 'file': 'DUNU EST112'}, {'name': 'Falcon Pro', 'file': ['DUNU Falcon Pro (Reference)', 'DUNU Falcon Pro (Atmospheric)', 'DUNU Falcon Pro (Transparency)'], 'suffix': ['Reference', 'Atmospheric', 'Transparency']}, {'name': 'Falcon Pro Experimental', 'file': ['DUNU Falcon Pro Experimental (Reference)', 'DUNU Falcon Pro Experimental (Atmospheric)', 'DUNU Falcon Pro Experimental (Transparency)'], 'suffix': ['Reference', 'Atmospheric', 'Transparency']}, {'name': 'Glacier', 'file': 'DUNU Glacier'}, {'name': 'Kima', 'file': 'DUNU Kima'}, {'name': 'Mirai', 'file': 'DUNU Mirai S2'}, {'name': 'SA6', 'file': ['DUNU SA6', 'DUNU SA6 (Atmospheric)'], 'suffix': ['Normal', 'Atmospheric']}, {'name': 'SA6 S2', 'file': ['DUNU SA6 S2', 'DUNU SA6 S2 (Atmospheric)'], 'suffix': ['Normal', 'Atmospheric']}, {'name': 'SA6 MK2', 'file': ['DUNU SA6 MK2 (OFF) S2', 'DUNU SA6 MK2 (ON) S2'], 'suffix': ['Normal', 'Atmospheric']}, {'name': 'SA6 Ultra', 'file': ['DUNU SA6 Ultra (OFF)', 'DUNU SA6 Ultra (ON)'], 'suffix': ['Normal', 'Atmospheric']}, {'name': 'SA6EST', 'file': 'DUNU SA6EST'}, {'name': 'Talos', 'file': ['DUNU Talos (OFF)', 'DUNU Talos (ON)'], 'suffix': ['OFF', 'ON']}, {'name': 'Titan S', 'file': 'DUNU Titan S'}, {'name': 'Vulkan', 'file': 'DUNU Vulkan'}, {'name': 'Zen', 'file': 'DUNU Zen'}, {'name': 'Zen Pro', 'file': 'Dunu Zen Pro'}, {'name': 'Zen Pro (Production)', 'file': 'DUNU Zen Pro (Production)'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27DUNU%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27DaVinci%27%2C%20%27file%27%3A%20%27DUNU%20DaVinci%27%7D%2C%20%7B%27name%27%3A%20%27DK-3001%20BD%27%2C%20%27file%27%3A%20%27DUNU%20DK-3001%20BD%27%7D%2C%20%7B%27name%27%3A%20%27EST112%27%2C%20%27file%27%3A%20%27DUNU%20EST112%27%7D%2C%20%7B%27name%27%3A%20%27Falcon%20Pro%27%2C%20%27file%27%3A%20%5B%27DUNU%20Falcon%20Pro%20%28Reference%29%27%2C%20%27DUNU%20Falcon%20Pro%20%28Atmospheric%29%27%2C%20%27DUNU%20Falcon%20Pro%20%28Transparency%29%27%5D%2C%20%27suffix%27%3A%20%5B%27Reference%27%2C%20%27Atmospheric%27%2C%20%27Transparency%27%5D%7D%2C%20%7B%27name%27%3A%20%27Falcon%20Pro%20Experimental%27%2C%20%27file%27%3A%20%5B%27DUNU%20Falcon%20Pro%20Experimental%20%28Reference%29%27%2C%20%27DUNU%20Falcon%20Pro%20Experimental%20%28Atmospheric%29%27%2C%20%27DUNU%20Falcon%20Pro%20Experimental%20%28Transparency%29%27%5D%2C%20%27suffix%27%3A%20%5B%27Reference%27%2C%20%27Atmospheric%27%2C%20%27Transparency%27%5D%7D%2C%20%7B%27name%27%3A%20%27Glacier%27%2C%20%27file%27%3A%20%27DUNU%20Glacier%27%7D%2C%20%7B%27name%27%3A%20%27Kima%27%2C%20%27file%27%3A%20%27DUNU%20Kima%27%7D%2C%20%7B%27name%27%3A%20%27Mirai%27%2C%20%27file%27%3A%20%27DUNU%20Mirai%20S2%27%7D%2C%20%7B%27name%27%3A%20%27SA6%27%2C%20%27file%27%3A%20%5B%27DUNU%20SA6%27%2C%20%27DUNU%20SA6%20%28Atmospheric%29%27%5D%2C%20%27suffix%27%3A%20%5B%27Normal%27%2C%20%27Atmospheric%27%5D%7D%2C%20%7B%27name%27%3A%20%27SA6%20S2%27%2C%20%27file%27%3A%20%5B%27DUNU%20SA6%20S2%27%2C%20%27DUNU%20SA6%20S2%20%28Atmospheric%29%27%5D%2C%20%27suffix%27%3A%20%5B%27Normal%27%2C%20%27Atmospheric%27%5D%7D%2C%20%7B%27name%27%3A%20%27SA6%20MK2%27%2C%20%27file%27%3A%20%5B%27DUNU%20SA6%20MK2%20%28OFF%29%20S2%27%2C%20%27DUNU%20SA6%20MK2%20%28ON%29%20S2%27%5D%2C%20%27suffix%27%3A%20%5B%27Normal%27%2C%20%27Atmospheric%27%5D%7D%2C%20%7B%27name%27%3A%20%27SA6%20Ultra%27%2C%20%27file%27%3A%20%5B%27DUNU%20SA6%20Ultra%20%28OFF%29%27%2C%20%27DUNU%20SA6%20Ultra%20%28ON%29%27%5D%2C%20%27suffix%27%3A%20%5B%27Normal%27%2C%20%27Atmospheric%27%5D%7D%2C%20%7B%27name%27%3A%20%27SA6EST%27%2C%20%27file%27%3A%20%27DUNU%20SA6EST%27%7D%2C%20%7B%27name%27%3A%20%27Talos%27%2C%20%27file%27%3A%20%5B%27DUNU%20Talos%20%28OFF%29%27%2C%20%27DUNU%20Talos%20%28ON%29%27%5D%2C%20%27suffix%27%3A%20%5B%27OFF%27%2C%20%27ON%27%5D%7D%2C%20%7B%27name%27%3A%20%27Titan%20S%27%2C%20%27file%27%3A%20%27DUNU%20Titan%20S%27%7D%2C%20%7B%27name%27%3A%20%27Vulkan%27%2C%20%27file%27%3A%20%27DUNU%20Vulkan%27%7D%2C%20%7B%27name%27%3A%20%27Zen%27%2C%20%27file%27%3A%20%27DUNU%20Zen%27%7D%2C%20%7B%27name%27%3A%20%27Zen%20Pro%27%2C%20%27file%27%3A%20%27Dunu%20Zen%20Pro%27%7D%2C%20%7B%27name%27%3A%20%27Zen%20Pro%20%28Production%29%27%2C%20%27file%27%3A%20%27DUNU%20Zen%20Pro%20%28Production%29%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Earfun', 'phones': [{'name': 'Oluv Edition', 'file': 'Earfun Oluv Edition'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Earfun%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Oluv%20Edition%27%2C%20%27file%27%3A%20%27Earfun%20Oluv%20Edition%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Effect Audio', 'phones': [{'name': 'Axiom', 'file': 'Effect Audio Axiom'}, {'name': 'x Elysian Acoustic Labs Gaea', 'file': 'Effect Audio x Elysian Gaea'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Effect%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Axiom%27%2C%20%27file%27%3A%20%27Effect%20Audio%20Axiom%27%7D%2C%20%7B%27name%27%3A%20%27x%20Elysian%20Acoustic%20Labs%20Gaea%27%2C%20%27file%27%3A%20%27Effect%20Audio%20x%20Elysian%20Gaea%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Elysian Acoustic Labs', 'phones': [{'name': 'Annihilator 2021', 'file': 'Elysian Annihilator'}, {'name': 'Annihilator 2023', 'file': 'Elysian Annihilator 2023'}, {'name': 'Annihilator 2023 S2', 'file': 'Elysian Annihilator 2023 S2'}, {'name': 'Annihilator 2023 S2 (Stock Tip)', 'file': 'Elysian Annihilator 2023 S2 (Spinfit)'}, {'name': 'Annihilator 2023 S2 (Xelastec)', 'file': 'Elysian Annihilator 2023 S2 (Xelastec)'}, {'name': 'Pilgrim', 'file': 'Elysian Pilgrim'}, {'name': 'Diva CIEM', 'file': ['Elysian Diva (Min)', 'Elysian Diva (Mid)', 'Elysian Diva (Max)', 'Elysian Diva (7kHz)', 'Elysian Diva (8kHz)'], 'suffix': ['Min', 'Mid', 'Max', '7kHz', '8kHz']}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Elysian%20Acoustic%20Labs%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Annihilator%202021%27%2C%20%27file%27%3A%20%27Elysian%20Annihilator%27%7D%2C%20%7B%27name%27%3A%20%27Annihilator%202023%27%2C%20%27file%27%3A%20%27Elysian%20Annihilator%202023%27%7D%2C%20%7B%27name%27%3A%20%27Annihilator%202023%20S2%27%2C%20%27file%27%3A%20%27Elysian%20Annihilator%202023%20S2%27%7D%2C%20%7B%27name%27%3A%20%27Annihilator%202023%20S2%20%28Stock%20Tip%29%27%2C%20%27file%27%3A%20%27Elysian%20Annihilator%202023%20S2%20%28Spinfit%29%27%7D%2C%20%7B%27name%27%3A%20%27Annihilator%202023%20S2%20%28Xelastec%29%27%2C%20%27file%27%3A%20%27Elysian%20Annihilator%202023%20S2%20%28Xelastec%29%27%7D%2C%20%7B%27name%27%3A%20%27Pilgrim%27%2C%20%27file%27%3A%20%27Elysian%20Pilgrim%27%7D%2C%20%7B%27name%27%3A%20%27Diva%20CIEM%27%2C%20%27file%27%3A%20%5B%27Elysian%20Diva%20%28Min%29%27%2C%20%27Elysian%20Diva%20%28Mid%29%27%2C%20%27Elysian%20Diva%20%28Max%29%27%2C%20%27Elysian%20Diva%20%287kHz%29%27%2C%20%27Elysian%20Diva%20%288kHz%29%27%5D%2C%20%27suffix%27%3A%20%5B%27Min%27%2C%20%27Mid%27%2C%20%27Max%27%2C%20%277kHz%27%2C%20%278kHz%27%5D%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Empire Ears', 'phones': [{'name': 'Bravado MK.II', 'file': 'Empire Ears Bravado MK.II'}, {'name': 'Hero', 'file': 'Empire Ears Hero'}, {'name': 'EVO', 'file': ['Empire Ears Legend EVO', 'Empire Ears Legend EVO S2'], 'suffix': ['S1', 'S2']}, {'name': 'Legend X SE', 'file': 'Empire Ears Legend X SE'}, {'name': 'Odin', 'file': 'Empire Ears Odin'}, {'name': 'ESR MK.II', 'file': 'Empire Ears ESR MK.II'}, {'name': 'Legend X', 'file': 'Empire Ears Legend X'}, {'name': 'Raven', 'file': 'Empire Ears Raven'}, {'name': 'Valkyrie MK.II', 'file': 'Empire Ears Valkyrie MK.II'}, {'name': 'Zeus XIV', 'file': 'Empire Ears Zeus XIV'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Empire%20Ears%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Bravado%20MK.II%27%2C%20%27file%27%3A%20%27Empire%20Ears%20Bravado%20MK.II%27%7D%2C%20%7B%27name%27%3A%20%27Hero%27%2C%20%27file%27%3A%20%27Empire%20Ears%20Hero%27%7D%2C%20%7B%27name%27%3A%20%27EVO%27%2C%20%27file%27%3A%20%5B%27Empire%20Ears%20Legend%20EVO%27%2C%20%27Empire%20Ears%20Legend%20EVO%20S2%27%5D%2C%20%27suffix%27%3A%20%5B%27S1%27%2C%20%27S2%27%5D%7D%2C%20%7B%27name%27%3A%20%27Legend%20X%20SE%27%2C%20%27file%27%3A%20%27Empire%20Ears%20Legend%20X%20SE%27%7D%2C%20%7B%27name%27%3A%20%27Odin%27%2C%20%27file%27%3A%20%27Empire%20Ears%20Odin%27%7D%2C%20%7B%27name%27%3A%20%27ESR%20MK.II%27%2C%20%27file%27%3A%20%27Empire%20Ears%20ESR%20MK.II%27%7D%2C%20%7B%27name%27%3A%20%27Legend%20X%27%2C%20%27file%27%3A%20%27Empire%20Ears%20Legend%20X%27%7D%2C%20%7B%27name%27%3A%20%27Raven%27%2C%20%27file%27%3A%20%27Empire%20Ears%20Raven%27%7D%2C%20%7B%27name%27%3A%20%27Valkyrie%20MK.II%27%2C%20%27file%27%3A%20%27Empire%20Ears%20Valkyrie%20MK.II%27%7D%2C%20%7B%27name%27%3A%20%27Zeus%20XIV%27%2C%20%27file%27%3A%20%27Empire%20Ears%20Zeus%20XIV%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Etymotic', 'phones': [{'name': 'ER2SE', 'file': ['Etymotic ER2SE', 'Etymotic ER2SE (S2)'], 'suffix': ['S1', 'S2']}, {'name': 'ER2XR', 'file': ['Etymotic ER2XR', 'Etymotic ER2XR w Spinfit CP100 Adapter'], 'suffix': ['Triple Flange', 'Spinfit CP100 Adapter']}, {'name': 'ER4XR', 'file': 'Etymotic ER4XR'}, {'name': 'EVO', 'file': ['Etymotic EVO', 'Etymotic EVO 10kHz', 'Etymotic EVO (Triple Flange)'], 'suffix': ['8kHz', 'Reference Plane', 'Triple Flange @ RP']}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Etymotic%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27ER2SE%27%2C%20%27file%27%3A%20%5B%27Etymotic%20ER2SE%27%2C%20%27Etymotic%20ER2SE%20%28S2%29%27%5D%2C%20%27suffix%27%3A%20%5B%27S1%27%2C%20%27S2%27%5D%7D%2C%20%7B%27name%27%3A%20%27ER2XR%27%2C%20%27file%27%3A%20%5B%27Etymotic%20ER2XR%27%2C%20%27Etymotic%20ER2XR%20w%20Spinfit%20CP100%20Adapter%27%5D%2C%20%27suffix%27%3A%20%5B%27Triple%20Flange%27%2C%20%27Spinfit%20CP100%20Adapter%27%5D%7D%2C%20%7B%27name%27%3A%20%27ER4XR%27%2C%20%27file%27%3A%20%27Etymotic%20ER4XR%27%7D%2C%20%7B%27name%27%3A%20%27EVO%27%2C%20%27file%27%3A%20%5B%27Etymotic%20EVO%27%2C%20%27Etymotic%20EVO%2010kHz%27%2C%20%27Etymotic%20EVO%20%28Triple%20Flange%29%27%5D%2C%20%27suffix%27%3A%20%5B%278kHz%27%2C%20%27Reference%20Plane%27%2C%20%27Triple%20Flange%20%40%20RP%27%5D%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'FatFreq', 'phones': [{'name': 'Maestro Mini', 'file': ['FatFreq Maestro Mini', 'FatFreq Maestro Mini S2'], 'suffix': ['S1', 'S2']}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27FatFreq%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Maestro%20Mini%27%2C%20%27file%27%3A%20%5B%27FatFreq%20Maestro%20Mini%27%2C%20%27FatFreq%20Maestro%20Mini%20S2%27%5D%2C%20%27suffix%27%3A%20%5B%27S1%27%2C%20%27S2%27%5D%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'FAudio', 'phones': [{'name': 'Dark Sky', 'file': 'FAudio Dark Sky'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27FAudio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Dark%20Sky%27%2C%20%27file%27%3A%20%27FAudio%20Dark%20Sky%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Fearless Audio', 'phones': [{'name': 'Barcelona', 'file': 'Fearless Audio Barcelona'}, {'name': 'Crinacle Dawn', 'file': 'Fearless Crinacle Dawn'}, {'name': 'Crinacle Dawn Prototype', 'file': 'Fearless Crinacle Dawn Prototype'}, {'name': 'Provence', 'file': 'Fearless Audio Provence'}, {'name': 'S8Z', 'file': 'Fearless Audio S8Z'}, {'name': 'Shangri-La', 'file': 'Fearless Audio Shangri-La'}, {'name': 'Tequila', 'file': 'Fearless Audio Tequila'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Fearless%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27Barcelona%27%2C%20%27file%27%3A%20%27Fearless%20Audio%20Barcelona%27%7D%2C%20%7B%27name%27%3A%20%27Crinacle%20Dawn%27%2C%20%27file%27%3A%20%27Fearless%20Crinacle%20Dawn%27%7D%2C%20%7B%27name%27%3A%20%27Crinacle%20Dawn%20Prototype%27%2C%20%27file%27%3A%20%27Fearless%20Crinacle%20Dawn%20Prototype%27%7D%2C%20%7B%27name%27%3A%20%27Provence%27%2C%20%27file%27%3A%20%27Fearless%20Audio%20Provence%27%7D%2C%20%7B%27name%27%3A%20%27S8Z%27%2C%20%27file%27%3A%20%27Fearless%20Audio%20S8Z%27%7D%2C%20%7B%27name%27%3A%20%27Shangri-La%27%2C%20%27file%27%3A%20%27Fearless%20Audio%20Shangri-La%27%7D%2C%20%7B%27name%27%3A%20%27Tequila%27%2C%20%27file%27%3A%20%27Fearless%20Audio%20Tequila%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Fiio', 'phones': [{'name': 'FD3', 'file': 'Fiio FD3'}, {'name': 'FD5', 'file': 'Fiio FD5'}, {'name': 'FH3', 'file': 'Fiio FH3'}, {'name': 'FHE Eclipse', 'file': 'Fiio FHE Eclipse'}, {'name': 'FH5', 'file': 'Fiio FH5'}, {'name': 'FH7', 'file': 'Fiio FH7'}, {'name': 'FH7S', 'file': 'Fiio FH7S'}, {'name': 'FH5S', 'file': 'Fiio FH5S'}, {'name': 'FX15', 'file': 'Fiio FX15'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Fiio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27FD3%27%2C%20%27file%27%3A%20%27Fiio%20FD3%27%7D%2C%20%7B%27name%27%3A%20%27FD5%27%2C%20%27file%27%3A%20%27Fiio%20FD5%27%7D%2C%20%7B%27name%27%3A%20%27FH3%27%2C%20%27file%27%3A%20%27Fiio%20FH3%27%7D%2C%20%7B%27name%27%3A%20%27FHE%20Eclipse%27%2C%20%27file%27%3A%20%27Fiio%20FHE%20Eclipse%27%7D%2C%20%7B%27name%27%3A%20%27FH5%27%2C%20%27file%27%3A%20%27Fiio%20FH5%27%7D%2C%20%7B%27name%27%3A%20%27FH7%27%2C%20%27file%27%3A%20%27Fiio%20FH7%27%7D%2C%20%7B%27name%27%3A%20%27FH7S%27%2C%20%27file%27%3A%20%27Fiio%20FH7S%27%7D%2C%20%7B%27name%27%3A%20%27FH5S%27%2C%20%27file%27%3A%20%27Fiio%20FH5S%27%7D%2C%20%7B%27name%27%3A%20%27FX15%27%2C%20%27file%27%3A%20%27Fiio%20FX15%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Final Audio', 'phones': [{'name': 'A4000', 'file': 'Final Audio A4000'}, {'name': 'B3', 'file': 'Final Audio B3'}, {'name': 'E500', 'file': 'Final Audio E500'}, {'name': 'x Dita Shichiku.Kangen', 'file': 'Final x Dita Shichiku.Kangen'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Final%20Audio%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27A4000%27%2C%20%27file%27%3A%20%27Final%20Audio%20A4000%27%7D%2C%20%7B%27name%27%3A%20%27B3%27%2C%20%27file%27%3A%20%27Final%20Audio%20B3%27%7D%2C%20%7B%27name%27%3A%20%27E500%27%2C%20%27file%27%3A%20%27Final%20Audio%20E500%27%7D%2C%20%7B%27name%27%3A%20%27x%20Dita%20Shichiku.Kangen%27%2C%20%27file%27%3A%20%27Final%20x%20Dita%20Shichiku.Kangen%27%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'FLC Technology', 'phones': [{'name': '8P', 'file': ['FLC 8P (Gold)', 'FLC 8P (Green)', 'FLC 8P (Gray)', 'FLC 8P (Silver)'], 'suffix': ['Gold', 'Gray', 'Green', 'Silver']}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27FLC%20Technology%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%278P%27%2C%20%27file%27%3A%20%5B%27FLC%208P%20%28Gold%29%27%2C%20%27FLC%208P%20%28Green%29%27%2C%20%27FLC%208P%20%28Gray%29%27%2C%20%27FLC%208P%20%28Silver%29%27%5D%2C%20%27suffix%27%3A%20%5B%27Gold%27%2C%20%27Gray%27%2C%20%27Green%27%2C%20%27Silver%27%5D%7D%5D%7D"
+    },
+    {
+        "reviewer": "Precog",
+        "item": "{'name': 'Geek Wold', 'phones': [{'name': 'GK10', 'file': 'Geek Wold GK10'}]}",
+        "date": "Jan 20, 04:48",
+        "link": "https://precog.squig.link/?share=%7B%27name%27%3A%20%27Geek%20Wold%27%2C%20%27phones%27%3A%20%5B%7B%27name%27%3A%20%27GK10%27%2C%20%27file%27%3A%20%27Geek%20Wold%20GK10%27%7D%5D%7D"
+    }
+]
