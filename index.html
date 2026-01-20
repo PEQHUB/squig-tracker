@@ -3,72 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Squig Tracker</title>
+    <title>Squig Tracker | Feed</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #000; color: #fff; }
-        /* Clean transition for search focus */
-        input:focus { outline: none; border-color: #fff !important; }
-        /* Custom scrollbar for minimalist look */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; }
+        body { background-color: #000; color: #fff; font-family: ui-sans-serif, system-ui, sans-serif; }
+        /* Smooth scrolling for mobile */
+        html { scroll-behavior: smooth; }
+        /* Hide scrollbar but keep functionality */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="selection:bg-white selection:text-black">
-    <div class="max-w-2xl mx-auto px-6 py-16">
+<body class="selection:bg-zinc-800 selection:text-white">
+
+    <div class="max-w-xl mx-auto px-6 py-20">
         
-        <header class="mb-12 border-b border-zinc-800 pb-8">
-            <h1 class="text-3xl font-light tracking-tighter mb-2">SQUIG_TRACKER</h1>
-            <p id="status" class="text-xs text-zinc-500 font-mono uppercase tracking-widest">System Active</p>
+        <header class="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-md z-10 border-b border-zinc-900">
+            <div class="max-w-xl mx-auto px-6 py-4 flex justify-between items-center">
+                <h1 class="text-xs font-bold tracking-[0.3em] uppercase">Squig_Live_Feed</h1>
+                <div class="flex items-center gap-2">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span id="update-time" class="text-[10px] font-mono text-zinc-500">POLLING...</span>
+                </div>
+            </div>
         </header>
 
-        <div class="mb-12">
-            <input type="text" id="searchInput" onkeyup="filterItems()" 
-                   placeholder="SEARCH MEASUREMENTS..." 
-                   class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-light placeholder:text-zinc-700 transition-colors">
-        </div>
-
-        <div id="feed" class="space-y-10">
+        <div id="feed" class="mt-8 space-y-0">
             </div>
+
+        <footer class="mt-20 py-10 border-t border-zinc-900 text-center">
+            <p class="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">End of Recent History</p>
+        </footer>
     </div>
 
     <script>
-        let allData = [];
-
         async function loadFeed() {
             try {
                 const response = await fetch('history.json');
-                allData = await response.json();
-                renderItems(allData);
-            } catch (e) {
-                document.getElementById('feed').innerHTML = '<p class="text-zinc-500 font-mono text-xs">NO DATA FOUND.</p>';
-            }
-        }
+                const data = await response.json();
+                
+                // Update the "Last Updated" timestamp using the most recent item's date
+                if (data.length > 0) {
+                    document.getElementById('update-time').innerText = `UPDATED: ${data[0].date}`;
+                }
 
-        function renderItems(data) {
-            const feed = document.getElementById('feed');
-            if (data.length === 0) {
-                feed.innerHTML = '<p class="text-zinc-500 font-mono text-xs uppercase">No matches found.</p>';
-                return;
-            }
+                const feed = document.getElementById('feed');
+                
+                if (data.length === 0) {
+                    feed.innerHTML = '<p class="text-zinc-500 font-mono text-xs">NO MEASUREMENTS RECORDED.</p>';
+                    return;
+                }
 
-            feed.innerHTML = data.map(item => `
-                <div class="group border-l border-zinc-800 pl-6 py-1 hover:border-white transition-colors">
-                    <div class="flex items-baseline justify-between mb-1">
-                        <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">${item.reviewer}</span>
-                        <span class="text-[10px] font-mono text-zinc-600">${item.date}</span>
-                    </div>
-                    <a href="${item.link}" target="_blank" class="block">
-                        <h2 class="text-xl font-medium tracking-tight hover:underline decoration-1 underline-offset-4 break-words">
-                            ${item.item}
-                        </h2>
-                    </a>
-                </div>
-            `).join('');
-        }
-
-        function filterItems() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allData.filter(i => 
-                i.item.toLowerCase().includes(query) ||
+                feed.innerHTML = data.map((item, index) => `
+                    <div class="group py-8 border-b border-zinc-900 flex flex-col gap-1">
+                        <div class="flex justify-between items-baseline">
+                            <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-tighter">${item.reviewer}</span>
+                            <span class="text-[10px] font-mono text-zinc-700">${item.date}</span>
+                        </div>
+                        <a href="${item.link}" target="_blank" class="block">
+                            <h2 class="text-lg font-light leading-snug text-zinc-200 group-hover:text-white transition-colors break-words">
