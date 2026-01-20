@@ -32,6 +32,10 @@
         .recent-list-mini li { margin-bottom: 4px; border-left: 1px solid #222; padding-left: 8px; }
         .recent-list-mini a:hover { color: #fff; text-decoration: underline; }
 
+        .contributor-table { width: 100%; font-size: 11px; color: #a1a1aa; margin-top: 1rem; }
+        .contributor-table th { text-align: left; color: #52525b; padding-bottom: 8px; font-weight: 500; }
+        .contributor-table td { padding: 4px 0; border-bottom: 1px solid #111; }
+
         #load-all-btn {
             margin: 4rem auto;
             display: block;
@@ -119,51 +123,46 @@
         const reviewer = (entry.reviewer || "").toLowerCase();
         const item = resolveName(entry.item).toLowerCase();
         
-        // 1. Explicit Path Markers
         const isExplicit711 = link.includes('/711') || link.includes('type=711');
         const isExplicitIEM = link.includes('/iem/') || link.includes('type=iem') || link.includes('5128iem');
         const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/');
 
-        // 2. Rig Detection (711 markers override general 5128 domain keywords)
         const is5128 = !isExplicit711 && (
                        link.includes('5128') || 
                        link.includes('hangout.audio') || 
                        link.includes('listener800.github.io') || 
                        reviewer.includes('5128'));
 
-        // 3. Listener 5128 Custom Multi-Factor Filter
         if (link.includes('listener800.github.io')) {
-            // Common Over-Ear Brands in Listener's DB
-            const oeBrands = ['sennheiser', 'hifiman', 'audeze', 'focal', 'beyerdynamic', 'zmf', 'audio-technica', 'akg', 'meze', 'dan clark', 'dca', 'stax', 'koss', 'abyss', 'denon', 'fostex'];
-            // Common Attributes
-            const oeAttributes = ['+oe', '(oe)', 'over-ear', 'headphone', '(hp)', 'open-back', 'closed-back'];
-            
-            const isKnownOEBrand = oeBrands.some(brand => item.includes(brand));
-            const hasOEAttribute = oeAttributes.some(attr => item.includes(attr));
+            const hasOEAttr = ['+oe', '(oe)', 'over-ear', 'headphone', '(hp)', 'open-back', 'closed-back'].some(attr => item.includes(attr));
+            if (hasOEAttr || isExplicitHP) return "Over-Ear (5128)";
 
-            if (isExplicitHP || isKnownOEBrand || hasOEAttribute) {
-                return "Over-Ear (5128)";
-            }
+            const pureIEMBrands = ['truthear', '7hz', 'kiwi ears', 'letshuoer', 'kz', 'cca', 'tanchjim', 'simgot', 'soft ears', 'qdc'];
+            if (pureIEMBrands.some(brand => item.includes(brand))) return "IEM (5128)";
+
+            const hybridOEModels = [
+                'para', 'venus', 'void', 'joker', 
+                'hd600', 'hd650', 'hd800', 'hd660', 'hd560', 'hd400', 
+                'arya', 'sundara', 'ananda', 'he400', 'edition xs', 'susvara', 
+                'utopia', 'clear', 'elear', 'stellia', 'radiance', 'bathys', 
+                'lcd-', 'maxwell', 'mm-100', 'mm-500'
+            ];
+            if (hybridOEModels.some(model => item.includes(model))) return "Over-Ear (5128)";
+
             return "IEM (5128)";
         }
 
-        // 4. Classification
-        
-        // Crinacle or Explicit IEM paths on a 5128 rig take top priority
         if (is5128) {
             const isCrinacle = reviewer.includes('crin') || link.includes('crinacle');
             if (isCrinacle || isExplicitIEM) return "IEM (5128)";
         }
 
-        // TWS
         if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
 
-        // Headphone Logic (Only if not already caught by IEM/Listener logic)
         if (isExplicitHP) {
             return is5128 ? "Over-Ear (5128)" : "Over-Ear (Legacy/Other)";
         }
 
-        // Final Fallback
         return is5128 ? "IEM (5128)" : "IEM (711)";
     }
 
@@ -181,7 +180,10 @@
 
     function updateDashboard() {
         const now = new Date().getTime();
-        const last12h = fullHistory.filter(e => (now - toLocalTime(e.date).getTime() < 12*60*60*1000)).length;
+        const last12h = fullHistory.filter(e => {
+            const t = toLocalTime(e.date);
+            return t && (now - t.getTime() < 12*60*60*1000);
+        }).length;
         document.getElementById('stat-total').innerText = last12h;
         document.getElementById('stat-db-total').innerText = fullHistory.length.toLocaleString();
         document.getElementById('stat-sources').innerText = Math.max(0, Object.keys(databaseData).length - 1);
@@ -190,6 +192,7 @@
     function renderStats() {
         const statsContainer = document.getElementById('stats');
         const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (Legacy/Other)": 0, "TWS & Earbuds": 0 };
+        const contributors = {};
         const recentLists = { "IEM": [], "Over-Ear": [], "TWS": [] };
         const latest5128_IEM = [];
         const latest5128_OE = [];
@@ -197,6 +200,13 @@
         fullHistory.forEach(entry => {
             const cat = getEntryMetadata(entry);
             if (counts[cat] !== undefined) counts[cat]++;
+            
+            // Contributor Stats (Only for 5128)
+            if (cat.includes("5128")) {
+                if (!contributors[entry.reviewer]) contributors[entry.reviewer] = 0;
+                contributors[entry.reviewer]++;
+            }
+
             if (cat.includes("IEM") && recentLists["IEM"].length < statsRecentLimit) recentLists["IEM"].push(entry);
             if (cat.includes("Over-Ear") && recentLists["Over-Ear"].length < statsRecentLimit) recentLists["Over-Ear"].push(entry);
             if (cat.includes("TWS") && recentLists["TWS"].length < statsRecentLimit) recentLists["TWS"].push(entry);
@@ -205,6 +215,7 @@
             if (cat === "Over-Ear (5128)" && latest5128_OE.length < statsRecentLimit) latest5128_OE.push(entry);
         });
 
+        const sortedContributors = Object.entries(contributors).sort((a,b) => b[1] - a[1]);
         const totalIEM = (counts["IEM (711)"] + counts["IEM (5128)"]) || 1;
         const totalOE = (counts["Over-Ear (5128)"] + counts["Over-Ear (Legacy/Other)"]) || 1;
 
@@ -230,18 +241,20 @@
                     <span class="text-[10px] uppercase mono text-zinc-500 font-bold">IEM Standards</span>
                     <div class="mt-4">${renderBar("5128", counts["IEM (5128)"], totalIEM, "bg-white")} ${renderBar("711", counts["IEM (711)"], totalIEM, "bg-zinc-800")}</div>
                     ${renderRecent("Latest 5128 Measurements", latest5128_IEM)}
-                    ${renderRecent("All Recent IEMs", recentLists["IEM"])}
                 </div>
                 <div class="stat-card">
                     <span class="text-[10px] uppercase mono text-zinc-500 font-bold">Over-Ear Standards</span>
                     <div class="mt-4">${renderBar("5128", counts["Over-Ear (5128)"], totalOE, "bg-white")} ${renderBar("Legacy", counts["Over-Ear (Legacy/Other)"], totalOE, "bg-zinc-800")}</div>
                     ${renderRecent("Latest 5128 Measurements", latest5128_OE)}
-                    ${renderRecent("All Recent Over-Ears", recentLists["Over-Ear"])}
                 </div>
                 <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">Consumer/TWS</span>
-                    <div class="text-2xl mono mt-4 text-white">${counts["TWS & Earbuds"]} <span class="text-xs text-zinc-500">Units</span></div>
-                    ${renderRecent("Recent TWS", recentLists["TWS"])}
+                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">5128 Contributors</span>
+                    <table class="contributor-table mono">
+                        <thead><tr><th>Reviewer</th><th class="text-right">Total</th></tr></thead>
+                        <tbody>
+                            ${sortedContributors.map(([name, count]) => `<tr><td>${name}</td><td class="text-right text-white">${count}</td></tr>`).join('')}
+                        </tbody>
+                    </table>
                 </div>
             </div>`;
     }
@@ -254,7 +267,7 @@
         }
         container.innerHTML = data.map(entry => {
             const date = toLocalTime(entry.date);
-            const isNew = (new Date() - date) < NEW_BADGE_MS;
+            const isNew = date && (new Date() - date) < NEW_BADGE_MS;
             const rigType = getEntryMetadata(entry);
             const rigColor = rigType.includes("5128") ? "text-white border-zinc-600" : "text-zinc-500 border-zinc-900";
             
