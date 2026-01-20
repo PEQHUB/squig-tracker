@@ -32,6 +32,14 @@
         .chart-bar-container { background: #111; height: 8px; border-radius: 1px; overflow: hidden; margin: 10px 0; }
         .chart-bar-fill { height: 100%; transition: width 1s ease-out; }
 
+        .recent-list-mini { font-size: 11px; color: #71717a; margin-top: 1rem; }
+        .recent-list-mini li { margin-bottom: 4px; border-left: 1px solid #222; padding-left: 8px; }
+        .recent-list-mini a:hover { color: #fff; text-decoration: underline; }
+
+        .contributor-table { width: 100%; font-size: 11px; color: #a1a1aa; margin-top: 1rem; }
+        .contributor-table th { text-align: left; color: #52525b; padding-bottom: 8px; font-weight: 500; }
+        .contributor-table td { padding: 4px 0; border-bottom: 1px solid #111; }
+
         #load-all-btn {
             margin: 4rem auto;
             display: block;
@@ -134,11 +142,9 @@
         const reviewer = (entry.reviewer || "").toLowerCase();
         const item = resolveName(entry.item).toLowerCase();
         
-        // 1. Rig Verification via Hostname (Strict Fix)
         let is5128Domain = false;
         try {
             const urlHost = new URL(link).hostname;
-            // Only flag if the domain itself is a known 5128 host
             if (urlHost.includes('hangout.audio') || urlHost.includes('listener800.github.io')) {
                 is5128Domain = true;
             }
@@ -146,12 +152,9 @@
             if (link.includes('hangout.audio/') || link.includes('listener800.github.io/')) is5128Domain = true;
         }
 
-        // 2. Indicators
         const is5128Reviewer = reviewer.includes("earphone's archive") || reviewer.includes("5128");
         const isExplicit711 = link.includes('/711') || link.includes('type=711') || item.includes('(711)');
         const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/');
-
-        // 3. Logic: 5128 if Domain or Reviewer matches, provided it's not explicitly tagged 711
         const is5128 = !isExplicit711 && (is5128Reviewer || is5128Domain || link.includes('5128'));
 
         if (is5128) {
@@ -159,10 +162,8 @@
             if (hasOEAttr || isExplicitHP) return "Over-Ear (5128)";
             return "IEM (5128)";
         }
-
         if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
         if (isExplicitHP) return "Over-Ear (Legacy/Other)";
-
         return "IEM (711)";
     }
 
@@ -188,9 +189,62 @@
         document.getElementById('stat-sources').innerText = Math.max(0, Object.keys(databaseData).length - 1);
     }
 
+    function renderStats() {
+        const statsContainer = document.getElementById('stats');
+        const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (Legacy/Other)": 0, "TWS & Earbuds": 0 };
+        const contributors = {};
+        const latest5128 = [];
+
+        fullHistory.forEach(entry => {
+            const cat = getEntryMetadata(entry);
+            if (counts[cat] !== undefined) counts[cat]++;
+            if (cat.includes("5128")) {
+                if (!contributors[entry.reviewer]) contributors[entry.reviewer] = 0;
+                contributors[entry.reviewer]++;
+                if (latest5128.length < 25) latest5128.push(entry);
+            }
+        });
+
+        const sortedContributors = Object.entries(contributors).sort((a,b) => b[1] - a[1]);
+        const totalIEM = (counts["IEM (711)"] + counts["IEM (5128)"]) || 1;
+        const totalOE = (counts["Over-Ear (5128)"] + counts["Over-Ear (Legacy/Other)"]) || 1;
+
+        const renderBar = (label, count, total, color) => `
+            <div class="mb-6">
+                <div class="flex justify-between text-[10px] mono uppercase mb-2">
+                    <span>${label}</span><span>${count} (${((count/total)*100).toFixed(1)}%)</span>
+                </div>
+                <div class="chart-bar-container"><div class="chart-bar-fill ${color}" style="width:${(count/total)*100}%"></div></div>
+            </div>`;
+
+        statsContainer.innerHTML = `
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="stat-card">
+                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">IEM Standards</span>
+                    <div class="mt-4">${renderBar("5128", counts["IEM (5128)"], totalIEM, "bg-white")} ${renderBar("711", counts["IEM (711)"], totalIEM, "bg-zinc-800")}</div>
+                    <span class="text-[9px] uppercase mono text-zinc-500 block mt-6 border-b border-zinc-900 pb-1">Latest 5128</span>
+                    <ul class="recent-list-mini">
+                        ${latest5128.map(i => `<li><a href="${i.link}" target="_blank">${resolveName(i.item)} <span class="opacity-50">(${i.reviewer})</span></a></li>`).join('')}
+                    </ul>
+                </div>
+                <div class="stat-card">
+                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">Over-Ear Standards</span>
+                    <div class="mt-4">${renderBar("5128", counts["Over-Ear (5128)"], totalOE, "bg-white")} ${renderBar("Legacy", counts["Over-Ear (Legacy/Other)"], totalOE, "bg-zinc-800")}</div>
+                </div>
+                <div class="stat-card">
+                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">5128 Contributors</span>
+                    <table class="contributor-table mono">
+                        <thead><tr><th>Reviewer</th><th class="text-right">Total</th></tr></thead>
+                        <tbody>
+                            ${sortedContributors.map(([name, count]) => `<tr><td>${name}</td><td class="text-right text-white">${count}</td></tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>`;
+    }
+
     function applyFilters() {
         const searchVal = document.getElementById('search').value.toLowerCase();
-        
         let countAll = 0, count711 = 0, count5128 = 0;
 
         const filtered = fullHistory.filter(entry => {
@@ -225,7 +279,6 @@
             const isNew = date && (new Date() - date) < NEW_BADGE_MS;
             const rigType = getEntryMetadata(entry);
             const rigColor = rigType.includes("5128") ? "text-white border-zinc-600" : "text-zinc-500 border-zinc-900";
-            
             return `
                 <div class="item-row py-6 flex justify-between items-center group">
                     <div class="min-w-0 pr-4">
@@ -252,13 +305,8 @@
         displayedHistory = [...displayedHistory, ...nextBatch];
         renderItems(nextBatch, 'feed', currentIndex > 0);
         currentIndex += PAGE_SIZE;
-
         const btn = document.getElementById('load-all-btn');
-        if (currentIndex < currentFilteredSet.length && currentTab === 'feed') {
-            btn.classList.remove('hidden');
-        } else {
-            btn.classList.add('hidden');
-        }
+        btn.classList.toggle('hidden', currentIndex >= currentFilteredSet.length || currentTab === 'stats');
     }
 
     function setRigFilter(rig) {
@@ -275,7 +323,12 @@
             document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
         });
         document.getElementById('rig-filters').classList.toggle('hidden', tab === 'stats');
-        if (tab === 'feed') applyFilters();
+        if (tab === 'stats') {
+            renderStats();
+            document.getElementById('load-all-btn').classList.add('hidden');
+        } else {
+            applyFilters();
+        }
     }
 
     document.getElementById('search').addEventListener('input', () => {
@@ -284,7 +337,6 @@
     });
 
     document.getElementById('load-all-btn').addEventListener('click', loadMore);
-
     fetchData();
 </script>
 </body>
