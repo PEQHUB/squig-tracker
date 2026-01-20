@@ -4,77 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SQUIG.LINK // TRACKER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap');
-        body { font-family: 'JetBrains Mono', monospace; background-color: #000000; color: #e4e4e7; }
-        input::placeholder { color: #3f3f46; }
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #121212;
+            --border: #1f1f1f;
+            --text-main: #e5e5e5;
+            --text-dim: #737373;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Custom scrollbar for a clean look */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #262626; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #404040; }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .feed-item {
+            border-bottom: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .feed-item:hover {
+            background-color: #111111;
+            padding-left: 8px;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 1px 0 0 #fff;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-6 md:p-12">
+<body class="min-h-screen py-10 px-4 md:px-0">
 
-    <main class="w-full max-w-3xl">
-        <header class="mb-12 border-b border-zinc-900 pb-10">
-            <h1 class="text-[10px] font-bold tracking-[0.4em] text-zinc-600 mb-8 uppercase">Database Overview</h1>
+    <div class="max-w-4xl mx-auto">
+        <header class="mb-12">
+            <h1 class="text-[11px] font-bold tracking-[0.3em] text-zinc-500 uppercase mb-8">Squiglink Database Tracker</h1>
             
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="text-[9px] text-zinc-500 uppercase tracking-widest mb-2">Total Graphs</div>
-                    <div class="text-xl font-medium text-white" id="stat-total">0</div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="stat-card">
+                    <p class="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Total Graphs</p>
+                    <p class="text-2xl font-medium mono" id="stat-total">0</p>
                 </div>
-                <div>
-                    <div class="text-[9px] text-zinc-500 uppercase tracking-widest mb-2">Unique Models</div>
-                    <div class="text-xl font-medium text-white" id="stat-unique">0</div>
+                <div class="stat-card">
+                    <p class="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Unique Models</p>
+                    <p class="text-2xl font-medium mono" id="stat-unique">0</p>
                 </div>
-                <div>
-                    <div class="text-[9px] text-zinc-500 uppercase tracking-widest mb-2">Active Sources</div>
-                    <div class="text-xl font-medium text-white" id="stat-sources">0</div>
+                <div class="stat-card">
+                    <p class="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Active Reviewers</p>
+                    <p class="text-2xl font-medium mono" id="stat-sources">0</p>
                 </div>
-                <div>
-                    <div class="text-[9px] text-zinc-500 uppercase tracking-widest mb-2">Last Update</div>
-                    <div class="text-xl font-medium text-white" id="stat-time">--:--</div>
+                <div class="stat-card">
+                    <p class="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Last Update</p>
+                    <p class="text-2xl font-medium mono" id="stat-time">--:--</p>
                 </div>
             </div>
         </header>
 
-        <div class="mb-12">
+        <section class="mb-8">
             <input type="text" id="searchInput" placeholder="Search models or reviewers..." 
-                class="w-full bg-transparent border-b border-zinc-800 py-4 text-sm outline-none focus:border-white transition-colors">
-        </div>
+                class="w-full bg-transparent border-b border-zinc-800 py-4 text-lg font-light outline-none search-input transition-all placeholder:text-zinc-800">
+        </section>
 
-        <div id="feed" class="space-y-1">
-            <div class="text-zinc-800 text-[10px] tracking-[0.2em] uppercase py-20 text-center">Loading Database...</div>
-        </div>
-    </main>
+        <section id="feed-container">
+            <div id="feed" class="flex flex-col">
+                <div class="py-20 text-center text-zinc-600 text-sm animate-pulse">Initializing data stream...</div>
+            </div>
+        </section>
+    </div>
 
     <script>
         let fullHistory = [];
-        const bust = `?t=${Date.now()}`;
+        const cacheBust = `?t=${Date.now()}`;
 
+        // Fetching both JSON files
         Promise.all([
-            fetch(`./history.json${bust}`).then(res => res.json()),
-            fetch(`./database.json${bust}`).then(res => res.json())
+            fetch(`./history.json${cacheBust}`).then(res => res.json()),
+            fetch(`./database.json${cacheBust}`).then(res => res.json())
         ])
         .then(([historyData, dbData]) => {
             fullHistory = historyData;
             renderFeed(historyData);
-            renderStats(dbData);
+            updateStats(dbData);
         })
         .catch(err => {
-            document.getElementById('feed').innerHTML = `<div class="text-zinc-500 text-[10px] uppercase text-center py-20">Connection Error.</div>`;
+            document.getElementById('feed').innerHTML = `<div class="py-20 text-center text-zinc-700 text-xs uppercase tracking-widest">Failed to load database.</div>`;
         });
 
-        function renderStats(db) {
+        function updateStats(db) {
             const sources = Object.keys(db).length;
             let totalGraphs = 0;
             let uniqueModels = new Set();
 
             for (const reviewer in db) {
-                db[reviewer].forEach(item => {
-                    totalGraphs++;
-                    // Basic cleanup for unique count
-                    uniqueModels.add(item.replace(/\{.*\}/, '').toLowerCase().trim());
-                });
+                if (Array.isArray(db[reviewer])) {
+                    db[reviewer].forEach(item => {
+                        totalGraphs++;
+                        // Extracting actual name if stored as a stringified object by accident
+                        let name = item;
+                        if (typeof item === 'string' && item.includes("'name':")) {
+                            const match = item.match(/'name':\s*'([^']+)'/);
+                            name = match ? match[1] : item;
+                        }
+                        uniqueModels.add(name.toLowerCase().trim());
+                    });
+                }
             }
 
             document.getElementById('stat-total').innerText = totalGraphs.toLocaleString();
@@ -85,44 +136,30 @@
             document.getElementById('stat-time').innerText = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
         }
 
-        function formatName(rawName) {
-            // This cleans the "nested code" issue seen in your screenshots
-            if (rawName.includes("'name':")) {
-                try {
-                    // Try to extract just the brand and model if it's formatted as a stringified object
-                    const match = rawName.match(/'name':\s*'([^']+)'/);
-                    return match ? match[1] : "Multiple Models Found";
-                } catch(e) { return "Batch Update"; }
-            }
-            return rawName;
-        }
-
         function renderFeed(data) {
             const feed = document.getElementById('feed');
             if (!data || data.length === 0) {
-                feed.innerHTML = '<div class="py-12 text-zinc-800 text-[10px] text-center">NO DATA FOUND.</div>';
+                feed.innerHTML = '<div class="py-20 text-center text-zinc-800 text-xs uppercase tracking-widest">No matching results.</div>';
                 return;
             }
 
-            feed.innerHTML = data.map(item => {
-                const cleanName = formatName(item.item);
-                return `
-                <div class="flex items-center justify-between py-4 border-b border-zinc-900 group hover:border-zinc-700 transition-colors">
-                    <div class="min-w-0 pr-4">
+            feed.innerHTML = data.map(entry => `
+                <div class="feed-item flex items-center justify-between py-5">
+                    <div class="flex flex-col min-w-0 pr-6">
                         <div class="flex items-center gap-3 mb-1">
-                            <span class="text-[8px] font-bold text-zinc-600 uppercase tracking-widest">${item.reviewer}</span>
-                            <span class="text-[8px] text-zinc-800 tracking-tighter">${item.date}</span>
+                            <span class="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider">${entry.reviewer}</span>
+                            <span class="text-[10px] text-zinc-700 mono">${entry.date}</span>
                         </div>
-                        <h2 class="text-sm text-zinc-300 truncate group-hover:text-white transition-colors">
-                            ${cleanName}
+                        <h2 class="text-[15px] font-normal text-zinc-200 truncate leading-snug">
+                            ${entry.item}
                         </h2>
                     </div>
-                    <a href="${item.link}" target="_blank" 
-                       class="text-[9px] font-bold text-zinc-600 hover:text-white uppercase tracking-widest transition-colors whitespace-nowrap">
-                        Graph →
+                    <a href="${entry.link}" target="_blank" class="flex-shrink-0 flex items-center gap-2 group">
+                        <span class="text-[10px] font-bold text-zinc-600 group-hover:text-white uppercase tracking-widest transition-colors">View Graph</span>
+                        <svg class="w-3 h-3 text-zinc-700 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
                 </div>
-            `}).join('');
+            `).join('');
         }
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
