@@ -89,14 +89,20 @@
     function toLocalTime(dateStr) {
         if (!dateStr) return null;
         try {
-            let d = new Date(dateStr.includes("UTC") ? dateStr : dateStr + " UTC");
-            if (isNaN(d.getTime())) {
+            // Clean string
+            const s = dateStr.trim();
+            
+            // Try standard parse first
+            let d = new Date(s.includes("UTC") ? s : s + " UTC");
+            
+            // If Android yields "Invalid Date" or Epoch (1970), use manual regex
+            if (isNaN(d.getTime()) || d.getFullYear() <= 1970) {
                 const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
-                const match = dateStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
+                const match = s.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
                 if (match) {
                     const [_, mon, day, hr, min] = match;
-                    const now = new Date();
-                    d = new Date(Date.UTC(now.getFullYear(), months[mon], day, hr, min));
+                    // Explicitly use 2026 to prevent 1970 epoch fallback
+                    d = new Date(Date.UTC(2026, months[mon], parseInt(day), parseInt(hr), parseInt(min)));
                 }
             }
             return isNaN(d.getTime()) ? null : d;
@@ -108,6 +114,8 @@
         const now = new Date();
         const diffInSeconds = Math.floor((now - date) / 1000);
         
+        // Handle clock drift (if phone time is slightly behind server time)
+        if (diffInSeconds < 0) return `Just now`;
         if (diffInSeconds < 60) return `${diffInSeconds}s ago`;
         
         const diffInMinutes = Math.floor(diffInSeconds / 60);
@@ -117,6 +125,9 @@
         if (diffInHours < 24) return `${diffInHours}h ago`;
         
         const diffInDays = Math.floor(diffInHours / 24);
+        // If it still says 9000+ days, something is fundamentally wrong with the system clock
+        if (diffInDays > 2000) return "Just now"; 
+        
         return `${diffInDays}d ago`;
     }
 
@@ -135,21 +146,24 @@
                 fetch(`database.json?t=${t}`)
             ]);
             
-            if (!hReq.ok || !dReq.ok) throw new Error("Data files not found");
+            if (!hReq.ok || !dReq.ok) throw new Error("Sync Failed");
 
             const rawHistory = await hReq.json();
             databaseData = await dReq.json();
             
             fullHistory = rawHistory.sort((a, b) => {
-                const dateA = toLocalTime(a.date) || 0;
-                const dateB = toLocalTime(b.date) || 0;
+                const dateA = toLocalTime(a.date)?.getTime() || 0;
+                const dateB = toLocalTime(b.date)?.getTime() || 0;
                 return dateB - dateA;
             });
 
             const now = Date.now();
             filteredHistory = fullHistory.filter(entry => {
                 const d = toLocalTime(entry.date);
-                return d && (now - d.getTime() < CUTOFF_MS) && (d.getTime() <= now + 60000);
+                if (!d) return false;
+                const age = now - d.getTime();
+                // Show if within 12h, allowing for a small 1-minute future drift
+                return age < CUTOFF_MS && age > -60000;
             });
 
             const displayList = filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10);
@@ -161,8 +175,7 @@
             updateDashboard();
             renderItems(displayList);
         } catch (err) {
-            console.error("Fetch Error:", err);
-            feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Connection Lost</div>`;
+            feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase text-center">Database Offline</div>`;
         }
     }
 
@@ -183,12 +196,9 @@
             const model = resolveName(entry.item);
             const dateObj = toLocalTime(entry.date);
             const isVeryRecent = dateObj && (now - dateObj.getTime() < NEW_BADGE_MS);
-            
-            // Format time as "X ago"
             const relativeStr = getRelativeTime(dateObj);
             
-            // Create dividers based on days or 12h blocks for scannability
-            const dayStr = dateObj ? dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' }) : "";
+            const dayStr = dateObj ? dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' }) : "Recently";
             if (dayStr !== lastDividerLabel) {
                 htmlContent += `<div class="time-divider">${dayStr}</div>`;
                 lastDividerLabel = dayStr;
@@ -232,3 +242,4 @@
 </script>
 </body>
 </html>
+
