@@ -114,15 +114,35 @@
         return typeof data === 'string' ? data : (data.name || "Unknown Device");
     }
 
+    // UPDATED LOGIC TO FIX CRINACLE 5128 IEM CLASSIFICATION
     function getEntryMetadata(entry) {
         const link = (entry.link || "").toLowerCase();
-        const is5128 = link.includes('5128') || link.includes('hangout.audio') || 
-                       link.includes('listener800.github.io') || entry.reviewer.toLowerCase().includes('5128');
+        const reviewer = (entry.reviewer || "").toLowerCase();
+        
+        const is5128 = link.includes('5128') || 
+                       link.includes('hangout.audio') || 
+                       link.includes('listener800.github.io') || 
+                       reviewer.includes('5128');
 
+        // Priority check for 5128 IEMs (Handles Crinacle override)
+        if (is5128) {
+            const isCrinacle = reviewer.includes('crin') || link.includes('crinacle');
+            const hasIEMKeywords = link.includes('5128iem') || link.includes('type=iem');
+            
+            if (isCrinacle || hasIEMKeywords) {
+                return "IEM (5128)";
+            }
+        }
+
+        // TWS detection
         if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
+
+        // Headphone/Over-Ear detection
         if (link.includes('type=headphone') || link.includes('/headphones/')) {
             return is5128 ? "Over-Ear (5128)" : "Over-Ear (Legacy/Other)";
         }
+
+        // Default fallback
         return is5128 ? "IEM (5128)" : "IEM (711)";
     }
 
