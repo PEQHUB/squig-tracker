@@ -46,7 +46,6 @@
             border-bottom-color: #ffffff;
         }
 
-        /* Chart Styling */
         .chart-bar-container { background: #111; height: 8px; border-radius: 1px; overflow: hidden; margin: 10px 0; }
         .chart-bar-fill { height: 100%; transition: width 1s ease-out; }
 
@@ -152,6 +151,31 @@
         return data.name || Object.values(data)[0] || "Unknown";
     }
 
+    /**
+     * Logic Fix: Uses URL patterns to identify standards
+     */
+    function getEntryMetadata(entry) {
+        const link = (entry.link || "").toLowerCase();
+        const name = resolveName(entry.item).toLowerCase();
+        const rev = entry.reviewer.toLowerCase();
+        
+        // 5128 Detection (URLs + Strings)
+        const is5128 = link.includes('hangout.audio') || 
+                       link.includes('listener800') || 
+                       link.includes('5128') || 
+                       name.includes('5128') || 
+                       name.includes('4620');
+
+        // Over-Ear Detection
+        const isOE = link.includes('/headphones') || 
+                     name.includes('overear') || 
+                     name.includes('headphone') || 
+                     rev.includes('overear');
+
+        if (isOE) return is5128 ? "Over-Ear - 5128" : "Over-Ear - Generic/Other";
+        return is5128 ? "IEM - 5128" : "IEM - 711";
+    }
+
     function switchTab(tab) {
         currentTab = tab;
         document.getElementById('tab-feed').classList.toggle('active', tab === 'feed');
@@ -162,7 +186,6 @@
         document.getElementById('advanced').classList.toggle('hidden', tab !== 'advanced');
         document.getElementById('stats').classList.toggle('hidden', tab !== 'stats');
         
-        // Ensure "Load More" is only visible on the Live Feed
         document.getElementById('load-all-btn').classList.add('hidden');
         if (tab === 'feed' && currentIndex < fullHistory.length) {
             document.getElementById('load-all-btn').classList.remove('hidden');
@@ -227,16 +250,8 @@
         };
 
         fullHistory.forEach(entry => {
-            const name = resolveName(entry.item).toLowerCase();
-            const rev = entry.reviewer.toLowerCase();
-            
-            if (name.includes("over") || name.includes("headphone") || rev.includes("overear")) {
-                if (name.includes("5128") || rev.includes("5128")) sections["Over-Ear - 5128"].push(entry);
-                else sections["Over-Ear - Generic/Other"].push(entry);
-            } else {
-                if (name.includes("5128") || rev.includes("5128") || name.includes("4620")) sections["IEM - 5128"].push(entry);
-                else sections["IEM - 711"].push(entry);
-            }
+            const category = getEntryMetadata(entry);
+            if (sections[category]) sections[category].push(entry);
         });
 
         let advHtml = "";
@@ -261,28 +276,21 @@
         let iem711 = 0, iem5128 = 0, oe711 = 0, oe5128 = 0;
         let reviewerCounts = [];
 
-        // Global DB Scan for accurate counts
-        Object.entries(databaseData).forEach(([reviewer, items]) => {
-            if (reviewer === 'last_sync') return;
-            const revLower = reviewer.toLowerCase();
-            let revTotal = 0;
-            
-            items.forEach(item => {
-                revTotal++;
-                const itemName = (typeof item === 'string' ? item : item.name || "").toLowerCase();
-                const isOE = itemName.includes("over") || itemName.includes("headphone") || revLower.includes("overear");
-                const is5128 = itemName.includes("5128") || revLower.includes("5128") || itemName.includes("4620");
-
-                if (isOE) {
-                    if (is5128) oe5128++; else oe711++;
-                } else {
-                    if (is5128) iem5128++; else iem711++;
-                }
-            });
-            reviewerCounts.push({ name: reviewer, count: revTotal });
+        // Note: For Statistics to be accurate, we iterate the history which has the links
+        fullHistory.forEach(entry => {
+            const cat = getEntryMetadata(entry);
+            if (cat === "IEM - 5128") iem5128++;
+            else if (cat === "IEM - 711") iem711++;
+            else if (cat === "Over-Ear - 5128") oe5128++;
+            else if (cat === "Over-Ear - Generic/Other") oe711++;
         });
 
-        // Sort reviewers by size
+        // Reviewer contribution summary from databaseData
+        Object.entries(databaseData).forEach(([reviewer, items]) => {
+            if (reviewer === 'last_sync') return;
+            reviewerCounts.push({ name: reviewer, count: items.length });
+        });
+
         reviewerCounts.sort((a, b) => b.count - a.count);
         const topReviewers = reviewerCounts.slice(0, 10);
         const maxRevCount = topReviewers[0]?.count || 1;
@@ -340,7 +348,7 @@
             
             <div class="stat-card opacity-50">
                 <p class="text-[10px] mono uppercase leading-relaxed text-zinc-400">
-                    Statistics are compiled from the full Squiglink index. Standards are identified via item tags and reviewer hardware metadata.
+                    Statistics are compiled from the full Squiglink index. Standards are identified via URL metadata and item tags.
                 </p>
             </div>
         `;
@@ -371,7 +379,7 @@
             <div class="item-row py-6 flex justify-between items-center group">
                 <div class="min-w-0 pr-4">
                     <div class="flex items-center gap-3 mb-1">
-                        ${isVeryRecent ? '<span class="bg-white text-black px-1.2 py-0.5 text-[8px] font-black uppercase rounded-sm">New</span>' : ''}
+                        ${isVeryRecent ? '<span class="bg-white text-black px-1 py-0.5 text-[8px] font-black uppercase rounded-sm">New</span>' : ''}
                         <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
                         <span class="text-[11px] text-zinc-500 mono uppercase">${relativeStr}</span>
                     </div>
