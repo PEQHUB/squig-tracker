@@ -10,7 +10,7 @@
         :root { --bg: #000000; --card: #0a0a0a; --border: #222222; --text: #e4e4e7; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'JetBrains Mono', monospace; }
-        .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; border-radius: 2px; }
+        .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; border-radius: 2px; height: 100%; }
         .item-row { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
         .item-row:hover { background: #080808; }
         
@@ -32,8 +32,8 @@
         .chart-bar-container { background: #111; height: 8px; border-radius: 1px; overflow: hidden; margin: 10px 0; }
         .chart-bar-fill { height: 100%; transition: width 1s ease-out; }
 
-        .recent-list-mini { font-size: 11px; color: #71717a; margin-top: 1rem; }
-        .recent-list-mini li { margin-bottom: 4px; border-left: 1px solid #222; padding-left: 8px; }
+        .recent-list-mini { font-size: 10px; color: #71717a; margin-top: 0.75rem; max-height: 250px; overflow-y: auto; }
+        .recent-list-mini li { margin-bottom: 6px; border-left: 1px solid #222; padding-left: 8px; line-height: 1.4; }
         .recent-list-mini a:hover { color: #fff; text-decoration: underline; }
 
         .contributor-table { width: 100%; font-size: 11px; color: #a1a1aa; margin-top: 1rem; }
@@ -53,10 +53,11 @@
         #load-all-btn:hover { border-color: #52525b; color: #ffffff; background: #0a0a0a; }
 
         input::placeholder { color: #3f3f46; }
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #222; }
     </style>
 </head>
-<body class="max-w-5xl mx-auto px-6 py-12">
+<body class="max-w-6xl mx-auto px-6 py-12">
 
     <header class="mb-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
@@ -80,15 +81,9 @@
                 <button onclick="switchTab('stats')" id="tab-stats" class="tab-btn mono">Statistics</button>
             </div>
             <div id="rig-filters" class="flex gap-2 mb-2">
-                <button onclick="setRigFilter('ALL')" class="filter-btn active mono" id="filter-ALL">
-                    All <span class="filter-count" id="count-ALL">0</span>
-                </button>
-                <button onclick="setRigFilter('711')" class="filter-btn mono" id="filter-711">
-                    711 <span class="filter-count" id="count-711">0</span>
-                </button>
-                <button onclick="setRigFilter('5128')" class="filter-btn mono" id="filter-5128">
-                    5128 <span class="filter-count" id="count-5128">0</span>
-                </button>
+                <button onclick="setRigFilter('ALL')" class="filter-btn active mono" id="filter-ALL">All <span class="filter-count" id="count-ALL">0</span></button>
+                <button onclick="setRigFilter('711')" class="filter-btn mono" id="filter-711">711 <span class="filter-count" id="count-711">0</span></button>
+                <button onclick="setRigFilter('5128')" class="filter-btn mono" id="filter-5128">5128 <span class="filter-count" id="count-5128">0</span></button>
             </div>
         </div>
 
@@ -97,14 +92,13 @@
     </header>
 
     <main id="feed" class="flex flex-col"></main>
-    <main id="stats" class="hidden flex flex-col py-10 space-y-16"></main>
+    <main id="stats" class="hidden flex flex-col py-4 space-y-12"></main>
     
     <button id="load-all-btn" class="mono uppercase hidden">Load More</button>
 
 <script>
     let fullHistory = [];
     let currentFilteredSet = [];
-    let displayedHistory = [];
     let databaseData = {};
     let currentIndex = 0;
     let currentTab = 'feed';
@@ -142,29 +136,21 @@
         const reviewer = (entry.reviewer || "").toLowerCase();
         const item = resolveName(entry.item).toLowerCase();
         
-        // Instant 5128 check for Earphone's Archive
         const isEA = reviewer.includes("earphone's archive") || reviewer.includes("earphonesarchive");
-        
-        let is5128Domain = false;
-        if (link.includes('hangout.audio') || link.includes('listener800.github.io')) {
-            is5128Domain = true;
-        }
-
+        const is5128Domain = link.includes('hangout.audio') || link.includes('listener800.github.io');
         const is5128Explicit = reviewer.includes("5128") || link.includes('5128');
         const isExplicit711 = link.includes('/711') || link.includes('type=711') || item.includes('(711)');
         const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/') || item.includes('(hp)') || item.includes('headphone');
         
-        // Priority logic: EA and known 5128 domains/tags are always 5128 unless explicitly tagged 711
         const is5128 = !isExplicit711 && (isEA || is5128Domain || is5128Explicit);
 
         if (is5128) {
-            const hasOEAttr = ['+oe', '(oe)', 'over-ear', 'open-back', 'closed-back'].some(attr => item.includes(attr));
+            const hasOEAttr = ['+oe', '(oe)', 'over-ear', 'open-back', 'closed-back', 'over ear'].some(attr => item.includes(attr));
             if (hasOEAttr || isExplicitHP) return "Over-Ear (5128)";
             return "IEM (5128)";
         }
-        
         if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
-        if (isExplicitHP) return "Over-Ear (Legacy/Other)";
+        if (isExplicitHP || isExplicit711) return "Over-Ear (711)";
         return "IEM (711)";
     }
 
@@ -192,60 +178,83 @@
 
     function renderStats() {
         const statsContainer = document.getElementById('stats');
-        const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (Legacy/Other)": 0, "TWS & Earbuds": 0 };
+        const counts = { "IEM (711)": 0, "IEM (5128)": 0, "Over-Ear (5128)": 0, "Over-Ear (711)": 0, "TWS & Earbuds": 0 };
+        const lists = { "IEM (711)": [], "IEM (5128)": [], "Over-Ear (5128)": [], "Over-Ear (711)": [] };
         const contributors = {};
-        const latest5128 = [];
 
         fullHistory.forEach(entry => {
             const cat = getEntryMetadata(entry);
-            if (counts[cat] !== undefined) counts[cat]++;
+            if (counts[cat] !== undefined) {
+                counts[cat]++;
+                if (lists[cat] && lists[cat].length < 15) lists[cat].push(entry);
+            }
             if (cat.includes("5128")) {
                 if (!contributors[entry.reviewer]) contributors[entry.reviewer] = 0;
                 contributors[entry.reviewer]++;
-                if (latest5128.length < 25) latest5128.push(entry);
             }
         });
 
         const sortedContributors = Object.entries(contributors).sort((a,b) => b[1] - a[1]);
         const totalIEM = (counts["IEM (711)"] + counts["IEM (5128)"]) || 1;
-        const totalOE = (counts["Over-Ear (5128)"] + counts["Over-Ear (Legacy/Other)"]) || 1;
+        const totalOE = (counts["Over-Ear (5128)"] + counts["Over-Ear (711)"]) || 1;
 
         const renderBar = (label, count, total, color) => `
-            <div class="mb-6">
-                <div class="flex justify-between text-[10px] mono uppercase mb-2">
-                    <span>${label}</span><span>${count} (${((count/total)*100).toFixed(1)}%)</span>
+            <div class="mb-4">
+                <div class="flex justify-between text-[10px] mono uppercase mb-1">
+                    <span>${label}</span><span>${count}</span>
                 </div>
                 <div class="chart-bar-container"><div class="chart-bar-fill ${color}" style="width:${(count/total)*100}%"></div></div>
             </div>`;
 
+        const renderMiniList = (title, items) => `
+            <div class="mt-6">
+                <span class="text-[9px] uppercase mono text-zinc-500 block border-b border-zinc-900 pb-1 mb-2">${title}</span>
+                <ul class="recent-list-mini">
+                    ${items.map(i => `<li><a href="${i.link}" target="_blank" class="block truncate">${resolveName(i.item)} <span class="opacity-40 ml-1">[${i.reviewer}]</span></a></li>`).join('')}
+                </ul>
+            </div>`;
+
         statsContainer.innerHTML = `
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">IEM Standards</span>
-                    <div class="mt-4">
-                        ${renderBar("5128", counts["IEM (5128)"], totalIEM, "bg-white")} 
-                        ${renderBar("711", counts["IEM (711)"], totalIEM, "bg-zinc-800")}
-                    </div>
-                    <span class="text-[9px] uppercase mono text-zinc-500 block mt-6 border-b border-zinc-900 pb-1">Latest 5128 Measurements</span>
-                    <ul class="recent-list-mini">
-                        ${latest5128.map(i => `<li><a href="${i.link}" target="_blank">${resolveName(i.item)} <span class="opacity-50">(${i.reviewer})</span></a></li>`).join('')}
-                    </ul>
+                    <span class="text-[10px] uppercase mono text-white font-bold">5128 IEMs</span>
+                    ${renderBar("Share of IEMs", counts["IEM (5128)"], totalIEM, "bg-white")}
+                    ${renderMiniList("Latest 5128 IEM", lists["IEM (5128)"])}
                 </div>
+
                 <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">Over-Ear Standards</span>
-                    <div class="mt-4">
-                        ${renderBar("5128", counts["Over-Ear (5128)"], totalOE, "bg-white")} 
-                        ${renderBar("Legacy", counts["Over-Ear (Legacy/Other)"], totalOE, "bg-zinc-800")}
-                    </div>
+                    <span class="text-[10px] uppercase mono text-white font-bold">5128 Over-Ears</span>
+                    ${renderBar("Share of Over-Ears", counts["Over-Ear (5128)"], totalOE, "bg-white")}
+                    ${renderMiniList("Latest 5128 OE", lists["Over-Ear (5128)"])}
                 </div>
+
                 <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">5128 Contributors</span>
+                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">711 IEMs</span>
+                    ${renderBar("Share of IEMs", counts["IEM (711)"], totalIEM, "bg-zinc-700")}
+                    ${renderMiniList("Latest 711 IEM", lists["IEM (711)"])}
+                </div>
+
+                <div class="stat-card">
+                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">711 Over-Ears</span>
+                    ${renderBar("Share of Over-Ears", counts["Over-Ear (711)"], totalOE, "bg-zinc-700")}
+                    ${renderMiniList("Latest 711 OE", lists["Over-Ear (711)"])}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                 <div class="stat-card">
+                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">5128 Power Rankings</span>
                     <table class="contributor-table mono">
-                        <thead><tr><th>Reviewer</th><th class="text-right">Total</th></tr></thead>
+                        <thead><tr><th>Reviewer</th><th class="text-right">Total 5128</th></tr></thead>
                         <tbody>
-                            ${sortedContributors.map(([name, count]) => `<tr><td>${name}</td><td class="text-right text-white">${count}</td></tr>`).join('')}
+                            ${sortedContributors.slice(0, 10).map(([name, count]) => `<tr><td>${name}</td><td class="text-right text-white">${count}</td></tr>`).join('')}
                         </tbody>
                     </table>
+                </div>
+                <div class="stat-card flex flex-col justify-center items-center opacity-50">
+                    <span class="text-[10px] uppercase mono">Total Database Composition</span>
+                    <div class="text-3xl mono mt-2">${fullHistory.length.toLocaleString()}</div>
+                    <span class="text-[9px] uppercase mt-1">Measurements Indexed</span>
                 </div>
             </div>`;
     }
@@ -275,8 +284,7 @@
 
         currentIndex = 0;
         currentFilteredSet = filtered;
-        displayedHistory = [];
-        loadMore();
+        loadMore(false);
     }
 
     function renderItems(data, containerId, append = false) {
@@ -307,10 +315,9 @@
         else container.innerHTML = html || `<div class="py-20 text-center mono text-[10px] uppercase text-zinc-600 tracking-widest">No matching items found</div>`;
     }
 
-    function loadMore() {
+    function loadMore(append = true) {
         const nextBatch = currentFilteredSet.slice(currentIndex, currentIndex + PAGE_SIZE);
-        displayedHistory = [...displayedHistory, ...nextBatch];
-        renderItems(nextBatch, 'feed', currentIndex > 0);
+        renderItems(nextBatch, 'feed', append);
         currentIndex += PAGE_SIZE;
         const btn = document.getElementById('load-all-btn');
         btn.classList.toggle('hidden', currentIndex >= currentFilteredSet.length || currentTab === 'stats');
@@ -343,7 +350,7 @@
         searchTimeout = setTimeout(() => applyFilters(), 300);
     });
 
-    document.getElementById('load-all-btn').addEventListener('click', loadMore);
+    document.getElementById('load-all-btn').addEventListener('click', () => loadMore(true));
     fetchData();
 </script>
 </body>
