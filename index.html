@@ -86,27 +86,25 @@
     const CUTOFF_MS = 12 * 60 * 60 * 1000; 
     const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
-    // ANDROID COMPATIBLE PARSER
     function toLocalTime(dateStr) {
         if (!dateStr) return null;
         try {
-            // 1. Try standard ISO/UTC parse
-            let d = new Date(dateStr.includes("UTC") ? dateStr : dateStr + " UTC");
+            // Clean the string: Remove extra spaces and ensure UTC suffix
+            const cleanStr = dateStr.trim();
             
-            // 2. If Android fails (Invalid Date), manual parse "Jan 20, 14:30"
-            if (isNaN(d.getTime())) {
-                const months = {
-                    Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5,
-                    Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11
-                };
-                const match = dateStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
-                if (match) {
-                    const [_, mon, day, hr, min] = match;
-                    const now = new Date();
-                    // Create date using UTC constructor for cross-device consistency
-                    d = new Date(Date.UTC(now.getFullYear(), months[mon], day, hr, min));
-                }
+            // Force a standard format that Android Chrome likes: "Month DD YYYY HH:MM:SS UTC"
+            // If it's your custom "Jan 20, 14:30" format:
+            const parts = cleanStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
+            if (parts) {
+                const [_, mon, day, hr, min] = parts;
+                const year = new Date().getUTCFullYear();
+                // We create a string that is ISO-compliant
+                const isoStr = `${mon} ${day}, ${year} ${hr}:${min}:00 UTC`;
+                return new Date(isoStr);
             }
+
+            // Fallback for other formats
+            const d = new Date(cleanStr.includes("UTC") ? cleanStr : cleanStr + " UTC");
             return isNaN(d.getTime()) ? null : d;
         } catch (e) { return null; }
     }
@@ -126,26 +124,30 @@
                 fetch(`database.json?t=${t}`)
             ]);
             
-            if (!hReq.ok || !dReq.ok) throw new Error("Data files not found");
+            if (!hReq.ok || !dReq.ok) throw new Error("Data missing");
 
             const rawHistory = await hReq.json();
             databaseData = await dReq.json();
             
-            // Robust Sorting
+            // Use current UTC time as the baseline for comparison
+            const nowUTC = new Date().getTime();
+
             fullHistory = rawHistory.sort((a, b) => {
-                const dateA = toLocalTime(a.date) || 0;
-                const dateB = toLocalTime(b.date) || 0;
+                const dateA = toLocalTime(a.date)?.getTime() || 0;
+                const dateB = toLocalTime(b.date)?.getTime() || 0;
                 return dateB - dateA;
             });
 
-            const now = Date.now();
             filteredHistory = fullHistory.filter(entry => {
-                const d = toLocalTime(entry.date);
-                // Ensure date exists and is NOT in the future (common Android bug)
-                return d && (now - d.getTime() < CUTOFF_MS) && (d.getTime() <= now + 60000);
+                const itemDate = toLocalTime(entry.date);
+                if (!itemDate) return false;
+                
+                const diff = nowUTC - itemDate.getTime();
+                // Return items within 12 hours. 
+                // We allow a 24-hour buffer on the "future" side to account for clock drift.
+                return diff < CUTOFF_MS && diff > -86400000; 
             });
 
-            // Fallback: If 12h is empty, show latest 10
             const displayList = filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10);
 
             if (fullHistory.length > displayList.length) {
@@ -155,8 +157,8 @@
             updateDashboard();
             renderItems(displayList);
         } catch (err) {
-            console.error("Fetch Error:", err);
-            feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Connection Lost</div>`;
+            console.error(err);
+            feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase text-center">Connection Lost</div>`;
         }
     }
 
@@ -170,15 +172,15 @@
     function renderItems(data) {
         const container = document.getElementById('feed');
         let htmlContent = "";
-        const now = Date.now();
+        const nowUTC = new Date().getTime();
         let lastHourLabel = "";
 
         data.forEach(entry => {
             const model = resolveName(entry.item);
             const dateObj = toLocalTime(entry.date);
-            const isVeryRecent = dateObj && (now - dateObj.getTime() < NEW_BADGE_MS);
+            const isVeryRecent = dateObj && (nowUTC - dateObj.getTime() < NEW_BADGE_MS);
             
-            // Format time for mobile display
+            // Format for display
             const localStr = dateObj ? dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : "Pending";
             const dayStr = dateObj ? dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' }) : "";
             
@@ -199,7 +201,7 @@
                     </div>
                     <h2 class="text-[19px] md:text-[22px] font-normal text-zinc-200 truncate tracking-tight">${model}</h2>
                 </div>
-                <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 text-zinc-600 transition-all">
+                <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 text-zinc-600">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             </div>`;
@@ -215,7 +217,7 @@
 
     document.getElementById('search').addEventListener('input', (e) => {
         const val = e.target.value.toLowerCase();
-        const source = (document.getElementById('load-all-btn').classList.contains('hidden')) ? fullHistory : (filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10));
+        const source = fullHistory;
         const filtered = source.filter(h => 
             resolveName(h.item).toLowerCase().includes(val) || 
             h.reviewer.toLowerCase().includes(val)
@@ -227,4 +229,5 @@
 </script>
 </body>
 </html>
+
 
