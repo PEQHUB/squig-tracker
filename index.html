@@ -89,24 +89,35 @@
     function toLocalTime(dateStr) {
         if (!dateStr) return null;
         try {
-            // Clean the string: Remove extra spaces and ensure UTC suffix
-            const cleanStr = dateStr.trim();
-            
-            // Force a standard format that Android Chrome likes: "Month DD YYYY HH:MM:SS UTC"
-            // If it's your custom "Jan 20, 14:30" format:
-            const parts = cleanStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
-            if (parts) {
-                const [_, mon, day, hr, min] = parts;
-                const year = new Date().getUTCFullYear();
-                // We create a string that is ISO-compliant
-                const isoStr = `${mon} ${day}, ${year} ${hr}:${min}:00 UTC`;
-                return new Date(isoStr);
+            let d = new Date(dateStr.includes("UTC") ? dateStr : dateStr + " UTC");
+            if (isNaN(d.getTime())) {
+                const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
+                const match = dateStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
+                if (match) {
+                    const [_, mon, day, hr, min] = match;
+                    const now = new Date();
+                    d = new Date(Date.UTC(now.getFullYear(), months[mon], day, hr, min));
+                }
             }
-
-            // Fallback for other formats
-            const d = new Date(cleanStr.includes("UTC") ? cleanStr : cleanStr + " UTC");
             return isNaN(d.getTime()) ? null : d;
         } catch (e) { return null; }
+    }
+
+    function getRelativeTime(date) {
+        if (!date) return "Pending";
+        const now = new Date();
+        const diffInSeconds = Math.floor((now - date) / 1000);
+        
+        if (diffInSeconds < 60) return `${diffInSeconds}s ago`;
+        
+        const diffInMinutes = Math.floor(diffInSeconds / 60);
+        if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+        
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        if (diffInHours < 24) return `${diffInHours}h ago`;
+        
+        const diffInDays = Math.floor(diffInHours / 24);
+        return `${diffInDays}d ago`;
     }
 
     function resolveName(data) {
@@ -124,28 +135,21 @@
                 fetch(`database.json?t=${t}`)
             ]);
             
-            if (!hReq.ok || !dReq.ok) throw new Error("Data missing");
+            if (!hReq.ok || !dReq.ok) throw new Error("Data files not found");
 
             const rawHistory = await hReq.json();
             databaseData = await dReq.json();
             
-            // Use current UTC time as the baseline for comparison
-            const nowUTC = new Date().getTime();
-
             fullHistory = rawHistory.sort((a, b) => {
-                const dateA = toLocalTime(a.date)?.getTime() || 0;
-                const dateB = toLocalTime(b.date)?.getTime() || 0;
+                const dateA = toLocalTime(a.date) || 0;
+                const dateB = toLocalTime(b.date) || 0;
                 return dateB - dateA;
             });
 
+            const now = Date.now();
             filteredHistory = fullHistory.filter(entry => {
-                const itemDate = toLocalTime(entry.date);
-                if (!itemDate) return false;
-                
-                const diff = nowUTC - itemDate.getTime();
-                // Return items within 12 hours. 
-                // We allow a 24-hour buffer on the "future" side to account for clock drift.
-                return diff < CUTOFF_MS && diff > -86400000; 
+                const d = toLocalTime(entry.date);
+                return d && (now - d.getTime() < CUTOFF_MS) && (d.getTime() <= now + 60000);
             });
 
             const displayList = filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10);
@@ -157,8 +161,8 @@
             updateDashboard();
             renderItems(displayList);
         } catch (err) {
-            console.error(err);
-            feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase text-center">Connection Lost</div>`;
+            console.error("Fetch Error:", err);
+            feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Connection Lost</div>`;
         }
     }
 
@@ -172,23 +176,22 @@
     function renderItems(data) {
         const container = document.getElementById('feed');
         let htmlContent = "";
-        const nowUTC = new Date().getTime();
-        let lastHourLabel = "";
+        const now = Date.now();
+        let lastDividerLabel = "";
 
         data.forEach(entry => {
             const model = resolveName(entry.item);
             const dateObj = toLocalTime(entry.date);
-            const isVeryRecent = dateObj && (nowUTC - dateObj.getTime() < NEW_BADGE_MS);
+            const isVeryRecent = dateObj && (now - dateObj.getTime() < NEW_BADGE_MS);
             
-            // Format for display
-            const localStr = dateObj ? dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }) : "Pending";
+            // Format time as "X ago"
+            const relativeStr = getRelativeTime(dateObj);
+            
+            // Create dividers based on days or 12h blocks for scannability
             const dayStr = dateObj ? dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' }) : "";
-            
-            const currentHourLabel = `${dayStr} ${localStr.split(':')[0]}`;
-
-            if (currentHourLabel !== lastHourLabel) {
-                htmlContent += `<div class="time-divider">${dayStr} — ${localStr.split(':')[0]}:00 Block</div>`;
-                lastHourLabel = currentHourLabel;
+            if (dayStr !== lastDividerLabel) {
+                htmlContent += `<div class="time-divider">${dayStr}</div>`;
+                lastDividerLabel = dayStr;
             }
 
             htmlContent += `
@@ -197,11 +200,11 @@
                     <div class="flex items-center gap-3 mb-2">
                         ${isVeryRecent ? '<span class="bg-white text-black px-1.5 py-0.5 text-[9px] font-black tracking-tighter uppercase rounded-sm">New</span>' : ''}
                         <span class="text-[12px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
-                        <span class="text-[12px] text-zinc-500 font-medium mono uppercase">${localStr}</span>
+                        <span class="text-[12px] text-zinc-500 font-medium mono uppercase">${relativeStr}</span>
                     </div>
                     <h2 class="text-[19px] md:text-[22px] font-normal text-zinc-200 truncate tracking-tight">${model}</h2>
                 </div>
-                <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 text-zinc-600">
+                <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 text-zinc-600 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             </div>`;
@@ -217,7 +220,7 @@
 
     document.getElementById('search').addEventListener('input', (e) => {
         const val = e.target.value.toLowerCase();
-        const source = fullHistory;
+        const source = (document.getElementById('load-all-btn').classList.contains('hidden')) ? fullHistory : (filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10));
         const filtered = source.filter(h => 
             resolveName(h.item).toLowerCase().includes(val) || 
             h.reviewer.toLowerCase().includes(val)
@@ -229,5 +232,3 @@
 </script>
 </body>
 </html>
-
-
