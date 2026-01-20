@@ -18,7 +18,7 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 3.5rem 0 1rem 0;
+            padding: 3.5rem 0 1.5rem 0;
             color: #52525b;
             font-size: 0.75rem;
             font-family: 'JetBrains Mono', monospace;
@@ -57,7 +57,7 @@
     <header class="mb-12">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
             <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12h</span>
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
                 <span id="stat-total" class="text-xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
@@ -69,7 +69,7 @@
                 <span id="stat-sources" class="text-xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">System Time</span>
+                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last Refresh</span>
                 <span id="stat-time" class="text-xl font-medium mono text-white">--:--</span>
             </div>
         </div>
@@ -87,10 +87,10 @@
         let filteredHistory = [];
         let databaseData = {};
         
-        // --- CONFIGURATION ---
         const CUTOFF_MS = 12 * 60 * 60 * 1000; 
         const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
+        // Cross-browser safe date parser (Android Fix)
         function toLocalTime(dateStr) {
             if (!dateStr) return null;
             try {
@@ -123,8 +123,11 @@
                     fetch(`./database.json?t=${t}`)
                 ]);
                 
-                fullHistory = await hReq.json();
+                const rawHistory = await hReq.json();
                 databaseData = await dReq.json();
+                
+                // Sort Newest First
+                fullHistory = rawHistory.reverse();
 
                 const now = Date.now();
                 filteredHistory = fullHistory.filter(entry => {
@@ -139,7 +142,7 @@
                 updateDashboard();
                 renderItems(filteredHistory);
             } catch (err) {
-                document.getElementById('feed').innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Data Sync Failed</div>`;
+                document.getElementById('feed').innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase tracking-widest text-center">Connection Lost</div>`;
             }
         }
 
@@ -179,11 +182,11 @@
                 <div class="item-row py-8 flex justify-between items-center group">
                     <div class="min-w-0 pr-4">
                         <div class="flex items-center gap-3 mb-2">
-                            ${isVeryRecent ? '<span class="bg-white text-black px-1.5 py-0.5 text-[10px] font-black tracking-tighter uppercase rounded-sm">New</span>' : ''}
+                            ${isVeryRecent ? '<span class="bg-white text-black px-1.5 py-0.5 text-[9px] font-black tracking-tighter uppercase rounded-sm">New</span>' : ''}
                             <span class="text-[12px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
                             <span class="text-[12px] text-zinc-500 font-medium mono uppercase">${localStr}</span>
                         </div>
-                        <h2 class="text-[19px] md:text-[22px] font-normal text-zinc-100 truncate tracking-tight">${model}</h2>
+                        <h2 class="text-[19px] md:text-[22px] font-normal text-zinc-200 truncate tracking-tight">${model}</h2>
                     </div>
                     <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 group-hover:border-zinc-400 text-zinc-600 group-hover:text-white transition-all duration-300">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
