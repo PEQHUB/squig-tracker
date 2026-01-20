@@ -142,28 +142,27 @@
         const reviewer = (entry.reviewer || "").toLowerCase();
         const item = resolveName(entry.item).toLowerCase();
         
+        // Instant 5128 check for Earphone's Archive
+        const isEA = reviewer.includes("earphone's archive") || reviewer.includes("earphonesarchive");
+        
         let is5128Domain = false;
-        try {
-            const urlHost = new URL(link).hostname;
-            if (urlHost.includes('hangout.audio') || urlHost.includes('listener800.github.io')) {
-                is5128Domain = true;
-            }
-        } catch(e) {
-            // Robust fallback if URL parsing fails
-            if (link.includes('hangout.audio/') || link.includes('listener800.github.io/')) is5128Domain = true;
+        if (link.includes('hangout.audio') || link.includes('listener800.github.io')) {
+            is5128Domain = true;
         }
 
-        const is5128Reviewer = reviewer.includes("earphone's archive") || reviewer.includes("5128");
+        const is5128Explicit = reviewer.includes("5128") || link.includes('5128');
         const isExplicit711 = link.includes('/711') || link.includes('type=711') || item.includes('(711)');
         const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/') || item.includes('(hp)') || item.includes('headphone');
         
-        const is5128 = !isExplicit711 && (is5128Reviewer || is5128Domain || link.includes('5128'));
+        // Priority logic: EA and known 5128 domains/tags are always 5128 unless explicitly tagged 711
+        const is5128 = !isExplicit711 && (isEA || is5128Domain || is5128Explicit);
 
         if (is5128) {
             const hasOEAttr = ['+oe', '(oe)', 'over-ear', 'open-back', 'closed-back'].some(attr => item.includes(attr));
             if (hasOEAttr || isExplicitHP) return "Over-Ear (5128)";
             return "IEM (5128)";
         }
+        
         if (link.includes('type=tws') || link.includes('/earbuds/')) return "TWS & Earbuds";
         if (isExplicitHP) return "Over-Ear (Legacy/Other)";
         return "IEM (711)";
@@ -223,15 +222,21 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="stat-card">
                     <span class="text-[10px] uppercase mono text-zinc-500 font-bold">IEM Standards</span>
-                    <div class="mt-4">${renderBar("5128", counts["IEM (5128)"], totalIEM, "bg-white")} ${renderBar("711", counts["IEM (711)"], totalIEM, "bg-zinc-800")}</div>
-                    <span class="text-[9px] uppercase mono text-zinc-500 block mt-6 border-b border-zinc-900 pb-1">Latest 5128</span>
+                    <div class="mt-4">
+                        ${renderBar("5128", counts["IEM (5128)"], totalIEM, "bg-white")} 
+                        ${renderBar("711", counts["IEM (711)"], totalIEM, "bg-zinc-800")}
+                    </div>
+                    <span class="text-[9px] uppercase mono text-zinc-500 block mt-6 border-b border-zinc-900 pb-1">Latest 5128 Measurements</span>
                     <ul class="recent-list-mini">
                         ${latest5128.map(i => `<li><a href="${i.link}" target="_blank">${resolveName(i.item)} <span class="opacity-50">(${i.reviewer})</span></a></li>`).join('')}
                     </ul>
                 </div>
                 <div class="stat-card">
                     <span class="text-[10px] uppercase mono text-zinc-500 font-bold">Over-Ear Standards</span>
-                    <div class="mt-4">${renderBar("5128", counts["Over-Ear (5128)"], totalOE, "bg-white")} ${renderBar("Legacy", counts["Over-Ear (Legacy/Other)"], totalOE, "bg-zinc-800")}</div>
+                    <div class="mt-4">
+                        ${renderBar("5128", counts["Over-Ear (5128)"], totalOE, "bg-white")} 
+                        ${renderBar("Legacy", counts["Over-Ear (Legacy/Other)"], totalOE, "bg-zinc-800")}
+                    </div>
                 </div>
                 <div class="stat-card">
                     <span class="text-[10px] uppercase mono text-zinc-500 font-bold">5128 Contributors</span>
