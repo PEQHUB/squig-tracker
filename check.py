@@ -34,7 +34,11 @@ def run_check():
     # Load Database
     if os.path.exists(DB_FILE):
         with open(DB_FILE, "r") as f:
-            database = json.load(f)
+            try:
+                database = json.load(f)
+                if not isinstance(database, dict): database = {}
+            except:
+                database = {}
     else:
         database = {}
 
@@ -43,24 +47,44 @@ def run_check():
     for sub in SUBDOMAINS:
         print(f"Checking {sub}...")
         data = fetch_data(sub)
-
+        
         if not data: continue
-
         if sub not in database: database[sub] = []
 
-        # Squig format: {"Brand": ["Model1", "Model2"]}
-        for brand, models in data.items():
-            for model in models:
-                full_name = f"{brand} {model}"
+        # --- SMART PARSING START ---
+        # If it's a Dictionary (e.g., {"Sony": ["IER-Z1R"]})
+        if isinstance(data, dict):
+            for brand, models in data.items():
+                for model in models:
+                    process_item(sub, brand, model, database, new_finds)
+        
+        # If it's a List (e.g., ["Sony IER-Z1R", "Moondrop Kato"])
+        elif isinstance(data, list):
+            for item in data:
+                process_item(sub, "", item, database, new_finds)
+        # --- SMART PARSING END ---
 
-                if full_name not in database[sub]:
-                    database[sub].append(full_name)
-                    new_finds.append({
-                        "reviewer": sub.capitalize(),
-                        "item": full_name,
-                        "date": datetime.now().strftime("%b %d, %H:%M"),
-                        "link": f"https://{sub}.squig.link"
-                    })
+    # Save files
+    with open(DB_FILE, "w") as f: json.dump(database, f, indent=4)
+    if new_finds:
+        history = []
+        if os.path.exists(HISTORY_FILE):
+            with open(HISTORY_FILE, "r") as f: history = json.load(f)
+        updated_history = new_finds + history
+        with open(HISTORY_FILE, "w") as f:
+            json.dump(updated_history[:200], f, indent=4)
+
+def process_item(sub, brand, model, database, new_finds):
+    # Clean up the name
+    full_name = f"{brand} {model}".strip()
+    if full_name not in database[sub]:
+        database[sub].append(full_name)
+        new_finds.append({
+            "reviewer": sub.capitalize(),
+            "item": full_name,
+            "date": datetime.now().strftime("%b %d, %H:%M"),
+            "link": f"https://{sub}.squig.link"
+        })
 
     # Save Database
     with open(DB_FILE, "w") as f:
@@ -80,4 +104,5 @@ def run_check():
 
 
 if __name__ == "__main__":
+
     run_check()
