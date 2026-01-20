@@ -3,140 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQUIGLINK // TRACKER</title>
+    <title>SQUIGLINK MONITOR</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --bg: #050505; --card: #0c0c0c; --border: #1a1a1a; --text: #d4d4d8; }
+        :root { --bg: #000000; --card: #0a0a0a; --border: #1a1a1a; --text: #d4d4d8; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; border-radius: 2px; }
-        .item-row { border-bottom: 1px solid var(--border); transition: all 0.15s ease; }
-        .item-row:hover { background: #0f0f0f; border-color: #333; }
+        .item-row { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
+        .item-row:hover { background: #050505; }
         input::placeholder { color: #27272a; }
+        /* Hide scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
 </head>
 <body class="max-w-5xl mx-auto px-6 py-12">
 
-    <header class="mb-16">
-        <div class="flex justify-between items-end mb-10">
-            <div>
-                <h1 class="text-[10px] font-bold tracking-[0.5em] text-zinc-600 uppercase mb-2">Network Status</h1>
-                <div class="flex items-center gap-2">
-                    <div class="w-1.5 h-1.5 rounded-full bg-zinc-700"></div>
-                    <span class="text-xs text-zinc-400 font-light">Database Synchronized</span>
-                </div>
-            </div>
-            <div class="text-right">
-                <span id="stat-time" class="text-xs mono text-zinc-500">00:00</span>
-            </div>
-        </div>
-        
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
+    <header class="mb-12">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
             <div class="stat-card">
-                <span class="block text-[9px] uppercase tracking-widest text-zinc-500 mb-2">Total Datapoints</span>
+                <span class="block text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Total Datapoints</span>
                 <span id="stat-total" class="text-xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[9px] uppercase tracking-widest text-zinc-500 mb-2">Unique Models</span>
+                <span class="block text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Unique Models</span>
                 <span id="stat-unique" class="text-xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[9px] uppercase tracking-widest text-zinc-500 mb-2">Reviewer Sources</span>
+                <span class="block text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Reviewers</span>
                 <span id="stat-sources" class="text-xl font-medium mono text-white">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="block text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Last Update</span>
+                <span id="stat-time" class="text-xl font-medium mono text-white">--:--</span>
             </div>
         </div>
 
-        <div class="relative">
-            <input type="text" id="search" placeholder="FILTER_MODELS..." 
-                class="w-full bg-transparent border-b border-zinc-800 py-4 text-xl font-light outline-none focus:border-zinc-400 transition-colors uppercase tracking-wider">
-        </div>
+        <input type="text" id="search" placeholder="Search..." 
+            class="w-full bg-transparent border-b border-zinc-900 py-3 text-lg font-light outline-none focus:border-zinc-500 transition-colors uppercase tracking-widest">
     </header>
 
-    <main id="feed" class="flex flex-col min-h-[400px]">
-        <div class="py-20 text-center mono text-[10px] text-zinc-700 tracking-[0.3em]">INITIALIZING_STREAM...</div>
-    </main>
+    <main id="feed" class="flex flex-col"></main>
 
     <script>
         let historyData = [];
         let databaseData = {};
 
-        // UNIVERSAL PARSER: Handles the "64 Audio" dictionary bug
-        function flattenName(data) {
-            if (!data) return "UNKNOWN_MODEL";
+        // FIXED PARSER: Handles 64 Audio, A&D, and other nested brand folders
+        function resolveName(data) {
+            if (!data) return "Unknown";
             if (typeof data === 'string') return data;
             
-            // If it's the dictionary structure you pasted:
+            // Handle {name: '64 Audio', phones: [...]}
             if (typeof data === 'object') {
-                // If it has a .name property (like '64 Audio' or 'A2e')
                 if (data.name && typeof data.name === 'string') return data.name;
-                
-                // If it's a list (like the 'file' property in your example)
-                if (Array.isArray(data)) return flattenName(data[0]);
-
-                // Fallback: If it's an object we don't recognize, check if any value is a string
-                const firstVal = Object.values(data)[0];
-                return typeof firstVal === 'string' ? firstVal : "BATCH_DATA";
+                if (Array.isArray(data)) return resolveName(data[0]);
+                const values = Object.values(data);
+                return typeof values[0] === 'string' ? values[0] : "Complex Object";
             }
-            return "UNKNOWN_DATA";
+            return "Unknown";
         }
 
-        async function init() {
+        async function fetchData() {
             try {
-                const bust = `?t=${Date.now()}`;
-                const [hRes, dRes] = await Promise.all([
-                    fetch(`./history.json${bust}`),
-                    fetch(`./database.json${bust}`)
+                // Fetch with cache busting to prevent stale data
+                const t = Date.now();
+                const [hReq, dReq] = await Promise.all([
+                    fetch(`./history.json?t=${t}`),
+                    fetch(`./database.json?t=${t}`)
                 ]);
-                historyData = await hRes.json();
-                databaseData = await dRes.json();
+
+                if (!hReq.ok || !dReq.ok) throw new Error("Files not found");
+
+                historyData = await hReq.json();
+                databaseData = await dReq.json();
                 
-                renderStats();
-                renderFeed(historyData);
-            } catch (e) {
-                document.getElementById('feed').innerHTML = `<div class="py-20 text-center text-zinc-800 mono text-[10px]">SYNC_ERROR // CHECK_JSON_FORMAT</div>`;
+                updateDashboard();
+                renderItems(historyData);
+            } catch (err) {
+                console.error(err);
+                document.getElementById('feed').innerHTML = `<div class="py-10 text-zinc-800 mono text-xs uppercase tracking-widest text-center">Data connection lost.</div>`;
             }
         }
 
-        function renderStats() {
-            let total = 0;
-            const unique = new Set();
+        function updateDashboard() {
+            let totalCount = 0;
+            const uniqueSet = new Set();
             
             Object.values(databaseData).forEach(list => {
                 if (Array.isArray(list)) {
                     list.forEach(item => {
-                        total++;
-                        unique.add(flattenName(item).toLowerCase().trim());
+                        totalCount++;
+                        uniqueSet.add(resolveName(item).toLowerCase().trim());
                     });
                 }
             });
 
-            document.getElementById('stat-total').innerText = total.toLocaleString();
-            document.getElementById('stat-unique').innerText = unique.size.toLocaleString();
+            document.getElementById('stat-total').innerText = totalCount.toLocaleString();
+            document.getElementById('stat-unique').innerText = uniqueSet.size.toLocaleString();
             document.getElementById('stat-sources').innerText = Object.keys(databaseData).length;
             document.getElementById('stat-time').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
         }
 
-        function renderFeed(data) {
+        function renderItems(data) {
             const container = document.getElementById('feed');
-            if (data.length === 0) {
-                container.innerHTML = `<div class="py-20 text-center text-zinc-800 mono text-[10px]">NO_MATCHING_SIGNALS</div>`;
+            if (!data || data.length === 0) {
+                container.innerHTML = `<div class="py-10 text-zinc-800 mono text-xs uppercase tracking-widest text-center">No entries found.</div>`;
                 return;
             }
 
             container.innerHTML = data.map(entry => {
-                const cleanName = flattenName(entry.item);
+                const model = resolveName(entry.item);
                 return `
-                <div class="item-row py-8 flex justify-between items-center group">
-                    <div class="min-w-0 pr-8">
-                        <div class="flex items-center gap-4 mb-2">
-                            <span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">${entry.reviewer}</span>
+                <div class="item-row py-6 flex justify-between items-center group">
+                    <div class="min-w-0 pr-4">
+                        <div class="flex items-center gap-3 mb-1">
+                            <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">${entry.reviewer}</span>
                             <span class="text-[9px] text-zinc-800 mono uppercase">${entry.date}</span>
                         </div>
-                        <h2 class="text-lg md:text-xl font-light text-zinc-200 truncate group-hover:text-white transition-colors">
-                            ${cleanName}
-                        </h2>
+                        <h2 class="text-base font-normal text-zinc-300 truncate">${model}</h2>
                     </div>
-                    <a href="${entry.link}" target="_blank" class="shrink-0 flex items-center gap-3 group/link">
-                        <span class="hidden md:inline text-[9px] font-bold text-zinc-600 group-hover/link:text-zinc-300 uppercase tracking-widest transition-colors">View_Graph</span>
-                        <div class="p
+                    <a href="${entry.link}" target="_blank" class="shrink-0 p-2 border border-zinc-900 hover:border-zinc-500 text-zinc-700 hover:text-white transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+                `;
+            }).join('');
+        }
+
+        document.getElementById('search').addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const filtered = historyData.filter(h => 
+                resolveName(h.item).toLowerCase().includes(val) || 
+                h.reviewer.toLowerCase().includes(val)
+            );
+            renderItems(filtered);
+        });
+
+        // Start
+        fetchData();
+    </script>
+</body>
+</html>
