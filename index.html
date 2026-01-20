@@ -125,7 +125,8 @@
         "Over-Ear (5128)": 15,
         "IEM (711)": 15,
         "Over-Ear (711)": 15,
-        "Misc/Unknown": 10
+        "Misc/Unknown": 10,
+        "TWS & Earbuds": 10
     };
 
     const PAGE_SIZE = 50;
@@ -160,38 +161,47 @@
         const reviewer = (entry.reviewer || "").toLowerCase();
         const item = resolveName(entry.item).toLowerCase();
         
-        // 1. Force-correct known IEM brands/models that trigger false OE tags
+        // 1. Path-Based Identification (High Priority)
+        const isExplicitPathHP = link.includes('/headphones/') || link.includes('type=headphone');
+        const isExplicitPathIEM = link.includes('/iems/') || link.includes('type=iem');
+        const isExplicitPathBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/');
+
+        // 2. Known IEM Reviewer List (Used as fallback)
+        const iemLeaningReviewers = [
+            'audiosense', 'super*review', 'superreview', 'bad guy good audio reviews', 'bgga', 
+            'precogvision', 'timmy', 'gizaudio', 'vortex reviews'
+        ];
+
+        // 3. Known IEM Brand Protection
         const knownIEMs = [
             '64 audio', 'artii', 'audiosense', 'campfire', 'zigaat', 'letshuoer', 'shuoer',
             'isine', 'lcd-i', 'afaq', 'u6t', 'u12t', 'u18', 'duo', 'trio', 'fourte', 'astrolith',
-            'dioko', '7hz', 'moondrop', 'kiwi ears', 'truthear', 'symphonium', 'nightjar', 'fatfreq', 'softars'
+            'dioko', '7hz', 'moondrop', 'kiwi ears', 'truthear', 'symphonium', 'nightjar', 
+            'fatfreq', 'softars', 'etymotic', 'westone', 'ie600', 'ie900', 'ie200', 'sennheiser ie'
         ];
         
-        const isKnownIEM = knownIEMs.some(brand => item.includes(brand));
+        const isKnownIEMBrand = knownIEMs.some(brand => item.includes(brand));
+        const isLeaningReviewer = iemLeaningReviewers.some(r => reviewer.includes(r));
 
-        // 2. Identify Rig
+        // 4. Rig Identification
         const isEA = reviewer.includes("earphone's archive") || reviewer.includes("earphonesarchive");
         const is5128Domain = link.includes('hangout.audio') || link.includes('listener800.github.io');
         const is5128Explicit = reviewer.includes("5128") || link.includes('5128');
         const isExplicit711 = link.includes('/711') || link.includes('type=711') || item.includes('(711)');
-        
         const is5128 = !isExplicit711 && (isEA || is5128Domain || is5128Explicit);
 
-        // 3. Determine Form Factor with Exception logic
-        const isExplicitHP = link.includes('type=headphone') || link.includes('/headphones/') || item.includes('(hp)') || item.includes('headphone');
-        const hasOEAttr = ['+oe', '(oe)', 'over-ear', 'open-back', 'closed-back', 'over ear'].some(attr => item.includes(attr));
-        const isExplicitIEM = ['(iem)', 'in-ear', 'in ear'].some(attr => item.includes(attr));
+        // 5. Final Classification Logic
+        let type = "Misc/Unknown";
 
-        const isOverEar = (isExplicitHP || hasOEAttr) && !isKnownIEM;
-        const isIEM = isKnownIEM || isExplicitIEM || (!isOverEar && (link.includes('type=iem') || link.includes('/iems/')));
+        if (isExplicitPathBuds) {
+            type = "TWS & Earbuds";
+        } else if (isExplicitPathHP || (item.includes('(hp)') && !isKnownIEMBrand)) {
+            type = is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
+        } else if (isExplicitPathIEM || isKnownIEMBrand || isLeaningReviewer || item.includes('(iem)')) {
+            type = is5128 ? "IEM (5128)" : "IEM (711)";
+        }
 
-        if (is5128) return isOverEar ? "Over-Ear (5128)" : (isIEM ? "IEM (5128)" : "Misc/Unknown");
-        if (link.includes('type=tws') || link.includes('/earbuds/') || item.includes('tws')) return "TWS & Earbuds";
-        
-        if (isOverEar) return "Over-Ear (711)";
-        if (isIEM) return "IEM (711)";
-        
-        return "Misc/Unknown";
+        return type;
     }
 
     function expandCategory(cat) {
@@ -290,12 +300,8 @@
                         </tbody>
                     </table>
                 </div>
+                ${renderCategoryCard("TWS & Earbuds", "TWS & Earbuds", "text-zinc-400")}
                 ${renderCategoryCard("Misc / Unknown", "Misc/Unknown", "text-orange-900")}
-                <div class="stat-card flex flex-col justify-center items-center opacity-50">
-                    <span class="text-[10px] lg:text-[13px] uppercase mono">Total Database Composition</span>
-                    <div class="text-3xl lg:text-5xl mono mt-2 text-white">${fullHistory.length.toLocaleString()}</div>
-                    <span class="text-[9px] lg:text-[11px] uppercase mt-1">Measurements Indexed</span>
-                </div>
             </div>`;
     }
 
