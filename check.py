@@ -28,25 +28,23 @@ SUBDOMAINS = [
 OVERRIDES = {
     "crinacle": "https://graph.hangout.audio/iem/711/data/phone_book.json",
     "crinacle5128": "https://graph.hangout.audio/iem/5128/data/phone_book.json",
+    "crinacleHP": "https://graph.hangout.audio/hp/data/phone_book.json", # Added 711-based HP
     "superreview": "https://squig.link/data/phone_book.json",
     "den-fi": "https://ish.squig.link/data/phone_book.json",
     "paulwasabii": "https://pw.squig.link/data/phone_book.json",
     "listener5128": "https://listener800.github.io/5128/data/phone_book.json"
 }
 
-# --- Exclusion Lists (Fixes Artti T10 Trap) ---
-FORCE_IEM_DOMAINS = ["musicafe", "crinacle", "superreview", "timmyv", "precog"]
+# --- Exclusion & Recognition Lists ---
+FORCE_IEM_DOMAINS = ["musicafe", "crinacle", "superreview", "timmyv", "precog", "jaytiss"]
 NOT_A_HEADPHONE = ["IEM", "In-Ear", "Monitor", "Earphone", "T10", "Planar IEM"]
 
-# --- TWO-FACTOR HEADPHONE FILTERING ---
-# High-Confidence Singles (Terms that are safely unique to over-ears)
 HP_SINGLES = [
     "(OE)", "Over-Ear", "On-Ear", "Closed-back", "Open-back", "Circumaural", "Supra-aural",
     "HD600", "HD650", "HD800", "HD6XX", "HD560", "HD580", "Sundara", "Ananda", "Susvara", 
     "DT770", "DT880", "DT990", "DT1990", "K701", "K702", "K371", "MDR-7506", "Porta Pro"
 ]
 
-# Brand-Verified Pairs (Terms like 'Stealth' only count if the brand is also present)
 HP_PAIRS = {
     "Dan Clark": ["Stealth", "Expanse", "Ether", "Aeon", "Corina", "DCA"],
     "ZMF": ["Atrium", "Verite", "Aeolus", "Eikon", "Auteur", "Caldera", "Bokeh"],
@@ -55,11 +53,7 @@ HP_PAIRS = {
     "Meze": ["Elite", "Empyrean", "Liric", "109 Pro"]
 }
 
-# --- TWS / Earbud Keywords ---
-TWS_KEYWORDS = [
-    "Earbud", "TWS", "Wireless", "Buds", "Pods", "True Wireless", "AirPods", 
-    "Earfree", "Monk Plus", "Flathead", "LBBS", "EB2S"
-]
+TWS_KEYWORDS = ["Earbud", "TWS", "Wireless", "Buds", "Pods", "True Wireless", "AirPods"]
 
 DB_FILE = "database.json"
 HISTORY_FILE = "history.json"
@@ -68,45 +62,40 @@ def fetch_data(url):
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
         response = requests.get(url, headers=headers, timeout=10)
-        if response.status_code == 200: return response.json()
-    except: pass
-    return None
+        return response.json() if response.status_code == 200 else None
+    except: return None
 
 def log_item(link_domain, name, file_id, database, sub_key, new_finds):
     if not name or not isinstance(name, str): return
     clean_name = name.strip()
     name_lower = clean_name.lower()
+    
     if sub_key not in database: database[sub_key] = []
     
     final_file_id = file_id[0] if isinstance(file_id, list) else file_id
     current_link = f"https://{link_domain}/?share={urllib.parse.quote(str(final_file_id))}"
 
-    # Logic 1: Detect TWS/Earbud
+    # --- REFINED LOGIC ---
     is_tws = any(kw.lower() in name_lower for kw in TWS_KEYWORDS)
-    
-    # Logic 2: Two-Factor Over-Ear Detection
+    is_hp_path = "5128" in link_domain or "headphone" in link_domain.lower() or "/hp/" in link_domain
     has_iem_keyword = any(kw.lower() in name_lower for kw in NOT_A_HEADPHONE)
-    is_iem_domain = any(domain in link_domain for domain in FORCE_IEM_DOMAINS)
     
-    # Check Singles
-    has_hp_single = any(kw.lower() in name_lower for kw in HP_SINGLES)
-    
-    # Check Pairs
-    has_hp_pair = False
-    for brand, models in HP_PAIRS.items():
-        if brand.lower() in name_lower:
-            if any(m.lower() in name_lower for m in models):
-                has_hp_pair = True
-                break
-
-    # Only a headphone if (Single OR Pair) AND NOT IEM-flagged
-    is_hp = (has_hp_single or has_hp_pair) and not has_iem_keyword and not is_iem_domain
-
-    # Apply Tags
+    # 1. TWS Check
     if is_tws:
         current_link += "&type=tws"
-    elif is_hp:
-        current_link += "&type=headphone"
+    
+    # 2. Over-Ear Check
+    else:
+        has_hp_single = any(kw.lower() in name_lower for kw in HP_SINGLES)
+        has_hp_pair = any(brand.lower() in name_lower and any(m.lower() in name_lower for m in models) 
+                         for brand, models in HP_PAIRS.items())
+        
+        # Check if the override itself is a dedicated headphone database
+        is_dedicated_hp = (sub_key == "crinacleHP")
+        
+        if (is_dedicated_hp or is_hp_path or has_hp_single or has_hp_pair) and not has_iem_keyword:
+            if "jaytiss" not in link_domain or (has_hp_single or has_hp_pair):
+                current_link += "&type=headphone"
 
     if current_link not in database[sub_key]:
         database[sub_key].append(current_link)
@@ -138,51 +127,44 @@ def parse_recursive(obj, link_domain, database, sub_key, new_finds, brand_contex
             parse_recursive(item, link_domain, database, sub_key, new_finds, brand_context)
 
 def run_check():
+    database = {}
     if os.path.exists(DB_FILE):
         with open(DB_FILE, "r") as f:
             try: database = json.load(f)
-            except: database = {}
-    else: database = {}
+            except: pass
 
+    history = []
     if os.path.exists(HISTORY_FILE):
         with open(HISTORY_FILE, "r") as f:
             try: history = json.load(f)
-            except: history = []
-    else: history = []
+            except: pass
 
     new_finds = []
 
-    # Check Overrides
     for sub_name, target_url in OVERRIDES.items():
-        print(f"Checking Override: {sub_name}...")
         data = fetch_data(target_url)
         if data:
             domain_part = target_url.replace("https://", "").split('/data/')[0]
             parse_recursive(data, domain_part, database, sub_name, new_finds)
 
-    # Regular Subdomains
-    all_targets = list(set(SUBDOMAINS + [k for k in database.keys() if k != 'last_sync']))
-    SCAN_PATHS = ["", "iems", "headphones", "earbuds", "5128", "headphones/5128", "5128/headphones"]
+    SCAN_PATHS = ["", "iems", "headphones", "earbuds", "5128", "headphones/5128"]
+    all_targets = list(set(SUBDOMAINS + [k for k in database.keys() if k not in OVERRIDES and k != 'last_sync']))
 
     for sub in all_targets:
-        if sub in OVERRIDES: continue 
-        print(f"Checking {sub}...")
+        if sub in OVERRIDES: continue
         for path in SCAN_PATHS:
-            base = f"{sub}.squig.link/{path}".strip('/')
-            url = f"https://{base}/data/phone_book.json"
+            base_link = f"{sub}.squig.link/{path}".strip('/')
+            url = f"https://{base_link}/data/phone_book.json"
             data = fetch_data(url)
             if data:
-                parse_recursive(data, base, database, sub, new_finds)
+                parse_recursive(data, base_link, database, sub, new_finds)
 
     database["last_sync"] = datetime.now().isoformat()
-
     if new_finds:
-        history = new_finds + history 
-        with open(HISTORY_FILE, "w") as f:
-            json.dump(history, f, indent=4)
+        history = new_finds + history
+        with open(HISTORY_FILE, "w") as f: json.dump(history, f, indent=4)
             
-    with open(DB_FILE, "w") as f:
-        json.dump(database, f, indent=4)
+    with open(DB_FILE, "w") as f: json.dump(database, f, indent=4)
 
 if __name__ == "__main__":
     run_check()
