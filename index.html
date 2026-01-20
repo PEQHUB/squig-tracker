@@ -7,14 +7,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Slightly lightened the text and border colors for better contrast */
         :root { --bg: #000000; --card: #0a0a0a; --border: #222222; --text: #e4e4e7; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; border-radius: 2px; }
         .item-row { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
         .item-row:hover { background: #080808; }
-        input::placeholder { color: #3f3f46; } /* Brighter placeholder */
+        
+        /* Time Divider Styling */
+        .time-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem 0 1rem 0;
+            color: #3f3f46;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        .time-divider::after {
+            content: "";
+            height: 1px;
+            flex-grow: 1;
+            background: linear-gradient(90deg, #222222 0%, transparent 100%);
+        }
+
+        input::placeholder { color: #3f3f46; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
 </head>
@@ -118,10 +137,22 @@
                 return;
             }
 
-            container.innerHTML = data.map(entry => {
+            let lastHourLabel = "";
+            let htmlContent = "";
+
+            data.forEach(entry => {
                 const model = resolveName(entry.item);
                 const localDate = toLocalTime(entry.date);
-                return `
+                
+                // Extract "Oct 24, 14" from "Oct 24, 14:30" to group by hour
+                const currentHourLabel = localDate.split(':')[0];
+
+                if (currentHourLabel !== lastHourLabel) {
+                    htmlContent += `<div class="time-divider">${currentHourLabel}:00 Block</div>`;
+                    lastHourLabel = currentHourLabel;
+                }
+
+                htmlContent += `
                 <div class="item-row py-6 flex justify-between items-center group">
                     <div class="min-w-0 pr-4">
                         <div class="flex items-center gap-3 mb-1.5">
@@ -135,7 +166,9 @@
                     </a>
                 </div>
                 `;
-            }).join('');
+            });
+
+            container.innerHTML = htmlContent;
         }
 
         document.getElementById('search').addEventListener('input', (e) => {
