@@ -4,7 +4,6 @@ import os
 import urllib.parse
 from datetime import datetime
 
-# Core list of known subdomains
 SUBDOMAINS = [
     "crinacle", "superreview", "hbb", "precog", "timmyv", "aftersound", 
     "paulwasabii", "vortexreviews", "tonedeafmonk", "rg", "nymz", 
@@ -25,21 +24,28 @@ SUBDOMAINS = [
     "sai", "earphonesarchive"
 ]
 
-# Manual mappings for reviewers not using standard [name].squig.link formats
 OVERRIDES = {
     "crinacle": "https://graph.hangout.audio/iem/711/data/phone_book.json",
     "crinacle5128": "https://graph.hangout.audio/iem/5128/data/phone_book.json",
     "superreview": "https://squig.link/data/phone_book.json",
     "den-fi": "https://ish.squig.link/data/phone_book.json",
-    "paulwasabii": "https://pw.squig.link/data/phone_book.json"
+    "paulwasabii": "https://pw.squig.link/data/phone_book.json",
+    "listener5128": "https://listener800.github.io/5128/data/phone_book.json"
 }
+
+# Only specific model series and explicit labels
+HP_KEYWORDS = [
+    "(OE)", "Headphone", "Over-Ear", "On-Ear", "Closed-back", "Open-back", "Circumaural",
+    "HD600", "HD650", "HD800", "HD660", "MDR-Z", "MDR-1", "ATH-M", "LCD-", "DT770", "DT880", "DT990", 
+    "DT1990", "DT1770", "Clear", "Utopia", "Elex", "Sundara", "Ananda", "Arya", "Susvara"
+]
 
 DB_FILE = "database.json"
 HISTORY_FILE = "history.json"
 
 def get_discovered_subdomains():
     try:
-        print("Discovering new Squiglink reviewers via crt.sh...")
+        print("Discovering new Squiglink reviewers...")
         url = "https://crt.sh/?q=%.squig.link&output=json"
         response = requests.get(url, timeout=25)
         if response.status_code != 200: return []
@@ -50,9 +56,7 @@ def get_discovered_subdomains():
             if name.endswith('.squig.link') and name not in ['squig.link', 'www.squig.link']:
                 discovered.add(name.split('.')[0])
         return list(discovered)
-    except Exception as e:
-        print(f"Discovery skipped: {e}")
-        return []
+    except Exception: return []
 
 def fetch_data(url):
     try:
@@ -65,19 +69,24 @@ def fetch_data(url):
 def log_item(link_domain, name, file_id, database, sub_key, new_finds):
     if not name or not isinstance(name, str): return
     clean_name = name.strip()
-    
-    # Initialize list if first time seeing this reviewer
     if sub_key not in database: database[sub_key] = []
     
     final_file_id = file_id[0] if isinstance(file_id, list) else file_id
+    current_link = f"https://{link_domain}/?share={urllib.parse.quote(str(final_file_id))}"
+
+    # Check against specific model/label keywords
+    is_hp_by_keyword = any(kw.lower() in clean_name.lower() for kw in HP_KEYWORDS)
     
-    if clean_name not in database[sub_key]:
-        database[sub_key].append(clean_name)
+    if is_hp_by_keyword and "headphones" not in current_link:
+        current_link += "&type=headphone"
+
+    if current_link not in database[sub_key]:
+        database[sub_key].append(current_link)
         new_finds.append({
             "reviewer": sub_key.capitalize(),
             "item": clean_name,
             "date": datetime.now().strftime("%b %d, %H:%M"),
-            "link": f"https://{link_domain}/?share={urllib.parse.quote(str(final_file_id))}"
+            "link": current_link
         })
 
 def parse_recursive(obj, link_domain, database, sub_key, new_finds, brand_context=""):
@@ -101,7 +110,6 @@ def parse_recursive(obj, link_domain, database, sub_key, new_finds, brand_contex
             parse_recursive(item, link_domain, database, sub_key, new_finds, brand_context)
 
 def run_check():
-    # Load Data
     if os.path.exists(DB_FILE):
         with open(DB_FILE, "r") as f:
             try: database = json.load(f)
@@ -116,7 +124,6 @@ def run_check():
 
     new_finds = []
 
-    # Step 1: Handle Manual Overrides first
     for sub_name, target_url in OVERRIDES.items():
         print(f"Checking Override: {sub_name}...")
         data = fetch_data(target_url)
@@ -124,17 +131,14 @@ def run_check():
             domain_part = target_url.replace("https://", "").split('/data/')[0]
             parse_recursive(data, domain_part, database, sub_name, new_finds)
 
-    # Step 2: Discovery and Standard Scanning
     discovered = get_discovered_subdomains()
     all_targets = list(set(SUBDOMAINS + [k for k in database.keys() if k != 'last_sync'] + discovered))
     
-    # These paths allow index.html to categorize items (e.g., Over-Ear vs IEM)
-   SCAN_PATHS = [
-    "", "iems", "headphones", "earbuds", "5128", 
-    "headphones/5128", "iems/5128", "5128/headphones"
+    # Nested paths ensure headphones/5128 directories are found
+    SCAN_PATHS = ["", "iems", "headphones", "earbuds", "5128", "headphones/5128", "5128/headphones"]
+
     for sub in all_targets:
-        if sub in OVERRIDES: continue # Skip since we already checked overrides
-        
+        if sub in OVERRIDES: continue 
         print(f"Checking {sub}...")
         for path in SCAN_PATHS:
             base = f"{sub}.squig.link/{path}".strip('/')
@@ -144,12 +148,10 @@ def run_check():
                 print(f"  > Found data at /{path}")
                 parse_recursive(data, base, database, sub, new_finds)
 
-    # Step 3: Save and Finalize
     database["last_sync"] = datetime.now().isoformat()
 
     if new_finds:
         print(f"Success! Found {len(new_finds)} new items.")
-        # Prepend new finds to history
         history = new_finds + history 
         with open(HISTORY_FILE, "w") as f:
             json.dump(history, f, indent=4)
@@ -159,4 +161,3 @@ def run_check():
 
 if __name__ == "__main__":
     run_check()
-
