@@ -1,13 +1,14 @@
 import json, requests, pandas as pd, numpy as np, io, os, time
 from scipy.interpolate import interp1d
 
-# --- SETTINGS ---
+# --- CONFIGURATION ---
 DB_FILE = "database.json"
 LIBRARY_DIR = "library"
 COMP_FILE = "DDComp.txt"
 TARGET_FREQ = np.geomspace(20, 20000, 500)
+CLEANUP_MODE = True 
 
-# Rig Mapping
+# Hardware Mapping
 REVIEWER_META = {
     "crinacle": {"rig": "5128", "pinna": "humanoid"},
     "vsg": {"rig": "5128", "pinna": "humanoid"},
@@ -25,70 +26,42 @@ def load_interpolation(file_path):
     except: return np.zeros(len(TARGET_FREQ))
 
 def get_harman_score(measured_amps, target_amps):
-    """Calculates Harman Predicted Preference Rating (PPR)."""
+    """Calculates Harman Predicted Preference Rating."""
     try:
-        # Standard calculation range: 20Hz - 10kHz for IEMs
         error = measured_amps - target_amps
-        error -= np.mean(error) # Level normalization
-        
-        # Calculate Slope (g) and Standard Deviation (s)
+        error -= np.mean(error) 
         log_freq = np.log10(TARGET_FREQ)
         slope, _ = np.polyfit(log_freq, error, 1)
         sd_eb = np.std(error, ddof=1)
-        
-        # Formula: 114.39 - 0.6*SD - 26.3*abs(Slope)
         score = 114.39 - (0.6 * sd_eb) - (26.3 * abs(slope))
         return max(0, min(100, round(score, 2)))
     except: return 0
 
-def main():
-    if not os.path.exists(DB_FILE): return print("Run check.py first.")
-    with open(DB_FILE, "r") as f: database = json.load(f)
-
-    # 1. Pre-load DDComp (only applied to 711 rigs)
-    dd_comp = load_interpolation(COMP_FILE)
-    rankings = []
-
-    for reviewer, models in database.items():
-        if reviewer == "last_sync": continue
-        meta = REVIEWER_META.get(reviewer, {"rig": "711", "pinna": "standard"})
-        
-        for model in models:
-            file_id, category = get_file_and_category(reviewer, model)
-            if not file_id: continue
-
-            # Construct path with hardware context
-            local_path = os.path.join(LIBRARY_DIR, meta['rig'], meta['pinna'], category, reviewer, f"{file_id}.csv")
-            
-            # Library Check
-            if os.path.exists(local_path):
-                std_amps = pd.read_csv(local_path)['amp'].values
-            else:
-                std_amps = download_and_standardize(reviewer, file_id, local_path)
-            
-            if std_amps is not None:
-                # 2. CORE LOGIC: Normalize 711 to 5128 approximation
-                if meta['rig'] == "711":
-                    std_amps = std_amps - dd_comp
-
-                # 3. Target Selection
-                # Since 711 is now compensated, we use 5128 targets for both 711 and 5128 rigs
-                target_key = "5128" if meta['rig'] in ["711", "5128"] else meta['rig']
-                target_file = f"target_{'ie' if category == 'inear' else 'oe'}_{target_key}_{meta['pinna'] if category == 'overear' else ''}".strip('_') + ".txt"
-                target_amps = load_interpolation(target_file)
-
-                score = get_harman_score(std_amps, target_amps)
-                rankings.append({
-                    "Model": model, "Category": category, "Score": score,
-                    "Rig": meta['rig'], "Reviewer": reviewer
-                })
-
-    # Export
-    df = pd.DataFrame(rankings)
-    for cat in ["inear", "overear"]:
-        df[df['Category'] == cat].sort_values("Score", ascending=False).to_csv(f"rankings_{cat}.csv", index=False)
+def get_file_and_category(reviewer, model_name):
+    """Crawl phone_book to find file_id and identify type."""
+    path_map = {"iems": "inear", "earbuds": "inear", "headphones": "overear"}
+    for folder, category in path_map.items():
+        url = f"https://{reviewer}.squig.link/{folder}/data/phone_book.json"
+        try:
+            res = requests.get(url, timeout=5).json()
+            def search(obj):
+                if isinstance(obj, list):
+                    for i in obj:
+                        r = search(i)
+                        if r: return r
+                elif isinstance(obj, dict):
+                    if obj.get('name') == model_name: return obj.get('file')
+                    for v in obj.values():
+                        r = search(v)
+                        if r: return r
+                return None
+            fid = search(res)
+            if fid: return fid, category
+        except: continue
+    return None, "unknown"
 
 def download_and_standardize(reviewer, file_id, local_path):
+    """Downloads and saves standardized FR."""
     url = f"https://{reviewer}.squig.link/data/{file_id}.txt"
     try:
         r = requests.get(url, timeout=5)
@@ -99,6 +72,60 @@ def download_and_standardize(reviewer, file_id, local_path):
             pd.DataFrame({'freq': TARGET_FREQ, 'amp': std_amps}).to_csv(local_path, index=False)
             return std_amps
     except: return None
+
+def validate_library():
+    if not os.path.exists(LIBRARY_DIR): return
+    for root, _, files in os.walk(LIBRARY_DIR):
+        for file in files:
+            if file.endswith(".csv"):
+                p = os.path.join(root, file)
+                try:
+                    if os.path.getsize(p) < 100 or len(pd.read_csv(p)) != len(TARGET_FREQ):
+                        os.remove(p)
+                except: os.remove(p)
+
+def main():
+    if not os.path.exists(DB_FILE): return print("Run check.py first.")
+    if CLEANUP_MODE: validate_library()
+
+    with open(DB_FILE, "r") as f: database = json.load(f)
+    dd_comp = load_interpolation(COMP_FILE)
+    rankings = []
+
+    for reviewer, models in database.items():
+        if reviewer == "last_sync": continue
+        meta = REVIEWER_META.get(reviewer, {"rig": "711", "pinna": "standard"})
+        
+        for model in models:
+            file_id, category = get_file_and_category(reviewer, model)
+            if not file_id or category == "unknown": continue
+
+            local_path = os.path.join(LIBRARY_DIR, meta['rig'], meta['pinna'], category, reviewer, f"{file_id}.csv")
+            
+            if os.path.exists(local_path):
+                std_amps = pd.read_csv(local_path)['amp'].values
+            else:
+                std_amps = download_and_standardize(reviewer, file_id, local_path)
+                time.sleep(0.1)
+            
+            if std_amps is not None:
+                if meta['rig'] == "711":
+                    std_amps = std_amps - dd_comp
+
+                # Select Target (Using 5128 for compensated 711)
+                t_key = "5128" if meta['rig'] == "711" else meta['rig']
+                t_file = f"target_{'ie' if category == 'inear' else 'oe'}_{t_key}_{meta['pinna'] if category == 'overear' else ''}".strip('_') + ".txt"
+                target_amps = load_interpolation(t_file)
+
+                score = get_harman_score(std_amps, target_amps)
+                rankings.append({
+                    "Model": model, "Category": category, "Score": score, "Reviewer": reviewer
+                })
+
+    df = pd.DataFrame(rankings)
+    for cat in ["inear", "overear"]:
+        if not df.empty:
+            df[df['Category'] == cat].sort_values("Score", ascending=False).to_csv(f"rankings_{cat}.csv", index=False)
 
 if __name__ == "__main__":
     main()
