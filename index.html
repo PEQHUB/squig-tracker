@@ -10,10 +10,19 @@
         :root { --bg: #000000; --card: #0a0a0a; --border: #222222; --text: #e4e4e7; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'JetBrains Mono', monospace; }
-        .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; border-radius: 2px; height: 100%; }
+        .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.25rem; border-radius: 2px; display: flex; flex-direction: column; }
         .item-row { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
         .item-row:hover { background: #080808; }
         
+        /* Desktop Specific Enlargement */
+        @media (min-width: 1024px) {
+            body { font-size: 16px; }
+            .stat-card { padding: 1.75rem; }
+            .item-row { padding-top: 2rem; padding-bottom: 2rem; }
+            .tab-btn, .filter-btn { font-size: 13px; }
+            #search { font-size: 1.5rem; }
+        }
+
         .tab-btn, .filter-btn {
             padding: 0.5rem 1rem;
             font-size: 11px;
@@ -32,11 +41,18 @@
         .chart-bar-container { background: #111; height: 8px; border-radius: 1px; overflow: hidden; margin: 10px 0; }
         .chart-bar-fill { height: 100%; transition: width 1s ease-out; }
 
-        .recent-list-mini { font-size: 10px; color: #71717a; margin-top: 0.75rem; max-height: 250px; overflow-y: auto; }
+        .recent-list-mini { font-size: 10px; color: #71717a; margin-top: 0.75rem; flex-grow: 1; }
+        @media (min-width: 1024px) { .recent-list-mini { font-size: 12px; } }
+        
         .recent-list-mini li { margin-bottom: 6px; border-left: 1px solid #222; padding-left: 8px; line-height: 1.4; }
         .recent-list-mini a:hover { color: #fff; text-decoration: underline; }
 
+        .load-inline-btn { font-size: 9px; text-transform: uppercase; color: #52525b; cursor: pointer; margin-top: 12px; border-top: 1px solid #111; padding-top: 8px; width: 100%; text-align: center; }
+        @media (min-width: 1024px) { .load-inline-btn { font-size: 11px; } }
+        .load-inline-btn:hover { color: #fff; }
+
         .contributor-table { width: 100%; font-size: 11px; color: #a1a1aa; margin-top: 1rem; }
+        @media (min-width: 1024px) { .contributor-table { font-size: 13px; } }
         .contributor-table th { text-align: left; color: #52525b; padding-bottom: 8px; font-weight: 500; }
         .contributor-table td { padding: 4px 0; border-bottom: 1px solid #111; }
 
@@ -57,21 +73,21 @@
         ::-webkit-scrollbar-thumb { background: #222; }
     </style>
 </head>
-<body class="max-w-6xl mx-auto px-6 py-12">
+<body class="max-w-6xl lg:max-w-7xl mx-auto px-6 py-12">
 
     <header class="mb-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
-                <span id="stat-total" class="text-xl font-medium mono text-white">0</span>
+                <span class="block text-[10px] lg:text-[12px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
+                <span id="stat-total" class="text-xl lg:text-3xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Total DB</span>
-                <span id="stat-db-total" class="text-xl font-medium mono text-white">0</span>
+                <span class="block text-[10px] lg:text-[12px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Total DB</span>
+                <span id="stat-db-total" class="text-xl lg:text-3xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Reviewers</span>
-                <span id="stat-sources" class="text-xl font-medium mono text-white">0</span>
+                <span class="block text-[10px] lg:text-[12px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Reviewers</span>
+                <span id="stat-sources" class="text-xl lg:text-3xl font-medium mono text-white">0</span>
             </div>
         </div>
 
@@ -104,6 +120,14 @@
     let currentTab = 'feed';
     let currentRigFilter = 'ALL';
     let searchTimeout = null;
+    
+    let statsPagination = {
+        "IEM (5128)": 15,
+        "Over-Ear (5128)": 15,
+        "IEM (711)": 15,
+        "Over-Ear (711)": 15
+    };
+
     const PAGE_SIZE = 50;
     const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
@@ -154,6 +178,11 @@
         return "IEM (711)";
     }
 
+    function expandCategory(cat) {
+        statsPagination[cat] += 15;
+        renderStats();
+    }
+
     async function fetchData() {
         try {
             const [hReq, dReq] = await Promise.all([fetch('history.json'), fetch('database.json')]);
@@ -186,11 +215,11 @@
             const cat = getEntryMetadata(entry);
             if (counts[cat] !== undefined) {
                 counts[cat]++;
-                if (lists[cat] && lists[cat].length < 15) lists[cat].push(entry);
+                if (lists[cat]) lists[cat].push(entry);
             }
             if (cat.includes("5128")) {
-                if (!contributors[entry.reviewer]) contributors[entry.reviewer] = 0;
-                contributors[entry.reviewer]++;
+                const rev = entry.reviewer || "Unknown";
+                contributors[rev] = (contributors[rev] || 0) + 1;
             }
         });
 
@@ -200,50 +229,41 @@
 
         const renderBar = (label, count, total, color) => `
             <div class="mb-4">
-                <div class="flex justify-between text-[10px] mono uppercase mb-1">
+                <div class="flex justify-between text-[10px] lg:text-[12px] mono uppercase mb-1">
                     <span>${label}</span><span>${count}</span>
                 </div>
                 <div class="chart-bar-container"><div class="chart-bar-fill ${color}" style="width:${(count/total)*100}%"></div></div>
             </div>`;
 
-        const renderMiniList = (title, items) => `
-            <div class="mt-6">
-                <span class="text-[9px] uppercase mono text-zinc-500 block border-b border-zinc-900 pb-1 mb-2">${title}</span>
-                <ul class="recent-list-mini">
-                    ${items.map(i => `<li><a href="${i.link}" target="_blank" class="block truncate">${resolveName(i.item)} <span class="opacity-40 ml-1">[${i.reviewer}]</span></a></li>`).join('')}
-                </ul>
-            </div>`;
+        const renderCategoryCard = (title, key, colorClass) => {
+            const limit = statsPagination[key];
+            const items = lists[key].slice(0, limit);
+            const hasMore = lists[key].length > limit;
+            const barTotal = key.includes("IEM") ? totalIEM : totalOE;
+
+            return `
+                <div class="stat-card">
+                    <span class="text-[10px] lg:text-[13px] uppercase mono font-bold ${colorClass}">${title}</span>
+                    ${renderBar("Composition Share", counts[key], barTotal, key.includes("5128") ? "bg-white" : "bg-zinc-700")}
+                    <span class="text-[9px] lg:text-[11px] uppercase mono text-zinc-500 block border-b border-zinc-900 pb-1 mb-2 mt-4">Latest Measurements</span>
+                    <ul class="recent-list-mini">
+                        ${items.map(i => `<li><a href="${i.link}" target="_blank" class="block truncate">${resolveName(i.item)} <span class="opacity-40 ml-1">[${i.reviewer}]</span></a></li>`).join('')}
+                    </ul>
+                    ${hasMore ? `<div class="load-inline-btn mono" onclick="expandCategory('${key}')">Show More (+15)</div>` : ''}
+                </div>`;
+        };
 
         statsContainer.innerHTML = `
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-white font-bold">5128 IEMs</span>
-                    ${renderBar("Share of IEMs", counts["IEM (5128)"], totalIEM, "bg-white")}
-                    ${renderMiniList("Latest 5128 IEM", lists["IEM (5128)"])}
-                </div>
-
-                <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-white font-bold">5128 Over-Ears</span>
-                    ${renderBar("Share of Over-Ears", counts["Over-Ear (5128)"], totalOE, "bg-white")}
-                    ${renderMiniList("Latest 5128 OE", lists["Over-Ear (5128)"])}
-                </div>
-
-                <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">711 IEMs</span>
-                    ${renderBar("Share of IEMs", counts["IEM (711)"], totalIEM, "bg-zinc-700")}
-                    ${renderMiniList("Latest 711 IEM", lists["IEM (711)"])}
-                </div>
-
-                <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">711 Over-Ears</span>
-                    ${renderBar("Share of Over-Ears", counts["Over-Ear (711)"], totalOE, "bg-zinc-700")}
-                    ${renderMiniList("Latest 711 OE", lists["Over-Ear (711)"])}
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+                ${renderCategoryCard("5128 IEMs", "IEM (5128)", "text-white")}
+                ${renderCategoryCard("5128 Over-Ears", "Over-Ear (5128)", "text-white")}
+                ${renderCategoryCard("711 IEMs", "IEM (711)", "text-zinc-500")}
+                ${renderCategoryCard("711 Over-Ears", "Over-Ear (711)", "text-zinc-500")}
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                  <div class="stat-card">
-                    <span class="text-[10px] uppercase mono text-zinc-500 font-bold">5128 Power Rankings</span>
+                    <span class="text-[10px] lg:text-[13px] uppercase mono text-zinc-500 font-bold">5128 Power Rankings</span>
                     <table class="contributor-table mono">
                         <thead><tr><th>Reviewer</th><th class="text-right">Total 5128</th></tr></thead>
                         <tbody>
@@ -252,9 +272,9 @@
                     </table>
                 </div>
                 <div class="stat-card flex flex-col justify-center items-center opacity-50">
-                    <span class="text-[10px] uppercase mono">Total Database Composition</span>
-                    <div class="text-3xl mono mt-2">${fullHistory.length.toLocaleString()}</div>
-                    <span class="text-[9px] uppercase mt-1">Measurements Indexed</span>
+                    <span class="text-[10px] lg:text-[13px] uppercase mono">Total Database Composition</span>
+                    <div class="text-3xl lg:text-5xl mono mt-2 text-white">${fullHistory.length.toLocaleString()}</div>
+                    <span class="text-[9px] lg:text-[11px] uppercase mt-1">Measurements Indexed</span>
                 </div>
             </div>`;
     }
@@ -298,15 +318,15 @@
                 <div class="item-row py-6 flex justify-between items-center group">
                     <div class="min-w-0 pr-4">
                         <div class="flex items-center gap-3 mb-1">
-                            ${isNew ? '<span class="bg-white text-black px-1 py-0.5 text-[8px] font-black uppercase rounded-sm">New</span>' : ''}
-                            <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
-                            <span class="text-[9px] mono px-2 py-0.5 border ${rigColor} uppercase tracking-tighter rounded-sm">${rigType}</span>
-                            <span class="text-[11px] text-zinc-500 mono uppercase">${getRelativeTime(date)}</span>
+                            ${isNew ? '<span class="bg-white text-black px-1 py-0.5 text-[8px] lg:text-[10px] font-black uppercase rounded-sm">New</span>' : ''}
+                            <span class="text-[11px] lg:text-[13px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
+                            <span class="text-[9px] lg:text-[11px] mono px-2 py-0.5 border ${rigColor} uppercase tracking-tighter rounded-sm">${rigType}</span>
+                            <span class="text-[11px] lg:text-[13px] text-zinc-500 mono uppercase">${getRelativeTime(date)}</span>
                         </div>
-                        <h2 class="text-[17px] font-normal text-zinc-200 truncate tracking-tight">${resolveName(entry.item)}</h2>
+                        <h2 class="text-[17px] lg:text-[22px] font-normal text-zinc-200 truncate tracking-tight">${resolveName(entry.item)}</h2>
                     </div>
-                    <a href="${entry.link}" target="_blank" class="shrink-0 p-2 border border-zinc-800 text-zinc-600 transition-all hover:border-zinc-400 hover:text-white">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <a href="${entry.link}" target="_blank" class="shrink-0 p-2 lg:p-4 border border-zinc-800 text-zinc-600 transition-all hover:border-zinc-400 hover:text-white">
+                        <svg class="w-4 h-4 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>`;
         }).join('');
@@ -333,8 +353,10 @@
     function switchTab(tab) {
         currentTab = tab;
         ['feed', 'stats'].forEach(t => {
-            document.getElementById(t).classList.toggle('hidden', t !== tab);
-            document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
+            const el = document.getElementById(t);
+            if (el) el.classList.toggle('hidden', t !== tab);
+            const btn = document.getElementById(`tab-${t}`);
+            if (btn) btn.classList.toggle('active', t === tab);
         });
         document.getElementById('rig-filters').classList.toggle('hidden', tab === 'stats');
         if (tab === 'stats') {
