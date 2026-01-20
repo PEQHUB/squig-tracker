@@ -46,6 +46,10 @@
             border-bottom-color: #ffffff;
         }
 
+        /* Chart Styling */
+        .chart-bar-container { background: #111; height: 8px; border-radius: 1px; overflow: hidden; margin: 10px 0; }
+        .chart-bar-fill { height: 100%; transition: width 1s ease-out; }
+
         #load-all-btn {
             margin: 4rem auto;
             display: block;
@@ -87,6 +91,7 @@
         <div class="flex gap-4 mb-8 border-b border-zinc-900">
             <button onclick="switchTab('feed')" id="tab-feed" class="tab-btn active mono">Live Feed</button>
             <button onclick="switchTab('advanced')" id="tab-advanced" class="tab-btn mono">Advanced View</button>
+            <button onclick="switchTab('stats')" id="tab-stats" class="tab-btn mono">Statistics</button>
         </div>
 
         <input type="text" id="search" placeholder="Search Filter..." 
@@ -94,8 +99,8 @@
     </header>
 
     <main id="feed" class="flex flex-col"></main>
-
     <main id="advanced" class="hidden flex flex-col"></main>
+    <main id="stats" class="hidden flex flex-col py-10 space-y-12"></main>
     
     <button id="load-all-btn" class="mono uppercase hidden">Load 50 More</button>
 
@@ -149,13 +154,21 @@
 
     function switchTab(tab) {
         currentTab = tab;
+        // Update Buttons
         document.getElementById('tab-feed').classList.toggle('active', tab === 'feed');
         document.getElementById('tab-advanced').classList.toggle('active', tab === 'advanced');
-        document.getElementById('feed').classList.toggle('hidden', tab === 'advanced');
-        document.getElementById('advanced').classList.toggle('hidden', tab === 'feed');
-        document.getElementById('load-all-btn').classList.toggle('hidden', tab === 'advanced');
+        document.getElementById('tab-stats').classList.toggle('active', tab === 'stats');
+        
+        // Update Containers
+        document.getElementById('feed').classList.toggle('hidden', tab !== 'feed');
+        document.getElementById('advanced').classList.toggle('hidden', tab !== 'advanced');
+        document.getElementById('stats').classList.toggle('hidden', tab !== 'stats');
+        
+        // Update Load Button
+        document.getElementById('load-all-btn').classList.toggle('hidden', tab !== 'feed');
         
         if (tab === 'advanced') renderAdvanced();
+        if (tab === 'stats') renderStats();
     }
 
     async function fetchData() {
@@ -187,7 +200,7 @@
         renderItems(displayedHistory, 'feed');
         const btn = document.getElementById('load-all-btn');
         btn.innerText = `Load ${PAGE_SIZE} More`;
-        if (currentIndex >= fullHistory.length || currentTab === 'advanced') btn.classList.add('hidden');
+        if (currentIndex >= fullHistory.length || currentTab !== 'feed') btn.classList.add('hidden');
         else btn.classList.remove('hidden');
     }
 
@@ -216,7 +229,6 @@
             const name = resolveName(entry.item).toLowerCase();
             const rev = entry.reviewer.toLowerCase();
             
-            // Logic based on Squiglink reviewer standards
             if (name.includes("over") || name.includes("headphone") || rev.includes("overear")) {
                 if (name.includes("5128") || rev.includes("5128")) sections["Over-Ear - 5128"].push(entry);
                 else sections["Over-Ear - Generic/Other"].push(entry);
@@ -230,17 +242,70 @@
         for (const [title, items] of Object.entries(sections)) {
             if (items.length > 0) {
                 advHtml += `<div class="time-divider">${title}</div>`;
-                advHtml += `<div id="section-${title.replace(/\s+/g, '')}"></div>`;
+                advHtml += `<div id="section-${title.replace(/\s+|\/|-/g, '')}"></div>`;
             }
         }
         advContainer.innerHTML = advHtml;
         
         for (const [title, items] of Object.entries(sections)) {
             if (items.length > 0) {
-                const subId = `section-${title.replace(/\s+/g, '')}`;
+                const subId = `section-${title.replace(/\s+|\/|-/g, '')}`;
                 renderItems(items.slice(0, 20), subId, true);
             }
         }
+    }
+
+    function renderStats() {
+        const statsContainer = document.getElementById('stats');
+        let c711 = 0, c5128 = 0;
+
+        fullHistory.forEach(entry => {
+            const name = resolveName(entry.item).toLowerCase();
+            const rev = entry.reviewer.toLowerCase();
+            const isIEM = !(name.includes("over") || name.includes("headphone") || rev.includes("overear"));
+            
+            if (isIEM) {
+                if (name.includes("5128") || rev.includes("5128") || name.includes("4620")) c5128++;
+                else c711++;
+            }
+        });
+
+        const total = c711 + c5128;
+        const p711 = ((c711 / total) * 100).toFixed(1);
+        const p5128 = ((c5128 / total) * 100).toFixed(1);
+
+        statsContainer.innerHTML = `
+            <div>
+                <div class="time-divider">Measurement Standard Breakdown (IEMs)</div>
+                <div class="space-y-8 mt-6">
+                    <div>
+                        <div class="flex justify-between items-end mb-2 mono text-[10px] uppercase tracking-widest">
+                            <span class="text-white">IEC-711 (Legacy)</span>
+                            <span class="text-zinc-500">${c711.toLocaleString()} units — ${p711}%</span>
+                        </div>
+                        <div class="chart-bar-container">
+                            <div class="chart-bar-fill bg-zinc-600" style="width: ${p711}%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-end mb-2 mono text-[10px] uppercase tracking-widest">
+                            <span class="text-white">B&K 5128 (Modern)</span>
+                            <span class="text-zinc-500">${c5128.toLocaleString()} units — ${p5128}%</span>
+                        </div>
+                        <div class="chart-bar-container">
+                            <div class="chart-bar-fill bg-white" style="width: ${p5128}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card opacity-50">
+                <p class="text-[10px] mono uppercase leading-relaxed text-zinc-400">
+                    The 5128 standard uses a high-fidelity anthropometric ear simulator (B&K 4620), 
+                    providing more human-like acoustic impedance compared to the legacy IEC 60318-4 (711) couplers.
+                </p>
+            </div>
+        `;
     }
 
     function renderItems(data, containerId, isSubSection = false) {
@@ -278,7 +343,7 @@
                 </a>
             </div>`;
         });
-        container.innerHTML = isSubSection ? htmlContent : htmlContent;
+        container.innerHTML = htmlContent;
     }
 
     document.getElementById('load-all-btn').addEventListener('click', loadMore);
