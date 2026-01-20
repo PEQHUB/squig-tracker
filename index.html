@@ -14,7 +14,6 @@
         .item-row { border-bottom: 1px solid var(--border); transition: background 0.15s ease; }
         .item-row:hover { background: #050505; }
         input::placeholder { color: #27272a; }
-        /* Hide scrollbar for a cleaner look */
         ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
 </head>
@@ -35,7 +34,7 @@
                 <span id="stat-sources" class="text-xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Last Update</span>
+                <span class="block text-[9px] uppercase tracking-widest text-zinc-600 mb-1">Last Sync (Local)</span>
                 <span id="stat-time" class="text-xl font-medium mono text-white">--:--</span>
             </div>
         </div>
@@ -50,12 +49,29 @@
         let historyData = [];
         let databaseData = {};
 
-        // FIXED PARSER: Handles 64 Audio, A&D, and other nested brand folders
+        // Helper to convert the scraper's UTC string to User's Local Time
+        function toLocalTime(dateStr) {
+            try {
+                // If dateStr is "Oct 24, 14:30", we append current year and "UTC"
+                // This tells the browser the source is UTC.
+                const year = new Date().getFullYear();
+                const utcDate = new Date(`${dateStr}, ${year} UTC`);
+                
+                return utcDate.toLocaleTimeString([], { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    hour12: false 
+                });
+            } catch (e) {
+                return dateStr; // Fallback to original if parsing fails
+            }
+        }
+
         function resolveName(data) {
             if (!data) return "Unknown";
             if (typeof data === 'string') return data;
-            
-            // Handle {name: '64 Audio', phones: [...]}
             if (typeof data === 'object') {
                 if (data.name && typeof data.name === 'string') return data.name;
                 if (Array.isArray(data)) return resolveName(data[0]);
@@ -67,7 +83,6 @@
 
         async function fetchData() {
             try {
-                // Fetch with cache busting to prevent stale data
                 const t = Date.now();
                 const [hReq, dReq] = await Promise.all([
                     fetch(`./history.json?t=${t}`),
@@ -91,6 +106,9 @@
             let totalCount = 0;
             const uniqueSet = new Set();
             
+            // Filter out 'last_sync' key if you added it to Python later
+            const reviewers = Object.keys(databaseData).filter(k => k !== 'last_sync');
+
             Object.values(databaseData).forEach(list => {
                 if (Array.isArray(list)) {
                     list.forEach(item => {
@@ -99,51 +117,3 @@
                     });
                 }
             });
-
-            document.getElementById('stat-total').innerText = totalCount.toLocaleString();
-            document.getElementById('stat-unique').innerText = uniqueSet.size.toLocaleString();
-            document.getElementById('stat-sources').innerText = Object.keys(databaseData).length;
-            document.getElementById('stat-time').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
-        }
-
-        function renderItems(data) {
-            const container = document.getElementById('feed');
-            if (!data || data.length === 0) {
-                container.innerHTML = `<div class="py-10 text-zinc-800 mono text-xs uppercase tracking-widest text-center">No entries found.</div>`;
-                return;
-            }
-
-            container.innerHTML = data.map(entry => {
-                const model = resolveName(entry.item);
-                return `
-                <div class="item-row py-6 flex justify-between items-center group">
-                    <div class="min-w-0 pr-4">
-                        <div class="flex items-center gap-3 mb-1">
-                            <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">${entry.reviewer}</span>
-                            <span class="text-[9px] text-zinc-800 mono uppercase">${entry.date}</span>
-                        </div>
-                        <h2 class="text-base font-normal text-zinc-300 truncate">${model}</h2>
-                    </div>
-                    <a href="${entry.link}" target="_blank" class="shrink-0 p-2 border border-zinc-900 hover:border-zinc-500 text-zinc-700 hover:text-white transition-all">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </a>
-                </div>
-                `;
-            }).join('');
-        }
-
-        document.getElementById('search').addEventListener('input', (e) => {
-            const val = e.target.value.toLowerCase();
-            const filtered = historyData.filter(h => 
-                resolveName(h.item).toLowerCase().includes(val) || 
-                h.reviewer.toLowerCase().includes(val)
-            );
-            renderItems(filtered);
-        });
-
-        // Start
-        fetchData();
-    </script>
-</body>
-</html>
-
