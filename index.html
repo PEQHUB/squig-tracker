@@ -89,20 +89,19 @@
     function toLocalTime(dateStr) {
         if (!dateStr) return null;
         try {
-            // Clean string
             const s = dateStr.trim();
-            
-            // Try standard parse first
+            // Try standard ISO/UTC parse
             let d = new Date(s.includes("UTC") ? s : s + " UTC");
             
-            // If Android yields "Invalid Date" or Epoch (1970), use manual regex
+            // If Android yields "Invalid Date" or defaults to 1970 Epoch
             if (isNaN(d.getTime()) || d.getFullYear() <= 1970) {
                 const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
                 const match = s.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
                 if (match) {
                     const [_, mon, day, hr, min] = match;
-                    // Explicitly use 2026 to prevent 1970 epoch fallback
-                    d = new Date(Date.UTC(2026, months[mon], parseInt(day), parseInt(hr), parseInt(min)));
+                    const currentYear = new Date().getFullYear();
+                    // Force UTC to ensure cross-device consistency
+                    d = new Date(Date.UTC(currentYear, months[mon], parseInt(day), parseInt(hr), parseInt(min)));
                 }
             }
             return isNaN(d.getTime()) ? null : d;
@@ -114,8 +113,12 @@
         const now = new Date();
         const diffInSeconds = Math.floor((now - date) / 1000);
         
-        // Handle clock drift (if phone time is slightly behind server time)
-        if (diffInSeconds < 0) return `Just now`;
+        // If diff is negative (up to 1 hour), it's just clock drift—treat as "now"
+        if (diffInSeconds < 30 && diffInSeconds > -3600) return `Just now`;
+        
+        // If diff is significantly negative (over 1 hour), there's a timezone/year error
+        if (diffInSeconds <= -3600) return `Recent`;
+
         if (diffInSeconds < 60) return `${diffInSeconds}s ago`;
         
         const diffInMinutes = Math.floor(diffInSeconds / 60);
@@ -125,9 +128,6 @@
         if (diffInHours < 24) return `${diffInHours}h ago`;
         
         const diffInDays = Math.floor(diffInHours / 24);
-        // If it still says 9000+ days, something is fundamentally wrong with the system clock
-        if (diffInDays > 2000) return "Just now"; 
-        
         return `${diffInDays}d ago`;
     }
 
@@ -157,13 +157,13 @@
                 return dateB - dateA;
             });
 
-            const now = Date.now();
+            const now = new Date().getTime();
             filteredHistory = fullHistory.filter(entry => {
                 const d = toLocalTime(entry.date);
                 if (!d) return false;
                 const age = now - d.getTime();
-                // Show if within 12h, allowing for a small 1-minute future drift
-                return age < CUTOFF_MS && age > -60000;
+                // Show if within 12h, allowing for a 1-hour future drift for safety
+                return age < CUTOFF_MS && age > -3600000;
             });
 
             const displayList = filteredHistory.length > 0 ? filteredHistory : fullHistory.slice(0, 10);
@@ -175,7 +175,7 @@
             updateDashboard();
             renderItems(displayList);
         } catch (err) {
-            feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase text-center">Database Offline</div>`;
+            feedElement.innerHTML = `<div class="py-20 text-zinc-500 mono text-xs uppercase text-center">Sync Error</div>`;
         }
     }
 
@@ -189,7 +189,7 @@
     function renderItems(data) {
         const container = document.getElementById('feed');
         let htmlContent = "";
-        const now = Date.now();
+        const now = new Date().getTime();
         let lastDividerLabel = "";
 
         data.forEach(entry => {
@@ -198,7 +198,7 @@
             const isVeryRecent = dateObj && (now - dateObj.getTime() < NEW_BADGE_MS);
             const relativeStr = getRelativeTime(dateObj);
             
-            const dayStr = dateObj ? dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' }) : "Recently";
+            const dayStr = dateObj ? dateObj.toLocaleDateString([], { month: 'short', day: 'numeric' }) : "New";
             if (dayStr !== lastDividerLabel) {
                 htmlContent += `<div class="time-divider">${dayStr}</div>`;
                 lastDividerLabel = dayStr;
@@ -242,4 +242,5 @@
 </script>
 </body>
 </html>
+
 
