@@ -50,6 +50,7 @@ TWS_KEYWORDS = ["Earbud", "TWS", "Wireless", "Buds", "Pods", "True Wireless", "A
 
 DB_FILE = "database.json"
 HISTORY_FILE = "history.json"
+REVIEW_QUEUE_FILE = "review_queue.txt"
 
 def fetch_data(url):
     try:
@@ -63,13 +64,11 @@ def log_item(link_domain, name, file_id, database, sub_key, new_finds):
     clean_name = name.strip()
     name_lower = clean_name.lower()
     
-    # Initialize list if sub_key is new, maintaining compatibility with older DB
     if sub_key not in database: database[sub_key] = []
     
     final_file_id = file_id[0] if isinstance(file_id, list) else file_id
     current_link = f"https://{link_domain}/?share={urllib.parse.quote(str(final_file_id))}"
 
-    # Logic categorization
     is_tws = any(kw.lower() in name_lower for kw in TWS_KEYWORDS)
     is_hp_path = "5128" in link_domain or "headphone" in link_domain.lower() or "/hp/" in link_domain
     has_iem_keyword = any(kw.lower() in name_lower for kw in NOT_A_HEADPHONE)
@@ -86,7 +85,6 @@ def log_item(link_domain, name, file_id, database, sub_key, new_finds):
             if "jaytiss" not in link_domain or (has_hp_single or has_hp_pair):
                 current_link += "&type=headphone"
 
-    # Set lookup for performance (converting list to set temporarily)
     if current_link not in database[sub_key]:
         database[sub_key].append(current_link)
         new_finds.append({
@@ -117,7 +115,6 @@ def parse_recursive(obj, link_domain, database, sub_key, new_finds, brand_contex
             parse_recursive(item, link_domain, database, sub_key, new_finds, brand_context)
 
 def process_target(sub, database, new_finds):
-    """Function to be run in parallel for each subdomain."""
     if sub in OVERRIDES:
         target_url = OVERRIDES[sub]
         data = fetch_data(target_url)
@@ -132,7 +129,7 @@ def process_target(sub, database, new_finds):
             data = fetch_data(url)
             if data:
                 parse_recursive(data, base_link, database, sub, new_finds)
-                break # Stop scanning paths once one is found for this sub
+                break
 
 def run_check():
     database = {}
@@ -149,6 +146,9 @@ def run_check():
 
     new_finds = []
     
+    # Identify known keys for the discovery feature
+    known_keys = set(SUBDOMAINS + list(OVERRIDES.keys()))
+    
     # Merge all unique subdomains to check
     all_targets = list(set(SUBDOMAINS + [k for k in OVERRIDES.keys()] + [k for k in database.keys() if k != 'last_sync']))
     
@@ -157,10 +157,29 @@ def run_check():
         for sub in all_targets:
             executor.submit(process_target, sub, database, new_finds)
 
+    # FEATURE: Discovery and Review Queue
+    # If a key exists in database but NOT in our hardcoded SUBDOMAINS/OVERRIDES, 
+    # it's a new discovery that needs review.
+    discovered_new = []
+    for key in database.keys():
+        if key != 'last_sync' and key not in known_keys:
+            discovered_new.append(key)
+
+    if discovered_new:
+        # Load existing queue to avoid duplicates
+        existing_queue = []
+        if os.path.exists(REVIEW_QUEUE_FILE):
+            with open(REVIEW_QUEUE_FILE, "r") as f:
+                existing_queue = [line.strip() for line in f.readlines()]
+        
+        with open(REVIEW_QUEUE_FILE, "a") as f:
+            for item in discovered_new:
+                if item not in existing_queue:
+                    f.write(f"{datetime.now().strftime('%Y-%m-%d')}: {item}\n")
+
     database["last_sync"] = datetime.now().isoformat()
     
     if new_finds:
-        # Sort new finds by name to look cleaner in history
         new_finds.sort(key=lambda x: x['item'])
         history = new_finds + history
         with open(HISTORY_FILE, "w") as f: 
