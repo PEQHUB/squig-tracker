@@ -168,6 +168,9 @@
 
         // 1. DOMAIN RULES (Top Priority - Hard Overrides)
         
+        // Rule: dl.squig.link is always 711 IE
+        if (link.includes('dl.squig.link')) return "IEM (711)";
+
         // Rule: Earphone Archive Specifics
         if (link.includes('earphonesarchive.squig.link/headphones')) return "Over-Ear (5128)";
         if (link.includes('earphonesarchive.squig.link')) return "IEM (5128)";
