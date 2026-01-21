@@ -119,6 +119,16 @@
     let currentTab = 'feed';
     let currentRigFilter = 'ALL';
     let searchTimeout = null;
+
+    // Central Color Map for strict consistency
+    const THEME_COLORS = {
+        "IEM (5128)": { text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-900/50" },
+        "Over-Ear (5128)": { text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-900/50" },
+        "IEM (711)": { text: "text-zinc-500", bg: "bg-zinc-600", border: "border-zinc-900" },
+        "Over-Ear (711)": { text: "text-zinc-500", bg: "bg-zinc-600", border: "border-zinc-900" },
+        "TWS & Earbuds": { text: "text-indigo-400", bg: "bg-indigo-500", border: "border-indigo-900/50" },
+        "Misc/Unknown": { text: "text-amber-600", bg: "bg-amber-700", border: "border-amber-900/50" }
+    };
     
     let statsPagination = {
         "IEM (5128)": 15,
@@ -161,32 +171,24 @@
         const reviewer = (entry.reviewer || "").toLowerCase();
         const item = resolveName(entry.item).toLowerCase();
         
-        // 1. Path & Keyword Identification
         const isListener = link.includes('listener.squig.link');
         const isExplicitPathHP = link.includes('/headphones/') || link.includes('type=headphone') || isListener;
         const isExplicitPathIEM = link.includes('/iems/') || link.includes('type=iem');
         const isExplicitPathBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/');
         
-        // 2. Identify Target Curves (Fixed categorization for Sl0the/Research)
         const targetKeywords = ['target', 'standard', 'reference', 'baseline', 'diffuse field', 'harman', 'ief neutral', 'diff '];
         const isTarget = targetKeywords.some(kw => item.includes(kw));
 
-        // 3. Rig Identification
         const isEA = reviewer.includes("earphone's archive") || reviewer.includes("earphonesarchive");
         const is5128Domain = link.includes('hangout.audio') || link.includes('listener800.github.io');
         const is5128Explicit = reviewer.includes("5128") || link.includes('5128');
         const isExplicit711 = link.includes('/711') || link.includes('type=711') || item.includes('(711)');
         const is5128 = !isExplicit711 && (isEA || is5128Domain || is5128Explicit);
 
-        // 4. THE SAFER LOGIC: Earbuds and Root paths are IE unless explicitly HP path
         if (isExplicitPathBuds || item.includes('earbud')) return "TWS & Earbuds";
-
-        // Only Over-Ear if explicitly categorized in the path
         if (isExplicitPathHP) {
             return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
         }
-
-        // Default to IEM if it's not explicitly a headphone path (including Sl0the's /711/ directory)
         if (!isExplicitPathHP || isExplicitPathIEM || isTarget) {
             return is5128 ? "IEM (5128)" : "IEM (711)";
         }
@@ -229,7 +231,6 @@
         categories.forEach(c => { counts[c] = 0; lists[c] = []; });
         
         const contributors = {};
-
         fullHistory.forEach(entry => {
             const cat = getEntryMetadata(entry);
             if (counts[cat] !== undefined) {
@@ -243,27 +244,26 @@
         });
 
         const sortedContributors = Object.entries(contributors).sort((a,b) => b[1] - a[1]);
-        const totalIEM = (counts["IEM (711)"] + counts["IEM (5128)"]) || 1;
-        const totalOE = (counts["Over-Ear (5128)"] + counts["Over-Ear (711)"]) || 1;
+        const totalDB = fullHistory.length || 1;
 
-        const renderBar = (label, count, total, color) => `
+        const renderBar = (label, count, total, colorClass) => `
             <div class="mb-4">
                 <div class="flex justify-between text-[10px] lg:text-[12px] mono uppercase mb-1">
                     <span>${label}</span><span>${count}</span>
                 </div>
-                <div class="chart-bar-container"><div class="chart-bar-fill ${color}" style="width:${(count/total)*100}%"></div></div>
+                <div class="chart-bar-container"><div class="chart-bar-fill ${colorClass}" style="width:${(count/total)*100}%"></div></div>
             </div>`;
 
-        const renderCategoryCard = (title, key, colorClass) => {
+        const renderCategoryCard = (title, key) => {
             const limit = statsPagination[key] || 15;
             const items = lists[key].slice(0, limit);
             const hasMore = lists[key].length > limit;
-            const barTotal = key.includes("IEM") ? totalIEM : (key.includes("Over-Ear") ? totalOE : fullHistory.length);
+            const theme = THEME_COLORS[key] || THEME_COLORS["Misc/Unknown"];
 
             return `
                 <div class="stat-card">
-                    <span class="text-[10px] lg:text-[13px] uppercase mono font-bold ${colorClass}">${title}</span>
-                    ${renderBar("Composition Share", counts[key], barTotal, key.includes("5128") ? "bg-white" : "bg-zinc-700")}
+                    <span class="text-[10px] lg:text-[13px] uppercase mono font-bold ${theme.text}">${title}</span>
+                    ${renderBar("Composition Share", counts[key], totalDB, theme.bg)}
                     <span class="text-[9px] lg:text-[11px] uppercase mono text-zinc-500 block border-b border-zinc-900 pb-1 mb-2 mt-4">Latest</span>
                     <ul class="recent-list-mini">
                         ${items.map(i => `<li><a href="${i.link}" target="_blank" class="block truncate">${resolveName(i.item)} <span class="opacity-40 ml-1">[${i.reviewer}]</span></a></li>`).join('')}
@@ -274,10 +274,10 @@
 
         statsContainer.innerHTML = `
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
-                ${renderCategoryCard("5128 IEMs", "IEM (5128)", "text-white")}
-                ${renderCategoryCard("5128 Over-Ears", "Over-Ear (5128)", "text-white")}
-                ${renderCategoryCard("711 IEMs", "IEM (711)", "text-zinc-500")}
-                ${renderCategoryCard("711 Over-Ears", "Over-Ear (711)", "text-zinc-500")}
+                ${renderCategoryCard("5128 IEMs", "IEM (5128)")}
+                ${renderCategoryCard("5128 Over-Ears", "Over-Ear (5128)")}
+                ${renderCategoryCard("711 IEMs", "IEM (711)")}
+                ${renderCategoryCard("711 Over-Ears", "Over-Ear (711)")}
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
@@ -286,12 +286,12 @@
                     <table class="contributor-table mono">
                         <thead><tr><th>Reviewer</th><th class="text-right">Total 5128</th></tr></thead>
                         <tbody>
-                            ${sortedContributors.slice(0, 10).map(([name, count]) => `<tr><td>${name}</td><td class="text-right text-white">${count}</td></tr>`).join('')}
+                            ${sortedContributors.slice(0, 10).map(([name, count]) => `<tr><td>${name}</td><td class="text-right text-emerald-400 font-bold">${count}</td></tr>`).join('')}
                         </tbody>
                     </table>
                 </div>
-                ${renderCategoryCard("TWS & Earbuds", "TWS & Earbuds", "text-zinc-400")}
-                ${renderCategoryCard("Misc / Unknown", "Misc/Unknown", "text-orange-900")}
+                ${renderCategoryCard("TWS & Earbuds", "TWS & Earbuds")}
+                ${renderCategoryCard("Misc / Unknown", "Misc/Unknown")}
             </div>`;
     }
 
@@ -329,14 +329,15 @@
             const date = toLocalTime(entry.date);
             const isNew = date && (new Date() - date) < NEW_BADGE_MS;
             const rigType = getEntryMetadata(entry);
-            const rigColor = rigType.includes("5128") ? "text-white border-zinc-600" : (rigType.includes("Unknown") ? "text-orange-800 border-orange-900" : "text-zinc-500 border-zinc-900");
+            const theme = THEME_COLORS[rigType] || THEME_COLORS["Misc/Unknown"];
+            
             return `
                 <div class="item-row py-6 flex justify-between items-center group">
                     <div class="min-w-0 pr-4">
                         <div class="flex items-center gap-3 mb-1">
                             ${isNew ? '<span class="bg-white text-black px-1 py-0.5 text-[8px] lg:text-[10px] font-black uppercase rounded-sm">New</span>' : ''}
                             <span class="text-[11px] lg:text-[13px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
-                            <span class="text-[9px] lg:text-[11px] mono px-2 py-0.5 border ${rigColor} uppercase tracking-tighter rounded-sm">${rigType}</span>
+                            <span class="text-[9px] lg:text-[11px] mono px-2 py-0.5 border ${theme.border} ${theme.text} uppercase tracking-tighter rounded-sm">${rigType}</span>
                             <span class="text-[11px] lg:text-[13px] text-zinc-500 mono uppercase">${getRelativeTime(date)}</span>
                         </div>
                         <h2 class="text-[17px] lg:text-[22px] font-normal text-zinc-200 truncate tracking-tight">${resolveName(entry.item)}</h2>
