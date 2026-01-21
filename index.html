@@ -11,7 +11,6 @@
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         
-        /* Visibility Boosts */
         .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; border-radius: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .item-row { border-bottom: 1px solid #161616; transition: all 0.2s ease; }
         .item-row:hover { background: #0c0c0c; border-bottom-color: #333; }
@@ -45,7 +44,6 @@
             background: rgba(255,255,255,0.02);
         }
 
-        /* High Visibility Rig Badges */
         .rig-tag {
             font-size: 10px;
             padding: 2px 8px;
@@ -122,7 +120,6 @@
     let currentTab = 'feed';
     let currentRigFilter = 'ALL';
     let searchTimeout = null;
-    let refreshInterval = null;
 
     const THEME_COLORS = {
         "IEM (5128)": { text: "text-white", bg: "bg-emerald-600", tagBg: "bg-emerald-950/50" },
@@ -137,7 +134,6 @@
     const PAGE_SIZE = 50;
     const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
-    // --- Core Logic (Retained from Original) ---
     function toLocalTime(dateStr) {
         if (!dateStr) return null;
         const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
@@ -162,15 +158,26 @@
 
     function getEntryMetadata(entry) {
         const link = (entry.link || "").toLowerCase();
-        const reviewer = (entry.reviewer || "").toLowerCase();
+        const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
-        if (link.includes('dl.squig.link')) return "IEM (711)";
-        const isListener = link.includes('listener.squig.link');
-        const isHP = link.includes('/headphones/') || link.includes('type=headphone') || isListener;
-        const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
-        const is5128 = link.includes('hangout.audio') || link.includes('listener800.github.io') || reviewer.includes("5128") || reviewer.includes("earphone's archive");
+
+        // 1. Precise Listener Logic
+        if (link.includes('listener.squig.link')) return "Over-Ear (711)";
+        if (link.includes('listener800.github.io/iems')) return "IEM (711)";
         
+        // Check for 5128 flag
+        const is5128 = link.includes('hangout.audio') || 
+                       link.includes('listener800.github.io/5128') || 
+                       reviewer.includes("5128") || 
+                       reviewer.includes("earphonearchive");
+
+        // 2. Identify Category
+        const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
         if (isBuds) return "TWS & Earbuds";
+
+        const isHP = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone');
+        
+        // 3. Final Rig/Category Mapping
         if (isHP) return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
         return is5128 ? "IEM (5128)" : "IEM (711)";
     }
