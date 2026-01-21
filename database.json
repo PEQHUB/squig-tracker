@@ -3108,7 +3108,8 @@
         "https://dhrme.squig.link/headphones/?share=SS1%20ANC%20SSig&type=headphone",
         "https://dhrme.squig.link/headphones/?share=SS1P%20ANC%20SSig&type=headphone",
         "https://dhrme.squig.link/headphones/?share=Te%20A800%20ANC&type=headphone",
-        "https://dhrme.squig.link/headphones/?share=Tozo%20HT2%20ANC&type=headphone"
+        "https://dhrme.squig.link/headphones/?share=Tozo%20HT2%20ANC&type=headphone",
+        "https://dhrme.squig.link/?share=DevGem2%20ANC"
     ],
     "theaudiostore": [
         "https://theaudiostore.squig.link/?share=64%20Audio%20U12t",
@@ -3915,7 +3916,10 @@
         "https://musicafe.squig.link/headphones/?share=ZMF%20Auteur%20Perf&type=headphone",
         "https://musicafe.squig.link/headphones/?share=ZMF%20Verit%C3%A9%20Open%20Perf&type=headphone",
         "https://musicafe.squig.link/headphones/?share=ZMF%20Verit%C3%A9%20Open%20SilkWood%20PerfPads&type=headphone",
-        "https://musicafe.squig.link/headphones/?share=Project%20HRP&type=headphone"
+        "https://musicafe.squig.link/headphones/?share=Project%20HRP&type=headphone",
+        "https://musicafe.squig.link/?share=TRN%20Seahorse%20Pro%20Foam",
+        "https://musicafe.squig.link/?share=TRN%20Starfish",
+        "https://musicafe.squig.link/?share=TRN%20WhaleShark%20Black"
     ],
     "joshtbvo": [
         "https://joshtbvo.squig.link/?share=7HZ%20Sonus",
@@ -20768,5 +20772,5 @@
         "https://arn.squig.link/?share=zig",
         "https://arn.squig.link/?share=horizon"
     ],
-    "last_sync": "2026-01-21T10:01:40.309955"
+    "last_sync": "2026-01-21T11:03:12.770702"
 }
