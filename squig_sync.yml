@@ -1,0 +1,47 @@
+name: Squig Sync (30 min)
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # Runs every 30 minutes
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          # Fetch all history so rebase works correctly
+          fetch-depth: 0 
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run script
+        run: python check.py
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "SquigBot"
+          git config --global user.email "bot@squig.link"
+          
+          # Only proceed if there are actual changes
+          git add database.json history.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Update measurements [skip ci]"
+          
+          # Pull latest changes from remote to avoid [rejected] error
+          # --rebase puts your new commit on top of whatever happened on GitHub
+          git pull --rebase origin main
+          
+          git push
