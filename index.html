@@ -166,41 +166,28 @@
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
 
-        // Comprehensive Pinnae Keyword List (GRAS & Precis)
-        const pinnaeKeywords = [
-            "kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"
-        ];
-        
-        const hasPinnaeKeyword = pinnaeKeywords.some(key => 
-            item.includes(key) || reviewer.includes(key)
-        );
-
-        // Forced 711 Over-Ear mapping for pinnae-specific measurements
+        // Pinnae Logic Reverted: Pinnae keywords now default back to Over-Ear 711
+        const pinnaeKeywords = ["kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"];
+        const hasPinnaeKeyword = pinnaeKeywords.some(key => item.includes(key) || reviewer.includes(key));
         if (hasPinnaeKeyword) return "Over-Ear (711)";
 
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
-        // 5128/4620 MATCHING
         const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
-                       reviewer.includes("5128") || 
-                       reviewer.includes("4620") ||
-                       reviewer.includes("earphonearchive") || 
-                       reviewer.includes("earphonesarchive") || 
-                       link.includes("earphonearchive") ||
-                       link.includes("earphonesarchive") ||
-                       item.includes("5128") || 
-                       item.includes("4620");
+                       reviewer.includes("5128") || reviewer.includes("4620") ||
+                       reviewer.includes("earphonearchive") || link.includes("earphonearchive") ||
+                       item.includes("5128") || item.includes("4620");
 
-        // CATEGORY DETECTION
         const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
         if (isBuds) return "TWS & Earbuds";
 
-        const isHP = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone') || link.includes('listener.squig.link');
+        // FIXED FILTERING LOGIC: Priority on /iem/ path to prevent graph.hangout.audio/iem/ from being labeled OE
+        const isIEMPath = link.includes('/iem/') || link.includes('/iems/');
+        const isHP = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone');
         
-        if (isHP) return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
-        if (link.includes('listener800.github.io/iems')) return "IEM (711)";
+        if (isHP && !isIEMPath) return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
 
         return is5128 ? "IEM (5128)" : "IEM (711)";
     }
