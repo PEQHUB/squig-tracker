@@ -4,137 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SQUIGLINK MONITOR</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { 
-            --bg: #050505; 
-            --card: #111111; 
-            --border: #222222; 
-            --text-main: #ffffff; 
-            --text-dim: #a1a1aa;
-            --accent: #ffffff;
-        }
-
-        body { 
-            background: var(--bg); 
-            color: var(--text-main); 
-            font-family: 'Inter', sans-serif; 
-            -webkit-font-smoothing: antialiased; 
-        }
-
+        :root { --bg: #050505; --card: #111111; --border: #222222; --text: #f4f4f5; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Visibility Boosts */
+        .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; border-radius: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .item-row { border-bottom: 1px solid #161616; transition: all 0.2s ease; }
+        .item-row:hover { background: #0c0c0c; border-bottom-color: #333; }
 
-        /* Dashboard Cards */
-        .stat-card { 
-            background: linear-gradient(145deg, #111111 0%, #080808 100%);
-            border: 1px solid var(--border); 
-            padding: 1.5rem; 
-            border-radius: 4px; 
-            transition: border-color 0.3s ease;
-        }
-        .stat-card:hover { border-color: #444; }
-
-        /* Row Visibility */
-        .item-row { 
-            border-bottom: 1px solid #111; 
-            padding: 1.5rem 0.5rem;
-            transition: all 0.2s ease;
-        }
-        .item-row:hover { 
-            background: #0c0c0c;
-            padding-left: 1rem;
-        }
-
-        /* Improved Badge Visibility */
-        .rig-badge {
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 3px;
+        .tab-btn, .filter-btn {
+            padding: 0.6rem 1.2rem;
+            font-size: 12px;
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            color: #71717a;
+            font-weight: 700;
+            transition: all 0.2s;
         }
+        .tab-btn.active { color: #ffffff; border-bottom: 2px solid #ffffff; }
+        .filter-btn { border: 1px solid var(--border); border-radius: 4px; background: #0a0a0a; }
+        .filter-btn.active { border-color: #52525b; color: #fff; background: #18181b; }
+        .filter-count { font-size: 10px; background: #27272a; color: #fff; padding: 1px 6px; border-radius: 10px; margin-left: 4px; }
 
-        /* Navigation & Filters */
-        .tab-btn {
-            padding: 0.75rem 1.5rem;
-            font-size: 13px;
+        .chart-bar-container { background: #1a1a1a; height: 10px; border-radius: 2px; overflow: hidden; margin: 12px 0; }
+        .chart-bar-fill { height: 100%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        .recent-list-mini li { margin-bottom: 8px; border-left: 2px solid #222; padding-left: 10px; }
+        .legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 8px; }
+
+        input#search {
+            border-bottom: 2px solid #18181b;
             font-weight: 600;
-            color: #52525b;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
         }
-        .tab-btn.active { color: white; border-bottom-color: white; }
-
-        .filter-btn { 
-            background: #111;
-            border: 1px solid var(--border);
-            padding: 0.5rem 1rem;
-            font-size: 12px;
-            color: #a1a1aa;
-            border-radius: 4px;
-        }
-        .filter-btn.active { 
-            background: #222;
-            border-color: #52525b;
-            color: white;
+        input#search:focus {
+            border-bottom-color: #52525b;
+            background: rgba(255,255,255,0.02);
         }
 
-        /* Search Input Fix */
-        #search {
-            background: #0a0a0a;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1rem 1.5rem;
-            font-size: 1.1rem;
-            transition: all 0.2s;
-        }
-        #search:focus {
-            border-color: #52525b;
-            background: #0d0d0d;
-            outline: none;
-        }
-
-        /* Chart Visuals */
-        .chart-bar-container { background: #1a1a1a; height: 6px; border-radius: 10px; margin: 12px 0; }
-        .chart-bar-fill { border-radius: 10px; }
-
-        .new-label {
-            background: #ffffff;
-            color: #000000;
-            font-weight: 900;
-            padding: 1px 6px;
-            border-radius: 2px;
+        /* High Visibility Rig Badges */
+        .rig-tag {
             font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body class="max-w-6xl lg:max-w-7xl mx-auto px-6 py-12">
 
     <header class="mb-12">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <div class="stat-card">
-                <span class="block text-[11px] uppercase tracking-[0.2em] text-zinc-500 font-bold mb-2">Sync Activity (12H)</span>
-                <span id="stat-total" class="text-4xl font-bold mono text-white">0</span>
+                <span class="block text-[11px] uppercase tracking-[0.15em] text-zinc-400 font-bold mb-2">Syncs (12H)</span>
+                <span id="stat-total" class="text-3xl font-bold mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[11px] uppercase tracking-[0.2em] text-zinc-500 font-bold mb-2">Global Database</span>
-                <span id="stat-db-total" class="text-4xl font-bold mono text-white">0</span>
+                <span class="block text-[11px] uppercase tracking-[0.15em] text-zinc-400 font-bold mb-2">Total Database</span>
+                <span id="stat-db-total" class="text-3xl font-bold mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[11px] uppercase tracking-[0.2em] text-zinc-500 font-bold mb-2">Verified Sources</span>
-                <span id="stat-sources" class="text-4xl font-bold mono text-white">0</span>
+                <span class="block text-[11px] uppercase tracking-[0.15em] text-zinc-400 font-bold mb-2">Active Reviewers</span>
+                <span id="stat-sources" class="text-3xl font-bold mono text-white">0</span>
             </div>
         </div>
 
-        <div class="flex justify-between items-center border-b border-zinc-800 mb-8">
-            <div class="flex gap-2">
-                <button onclick="switchTab('feed')" id="tab-feed" class="tab-btn active mono uppercase tracking-widest">Live Feed</button>
-                <button onclick="switchTab('stats')" id="tab-stats" class="tab-btn mono uppercase tracking-widest">Statistics</button>
+        <div class="flex flex-col md:flex-row justify-between items-center border-b border-zinc-900 mb-8 gap-4">
+            <div class="flex gap-4">
+                <button onclick="switchTab('feed')" id="tab-feed" class="tab-btn active mono">Live Feed</button>
+                <button onclick="switchTab('stats')" id="tab-stats" class="tab-btn mono">Statistics</button>
             </div>
-            <div class="flex items-center gap-3 px-4 py-2 bg-zinc-900/50 rounded-full border border-zinc-800">
-                <span class="text-[10px] mono text-zinc-400 uppercase font-bold">System Online</span>
+            
+            <div class="flex items-center gap-3 py-2 px-4 bg-zinc-900/40 rounded-full border border-zinc-800/50 mb-2">
+                <span class="text-[10px] mono text-zinc-400 uppercase font-bold tracking-widest">System Live</span>
                 <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -142,41 +89,114 @@
             </div>
         </div>
 
-        <div id="rig-filters-container" class="space-y-6 mb-10">
-            <div class="flex flex-wrap gap-3">
-                <button onclick="setRigFilter('ALL')" class="filter-btn active mono" id="filter-ALL">All Results <span class="ml-2 opacity-50 text-[10px]" id="count-ALL">0</span></button>
-                <button onclick="setRigFilter('711')" class="filter-btn mono" id="filter-711">711 Standard <span class="ml-2 opacity-50 text-[10px]" id="count-711">0</span></button>
-                <button onclick="setRigFilter('5128')" class="filter-btn mono" id="filter-5128">Type 5128 <span class="ml-2 opacity-50 text-[10px]" id="count-5128">0</span></button>
+        <div id="rig-filters-container">
+            <div class="flex flex-col md:flex-row justify-between gap-6 mb-8">
+                <div id="rig-filters" class="flex gap-2">
+                    <button onclick="setRigFilter('ALL')" class="filter-btn active mono" id="filter-ALL">All <span class="filter-count" id="count-ALL">0</span></button>
+                    <button onclick="setRigFilter('711')" class="filter-btn mono" id="filter-711">711 <span class="filter-count" id="count-711">0</span></button>
+                    <button onclick="setRigFilter('5128')" class="filter-btn mono" id="filter-5128">5128 <span class="filter-count" id="count-5128">0</span></button>
+                </div>
+                <div id="global-legend" class="flex flex-wrap gap-x-5 gap-y-2 mono text-[10px] uppercase font-bold text-zinc-500">
+                    <div class="flex items-center"><span class="legend-dot bg-emerald-500"></span>5128 IEM</div>
+                    <div class="flex items-center"><span class="legend-dot bg-zinc-600"></span>711 IEM</div>
+                    <div class="flex items-center"><span class="legend-dot bg-blue-500"></span>711 HP</div>
+                    <div class="flex items-center"><span class="legend-dot bg-indigo-500"></span>TWS</div>
+                </div>
             </div>
 
-            <input type="text" id="search" placeholder="FILTER BY DEVICE OR REVIEWER..." 
-                class="w-full mono uppercase tracking-widest text-white placeholder-zinc-700">
+            <input type="text" id="search" placeholder="FILTER BY DEVICE, BRAND, OR REVIEWER..." 
+                class="w-full bg-transparent py-4 text-xl outline-none transition-all uppercase tracking-widest text-white placeholder-zinc-800">
         </div>
     </header>
 
-    <main id="feed" class="space-y-1"></main>
-    <main id="stats" class="hidden grid grid-cols-1 md:grid-cols-2 gap-8 py-4"></main>
+    <main id="feed" class="flex flex-col"></main>
+    <main id="stats" class="hidden flex flex-col py-4 space-y-12"></main>
     
-    <button id="load-all-btn" class="mt-12 w-full py-4 border border-zinc-800 text-zinc-500 mono uppercase tracking-widest hover:bg-white hover:text-black transition-all rounded">
-        Load Older Entries
-    </button>
+    <button id="load-all-btn" class="mono uppercase hidden border border-zinc-800 py-4 w-full mt-8 hover:bg-white hover:text-black transition-all">Load More Entries</button>
 
 <script>
-    /* CORE LOGIC MODIFICATIONS 
-       I have updated the THEME_COLORS to use high-contrast solid backgrounds 
-       instead of borders for the rig labels.
-    */
-    const THEME_COLORS = {
-        "IEM (5128)": { text: "text-white", bg: "bg-emerald-600" },
-        "Over-Ear (5128)": { text: "text-white", bg: "bg-teal-600" },
-        "IEM (711)": { text: "text-white", bg: "bg-zinc-700" },
-        "Over-Ear (711)": { text: "text-white", bg: "bg-blue-600" },
-        "TWS & Earbuds": { text: "text-white", bg: "bg-indigo-600" },
-        "Misc/Unknown": { text: "text-white", bg: "bg-amber-800" }
-    };
+    let fullHistory = [];
+    let currentFilteredSet = [];
+    let databaseData = {};
+    let currentIndex = 0;
+    let currentTab = 'feed';
+    let currentRigFilter = 'ALL';
+    let searchTimeout = null;
+    let refreshInterval = null;
 
-    // ... [Rest of your logic: fetchData, applyFilters, etc] ...
-    // Note: Ensure getEntryMetadata() includes the dl.squig.link override from previous step.
+    const THEME_COLORS = {
+        "IEM (5128)": { text: "text-white", bg: "bg-emerald-600", tagBg: "bg-emerald-950/50" },
+        "Over-Ear (5128)": { text: "text-white", bg: "bg-teal-600", tagBg: "bg-teal-950/50" },
+        "IEM (711)": { text: "text-white", bg: "bg-zinc-700", tagBg: "bg-zinc-900" },
+        "Over-Ear (711)": { text: "text-white", bg: "bg-blue-600", tagBg: "bg-blue-950/50" },
+        "TWS & Earbuds": { text: "text-white", bg: "bg-indigo-600", tagBg: "bg-indigo-950/50" },
+        "Misc/Unknown": { text: "text-white", bg: "bg-amber-800", tagBg: "bg-amber-950/50" }
+    };
+    
+    let statsPagination = { "IEM (5128)": 15, "Over-Ear (5128)": 15, "IEM (711)": 15, "Over-Ear (711)": 15, "Misc/Unknown": 10, "TWS & Earbuds": 10 };
+    const PAGE_SIZE = 50;
+    const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
+
+    // --- Core Logic (Retained from Original) ---
+    function toLocalTime(dateStr) {
+        if (!dateStr) return null;
+        const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
+        const match = dateStr.match(/([A-Za-z]+)\s+(\d+),\s+(\d+):(\d+)/);
+        if (match) {
+            const [_, mon, day, hr, min] = match;
+            return new Date(Date.UTC(2026, months[mon], parseInt(day), parseInt(hr), parseInt(min)));
+        }
+        return new Date(dateStr);
+    }
+
+    function getRelativeTime(date) {
+        if (!date) return "Recent";
+        const diff = Math.floor((new Date() - date) / 1000);
+        if (diff < 60) return `${diff}s`;
+        if (diff < 3600) return `${Math.floor(diff/60)}m`;
+        if (diff < 84400) return `${Math.floor(diff/3600)}h`;
+        return `${Math.floor(diff/86400)}d`;
+    }
+
+    function resolveName(data) { return typeof data === 'string' ? data : (data.name || "Unknown Device"); }
+
+    function getEntryMetadata(entry) {
+        const link = (entry.link || "").toLowerCase();
+        const reviewer = (entry.reviewer || "").toLowerCase();
+        const item = resolveName(entry.item).toLowerCase();
+        if (link.includes('dl.squig.link')) return "IEM (711)";
+        const isListener = link.includes('listener.squig.link');
+        const isHP = link.includes('/headphones/') || link.includes('type=headphone') || isListener;
+        const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
+        const is5128 = link.includes('hangout.audio') || link.includes('listener800.github.io') || reviewer.includes("5128") || reviewer.includes("earphone's archive");
+        
+        if (isBuds) return "TWS & Earbuds";
+        if (isHP) return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
+        return is5128 ? "IEM (5128)" : "IEM (711)";
+    }
+
+    async function fetchData() {
+        try {
+            const cacheBuster = new Date().getTime();
+            const [hReq, dReq] = await Promise.all([fetch(`history.json?v=${cacheBuster}`), fetch(`database.json?v=${cacheBuster}`)]);
+            const newHistory = await hReq.json();
+            const newDatabase = await dReq.json();
+            if (newHistory.length !== fullHistory.length || Object.keys(newDatabase).length !== Object.keys(databaseData).length) {
+                fullHistory = newHistory; databaseData = newDatabase;
+                fullHistory.sort((a,b) => (toLocalTime(b.date) - toLocalTime(a.date)));
+                updateDashboard();
+                if (currentTab === 'feed') applyFilters(); else renderStats();
+            }
+        } catch (e) { console.error("Sync Error", e); }
+    }
+
+    function updateDashboard() {
+        const now = new Date().getTime();
+        const last12h = fullHistory.filter(e => { const t = toLocalTime(e.date); return t && (now - t.getTime() < 12*60*60*1000); }).length;
+        document.getElementById('stat-total').innerText = last12h;
+        document.getElementById('stat-db-total').innerText = fullHistory.length.toLocaleString();
+        document.getElementById('stat-sources').innerText = Math.max(0, Object.keys(databaseData).length - 1);
+    }
 
     function renderItems(data, containerId, append = false) {
         const container = document.getElementById(containerId);
@@ -187,27 +207,115 @@
             const theme = THEME_COLORS[rigType] || THEME_COLORS["Misc/Unknown"];
             
             return `
-                <div class="item-row flex justify-between items-center group">
-                    <div class="min-w-0">
+                <div class="item-row py-8 flex justify-between items-center group px-2">
+                    <div class="min-w-0 pr-4">
                         <div class="flex items-center gap-3 mb-2">
-                            ${isNew ? '<span class="new-label">NEW</span>' : ''}
-                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest">${entry.reviewer}</span>
-                            <span class="rig-badge ${theme.bg} ${theme.text}">${rigType}</span>
-                            <span class="text-xs text-zinc-600 mono">${getRelativeTime(date)}</span>
+                            ${isNew ? '<span class="bg-white text-black px-2 py-0.5 text-[10px] font-black uppercase rounded-sm">NEW</span>' : ''}
+                            <span class="text-[12px] font-extrabold text-zinc-500 uppercase tracking-widest">${entry.reviewer}</span>
+                            <span class="rig-tag ${theme.bg} ${theme.text}">${rigType}</span>
+                            <span class="text-[12px] text-zinc-600 mono font-bold uppercase">${getRelativeTime(date)} ago</span>
                         </div>
-                        <h2 class="text-xl lg:text-2xl font-bold text-zinc-200 group-hover:text-white transition-colors truncate">${resolveName(entry.item)}</h2>
+                        <h2 class="text-xl lg:text-2xl font-bold text-zinc-100 group-hover:text-white truncate tracking-tight transition-colors">${resolveName(entry.item)}</h2>
                     </div>
-                    <a href="${entry.link}" target="_blank" class="shrink-0 ml-4 p-4 rounded bg-zinc-900 border border-zinc-800 text-zinc-500 hover:text-white hover:border-zinc-500 transition-all">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <a href="${entry.link}" target="_blank" class="shrink-0 p-4 border border-zinc-800 text-zinc-500 transition-all hover:bg-zinc-100 hover:text-black hover:border-white">
+                        <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>`;
         }).join('');
-
         if (append) container.insertAdjacentHTML('beforeend', html);
-        else container.innerHTML = html;
+        else container.innerHTML = html || `<div class="py-20 text-center mono text-zinc-700">No matching results</div>`;
     }
+
+    function applyFilters() {
+        const searchVal = document.getElementById('search').value.toLowerCase();
+        let countAll = 0, count711 = 0, count5128 = 0;
+        const filtered = fullHistory.filter(entry => {
+            const matchesSearch = resolveName(entry.item).toLowerCase().includes(searchVal) || entry.reviewer.toLowerCase().includes(searchVal);
+            if (!matchesSearch) return false;
+            const metadata = getEntryMetadata(entry);
+            countAll++;
+            if (metadata.includes('711')) count711++;
+            if (metadata.includes('5128')) count5128++;
+            if (currentRigFilter === 'ALL') return true;
+            return metadata.includes(currentRigFilter);
+        });
+        document.getElementById('count-ALL').innerText = countAll;
+        document.getElementById('count-711').innerText = count711;
+        document.getElementById('count-5128').innerText = count5128;
+        currentIndex = 0; currentFilteredSet = filtered; loadMore(false);
+    }
+
+    function loadMore(append = true) {
+        const nextBatch = currentFilteredSet.slice(currentIndex, currentIndex + PAGE_SIZE);
+        renderItems(nextBatch, 'feed', append);
+        currentIndex += PAGE_SIZE;
+        document.getElementById('load-all-btn').classList.toggle('hidden', currentIndex >= currentFilteredSet.length || currentTab === 'stats');
+    }
+
+    function renderStats() {
+        const statsContainer = document.getElementById('stats');
+        const categories = ["IEM (5128)", "Over-Ear (5128)", "IEM (711)", "Over-Ear (711)", "Misc/Unknown", "TWS & Earbuds"];
+        const counts = {}; const lists = {}; categories.forEach(c => { counts[c] = 0; lists[c] = []; });
+        const contributors = {};
+        
+        fullHistory.forEach(entry => {
+            const cat = getEntryMetadata(entry);
+            if (counts[cat] !== undefined) { counts[cat]++; lists[cat].push(entry); }
+            if (cat.includes("5128")) { const rev = entry.reviewer || "Unknown"; contributors[rev] = (contributors[rev] || 0) + 1; }
+        });
+
+        const sortedContributors = Object.entries(contributors).sort((a,b) => b[1] - a[1]);
+        const totalDB = fullHistory.length || 1;
+
+        const renderCategoryCard = (title, key) => {
+            const limit = statsPagination[key] || 15;
+            const items = lists[key].slice(0, limit);
+            const theme = THEME_COLORS[key] || THEME_COLORS["Misc/Unknown"];
+            return `
+                <div class="stat-card">
+                    <span class="text-[12px] uppercase mono font-black mb-4 block ${theme.text}">${title}</span>
+                    <div class="flex justify-between text-[10px] mono text-zinc-500 mb-1"><span>Database Share</span><span>${counts[key]} Units</span></div>
+                    <div class="chart-bar-container"><div class="chart-bar-fill ${theme.bg}" style="width:${(counts[key]/totalDB)*100}%"></div></div>
+                    <ul class="recent-list-mini mt-6">
+                        ${items.map(i => `<li><a href="${i.link}" target="_blank" class="block truncate text-zinc-300 hover:text-white">${resolveName(i.item)} <span class="opacity-30 text-[9px] ml-1">${i.reviewer}</span></a></li>`).join('')}
+                    </ul>
+                    ${lists[key].length > limit ? `<div class="text-[10px] font-bold text-center mt-4 pt-4 border-t border-zinc-900 cursor-pointer text-zinc-500 hover:text-white" onclick="expandCategory('${key}')">VIEW MORE</div>` : ''}
+                </div>`;
+        };
+
+        statsContainer.innerHTML = `
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                ${renderCategoryCard("5128 IEMs", "IEM (5128)")} ${renderCategoryCard("5128 Over-Ears", "Over-Ear (5128)")}
+                ${renderCategoryCard("711 IEMs", "IEM (711)")} ${renderCategoryCard("711 Over-Ears", "Over-Ear (711)")}
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="stat-card md:col-span-1">
+                    <span class="text-[12px] uppercase mono font-black text-emerald-500 mb-6 block">5128 Contributors</span>
+                    <table class="w-full text-[12px] mono text-zinc-400">
+                        ${sortedContributors.slice(0, 8).map(([name, count]) => `<tr class="border-b border-zinc-900"><td class="py-2">${name}</td><td class="text-right text-white font-bold">${count}</td></tr>`).join('')}
+                    </table>
+                </div>
+                ${renderCategoryCard("TWS & Earbuds", "TWS & Earbuds")} ${renderCategoryCard("Misc / Targets", "Misc/Unknown")}
+            </div>`;
+    }
+
+    function expandCategory(key) { statsPagination[key] += 15; renderStats(); }
+    function setRigFilter(rig) { currentRigFilter = rig; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.id === `filter-${rig}`)); applyFilters(); }
+    function switchTab(tab) {
+        currentTab = tab;
+        document.getElementById('feed').classList.toggle('hidden', tab !== 'feed');
+        document.getElementById('stats').classList.toggle('hidden', tab !== 'stats');
+        document.getElementById('rig-filters-container').classList.toggle('hidden', tab === 'stats');
+        document.getElementById('tab-feed').classList.toggle('active', tab === 'feed');
+        document.getElementById('tab-stats').classList.toggle('active', tab === 'stats');
+        if (tab === 'stats') renderStats(); else applyFilters();
+    }
+
+    document.getElementById('search').addEventListener('input', () => { clearTimeout(searchTimeout); searchTimeout = setTimeout(applyFilters, 300); });
+    document.getElementById('load-all-btn').addEventListener('click', () => loadMore(true));
     
-    // [Maintain all other functions from your original code]
+    fetchData();
+    setInterval(fetchData, 5 * 60 * 1000);
 </script>
 </body>
 </html>
