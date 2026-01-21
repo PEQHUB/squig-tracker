@@ -11,7 +11,8 @@
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         
-        .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; border-radius: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        /* Reduced padding for stat cards */
+        .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
         .item-row { border-bottom: 1px solid #161616; transition: all 0.2s ease; }
         .item-row:hover { background: #0c0c0c; border-bottom-color: #333; }
 
@@ -57,18 +58,18 @@
 <body class="max-w-6xl lg:max-w-7xl mx-auto px-6 py-12">
 
     <header class="mb-12">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             <div class="stat-card">
-                <span class="block text-[11px] uppercase tracking-[0.15em] text-zinc-400 font-bold mb-2">Syncs (12H)</span>
-                <span id="stat-total" class="text-3xl font-bold mono text-white">0</span>
+                <span class="block text-[10px] uppercase tracking-[0.15em] text-zinc-500 font-bold mb-1">Syncs (12H)</span>
+                <span id="stat-total" class="text-xl font-bold mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[11px] uppercase tracking-[0.15em] text-zinc-400 font-bold mb-2">Total Database</span>
-                <span id="stat-db-total" class="text-3xl font-bold mono text-white">0</span>
+                <span class="block text-[10px] uppercase tracking-[0.15em] text-zinc-500 font-bold mb-1">Total Database</span>
+                <span id="stat-db-total" class="text-xl font-bold mono text-white">0</span>
             </div>
             <div class="stat-card">
-                <span class="block text-[11px] uppercase tracking-[0.15em] text-zinc-400 font-bold mb-2">Active Reviewers</span>
-                <span id="stat-sources" class="text-3xl font-bold mono text-white">0</span>
+                <span class="block text-[10px] uppercase tracking-[0.15em] text-zinc-500 font-bold mb-1">Active Reviewers</span>
+                <span id="stat-sources" class="text-xl font-bold mono text-white">0</span>
             </div>
         </div>
 
@@ -161,23 +162,24 @@
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
 
-        // 1. Precise Listener Logic
+        // Robust Rig Logic: Filter by URL domain to avoid falsing on IEM names
+        let hostname = "";
+        try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
+
         if (link.includes('listener.squig.link')) return "Over-Ear (711)";
         if (link.includes('listener800.github.io/iems')) return "IEM (711)";
         
-        // Check for 5128 flag
-        const is5128 = link.includes('hangout.audio') || 
+        // 5128 Flag: Check domain specifically for hangout.audio
+        const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
                        reviewer.includes("5128") || 
                        reviewer.includes("earphonearchive");
 
-        // 2. Identify Category
         const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
         if (isBuds) return "TWS & Earbuds";
 
         const isHP = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone');
         
-        // 3. Final Rig/Category Mapping
         if (isHP) return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
         return is5128 ? "IEM (5128)" : "IEM (711)";
     }
