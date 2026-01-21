@@ -166,11 +166,7 @@
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
 
-        // Pinnae Logic Reverted: Pinnae keywords now default back to Over-Ear 711
-        const pinnaeKeywords = ["kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"];
-        const hasPinnaeKeyword = pinnaeKeywords.some(key => item.includes(key) || reviewer.includes(key));
-        if (hasPinnaeKeyword) return "Over-Ear (711)";
-
+        // 1. CHECK RIG FIRST (5128 Priority)
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
@@ -180,16 +176,26 @@
                        reviewer.includes("earphonearchive") || link.includes("earphonearchive") ||
                        item.includes("5128") || item.includes("4620");
 
+        // 2. CHECK PINNAE (Defaults to OE 711 unless 5128 is flagged above)
+        const pinnaeKeywords = ["kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"];
+        const hasPinnaeKeyword = pinnaeKeywords.some(key => item.includes(key) || reviewer.includes(key));
+        
         const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
         if (isBuds) return "TWS & Earbuds";
 
-        // FIXED FILTERING LOGIC: Priority on /iem/ path to prevent graph.hangout.audio/iem/ from being labeled OE
         const isIEMPath = link.includes('/iem/') || link.includes('/iems/');
         const isHP = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone');
         
-        if (isHP && !isIEMPath) return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
+        // Handle 5128 Specifics
+        if (is5128) {
+            if (isHP && !isIEMPath) return "Over-Ear (5128)";
+            return "IEM (5128)";
+        }
 
-        return is5128 ? "IEM (5128)" : "IEM (711)";
+        // Handle 711 / Pinnae Specifics
+        if (hasPinnaeKeyword || (isHP && !isIEMPath)) return "Over-Ear (711)";
+
+        return "IEM (711)";
     }
 
     async function fetchData() {
@@ -295,7 +301,13 @@
         fullHistory.forEach(entry => {
             const cat = getEntryMetadata(entry);
             if (counts[cat] !== undefined) { counts[cat]++; lists[cat].push(entry); }
-            if (cat.includes("5128")) { const rev = entry.reviewer || "Unknown"; contributors[rev] = (contributors[rev] || 0) + 1; }
+            
+            // Fixed Duplicate logic: Normalize reviewer name to prevent Crinacle/crinacle double entry
+            if (cat.includes("5128")) { 
+                const rawRev = entry.reviewer || "Unknown";
+                const rev = rawRev.charAt(0).toUpperCase() + rawRev.slice(1).toLowerCase(); // Proper Case normalization
+                contributors[rev] = (contributors[rev] || 0) + 1; 
+            }
         });
 
         const sortedContributors = Object.entries(contributors).sort((a,b) => b[1] - a[1]);
