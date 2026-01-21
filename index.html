@@ -40,11 +40,14 @@
         .chart-bar-container { background: #111; height: 8px; border-radius: 1px; overflow: hidden; margin: 10px 0; }
         .chart-bar-fill { height: 100%; transition: width 1s ease-out; }
 
-        .recent-list-mini { font-size: 10px; color: #71717a; margin-top: 0.75rem; flex-grow: 1; }
+        .recent-list-mini { font-size: 10px; margin-top: 0.75rem; flex-grow: 1; }
         @media (min-width: 1024px) { .recent-list-mini { font-size: 12px; } }
         
         .recent-list-mini li { margin-bottom: 6px; border-left: 1px solid #222; padding-left: 8px; line-height: 1.4; }
-        .recent-list-mini a:hover { color: #fff; text-decoration: underline; }
+        .recent-list-mini a { transition: opacity 0.2s; }
+        .recent-list-mini a:hover { opacity: 0.7; text-decoration: underline; }
+
+        .legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
 
         .load-inline-btn { font-size: 9px; text-transform: uppercase; color: #52525b; cursor: pointer; margin-top: 12px; border-top: 1px solid #111; padding-top: 8px; width: 100%; text-align: center; }
         @media (min-width: 1024px) { .load-inline-btn { font-size: 11px; } }
@@ -120,7 +123,6 @@
     let currentRigFilter = 'ALL';
     let searchTimeout = null;
 
-    // Central Color Map for strict consistency
     const THEME_COLORS = {
         "IEM (5128)": { text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-900/50" },
         "Over-Ear (5128)": { text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-900/50" },
@@ -192,7 +194,6 @@
         if (!isExplicitPathHP || isExplicitPathIEM || isTarget) {
             return is5128 ? "IEM (5128)" : "IEM (711)";
         }
-
         return "Misc/Unknown";
     }
 
@@ -266,13 +267,24 @@
                     ${renderBar("Composition Share", counts[key], totalDB, theme.bg)}
                     <span class="text-[9px] lg:text-[11px] uppercase mono text-zinc-500 block border-b border-zinc-900 pb-1 mb-2 mt-4">Latest</span>
                     <ul class="recent-list-mini">
-                        ${items.map(i => `<li><a href="${i.link}" target="_blank" class="block truncate">${resolveName(i.item)} <span class="opacity-40 ml-1">[${i.reviewer}]</span></a></li>`).join('')}
+                        ${items.map(i => {
+                            const itemRig = getEntryMetadata(i);
+                            const itemTheme = THEME_COLORS[itemRig] || THEME_COLORS["Misc/Unknown"];
+                            return `<li><a href="${i.link}" target="_blank" class="block truncate ${itemTheme.text}">${resolveName(i.item)} <span class="opacity-40 text-zinc-500 ml-1">[${i.reviewer}]</span></a></li>`;
+                        }).join('')}
                     </ul>
                     ${hasMore ? `<div class="load-inline-btn mono" onclick="expandCategory('${key}')">Show More (+15)</div>` : ''}
                 </div>`;
         };
 
         statsContainer.innerHTML = `
+            <div class="flex flex-wrap gap-6 mb-2 mono text-[10px] uppercase tracking-widest text-zinc-500 border-b border-zinc-900 pb-4">
+                <div class="flex items-center"><span class="legend-dot bg-emerald-500"></span>5128 Standards</div>
+                <div class="flex items-center"><span class="legend-dot bg-zinc-600"></span>711 Legacy</div>
+                <div class="flex items-center"><span class="legend-dot bg-indigo-500"></span>TWS / Bluetooth</div>
+                <div class="flex items-center"><span class="legend-dot bg-amber-700"></span>Uncategorized</div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
                 ${renderCategoryCard("5128 IEMs", "IEM (5128)")}
                 ${renderCategoryCard("5128 Over-Ears", "Over-Ear (5128)")}
@@ -340,7 +352,7 @@
                             <span class="text-[9px] lg:text-[11px] mono px-2 py-0.5 border ${theme.border} ${theme.text} uppercase tracking-tighter rounded-sm">${rigType}</span>
                             <span class="text-[11px] lg:text-[13px] text-zinc-500 mono uppercase">${getRelativeTime(date)}</span>
                         </div>
-                        <h2 class="text-[17px] lg:text-[22px] font-normal text-zinc-200 truncate tracking-tight">${resolveName(entry.item)}</h2>
+                        <h2 class="text-[17px] lg:text-[22px] font-normal ${theme.text} truncate tracking-tight">${resolveName(entry.item)}</h2>
                     </div>
                     <a href="${entry.link}" target="_blank" class="shrink-0 p-2 lg:p-4 border border-zinc-800 text-zinc-600 transition-all hover:border-zinc-400 hover:text-white">
                         <svg class="w-4 h-4 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
