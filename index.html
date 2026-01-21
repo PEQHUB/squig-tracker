@@ -132,15 +132,6 @@
     const PAGE_SIZE = 50;
     const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
-    // Comprehensive list of reviewers who ONLY (or 99%) measure IEMs
-    const iemExclusiveReviewers = [
-        'bad guy good audio reviews', 'bgga', 'precogvision', 'timmy', 'gizaudio', 
-        'vortex reviews', 'super*review', 'superreview', 'sharur', 'hbb', 
-        'crinacle', 'audiosense', 'hisenior', 'kiwi ears', 'letshuoer', 'moondrop',
-        'kopisusu', 'akros', 'noon', 'danying', 'clover', 'flare', 'silicagel',
-        'bangbeucmas', 'vortex', 'tanchjim', 'thieaudio', '7hz', 'blon'
-    ];
-
     function toLocalTime(dateStr) {
         if (!dateStr) return null;
         const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
@@ -175,39 +166,28 @@
         const isExplicitPathHP = link.includes('/headphones/') || link.includes('type=headphone') || isListener;
         const isExplicitPathIEM = link.includes('/iems/') || link.includes('type=iem');
         const isExplicitPathBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/');
-        const itemHasHP = item.includes('(hp)') || item.includes('over-ear') || item.includes('headphone');
-        const itemHasIEM = item.includes('(iem)') || item.includes('in-ear');
+        
+        // 2. Identify Target Curves (Fixed categorization for Sl0the/Research)
+        const targetKeywords = ['target', 'standard', 'reference', 'baseline', 'diffuse field', 'harman', 'ief neutral', 'diff '];
+        const isTarget = targetKeywords.some(kw => item.includes(kw));
 
-        // 2. IEM Exemption Check
-        const isIEMOnlyReviewer = iemExclusiveReviewers.some(r => reviewer.includes(r));
-
-        // 3. Known IEM Brand Protection
-        const knownIEMs = [
-            '64 audio', 'artii', 'audiosense', 'campfire', 'zigaat', 'letshuoer', 'shuoer',
-            'isine', 'lcd-i', 'afaq', 'u6t', 'u12t', 'u18', 'duo', 'trio', 'fourte', 'astrolith',
-            'dioko', '7hz', 'moondrop', 'kiwi ears', 'truthear', 'symphonium', 'nightjar', 
-            'fatfreq', 'softars', 'etymotic', 'westone', 'ie600', 'ie900', 'ie200', 'sennheiser ie'
-        ];
-        const isKnownIEMBrand = knownIEMs.some(brand => item.includes(brand));
-
-        // 4. Rig Identification
+        // 3. Rig Identification
         const isEA = reviewer.includes("earphone's archive") || reviewer.includes("earphonesarchive");
         const is5128Domain = link.includes('hangout.audio') || link.includes('listener800.github.io');
         const is5128Explicit = reviewer.includes("5128") || link.includes('5128');
         const isExplicit711 = link.includes('/711') || link.includes('type=711') || item.includes('(711)');
         const is5128 = !isExplicit711 && (isEA || is5128Domain || is5128Explicit);
 
-        // 5. Classification Logic
-        if (isExplicitPathBuds) return "TWS & Earbuds";
+        // 4. THE SAFER LOGIC: Earbuds and Root paths are IE unless explicitly HP path
+        if (isExplicitPathBuds || item.includes('earbud')) return "TWS & Earbuds";
 
-        // OVER-EAR: Only if path is explicit OR item says HP. 
-        // If it's an IEM-only reviewer, it MUST have a specific HP keyword to be classified as Over-Ear.
-        if (isExplicitPathHP || (itemHasHP && !isKnownIEMBrand)) {
+        // Only Over-Ear if explicitly categorized in the path
+        if (isExplicitPathHP) {
             return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
         }
 
-        // IEM: Explicit paths, IEM-only reviewers (unless it was caught by HP above), known brands, or generic IEM keywords.
-        if (isExplicitPathIEM || isIEMOnlyReviewer || isKnownIEMBrand || itemHasIEM) {
+        // Default to IEM if it's not explicitly a headphone path (including Sl0the's /711/ directory)
+        if (!isExplicitPathHP || isExplicitPathIEM || isTarget) {
             return is5128 ? "IEM (5128)" : "IEM (711)";
         }
 
@@ -413,4 +393,3 @@
 </script>
 </body>
 </html>
-
