@@ -178,7 +178,7 @@
         const diff = Math.floor((new Date() - date) / 1000);
         if (diff < 60) return `${diff}s ago`;
         if (diff < 3600) return `${Math.floor(diff/60)}m ago`;
-        if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
+        if (diff < 84400) return `${Math.floor(diff/3600)}h ago`;
         return `${Math.floor(diff/86400)}d ago`;
     }
 
@@ -191,6 +191,9 @@
         const reviewer = (entry.reviewer || "").toLowerCase();
         const item = resolveName(entry.item).toLowerCase();
         
+        // Priority Fix: dl.squig.link is always 711 IEM
+        if (link.includes('dl.squig.link')) return "IEM (711)";
+
         const isListener = link.includes('listener.squig.link');
         const isExplicitPathHP = link.includes('/headphones/') || link.includes('type=headphone') || isListener;
         const isExplicitPathIEM = link.includes('/iems/') || link.includes('type=iem');
@@ -220,7 +223,6 @@
             const newHistory = await hReq.json();
             const newDatabase = await dReq.json();
             
-            // Compare counts to decide if we need a visual update
             if (newHistory.length !== fullHistory.length || Object.keys(newDatabase).length !== Object.keys(databaseData).length) {
                 fullHistory = newHistory;
                 databaseData = newDatabase;
@@ -228,16 +230,13 @@
                 updateDashboard();
                 if (currentTab === 'feed') applyFilters();
                 else renderStats();
-                console.log(`Sync complete: New data found at ${new Date().toLocaleTimeString()}`);
-            } else {
-                console.log(`Sync complete: No changes found at ${new Date().toLocaleTimeString()}`);
             }
         } catch (e) { console.error("Sync Error", e); }
     }
 
     function startAutoRefresh() {
         if (refreshInterval) clearInterval(refreshInterval);
-        refreshInterval = setInterval(fetchData, 5 * 60 * 1000); // Check every 5 minutes
+        refreshInterval = setInterval(fetchData, 5 * 60 * 1000);
     }
 
     function updateDashboard() {
@@ -415,7 +414,6 @@
 
     document.getElementById('load-all-btn').addEventListener('click', () => loadMore(true));
     
-    // Initial fetch and start interval
     fetchData();
     startAutoRefresh();
 </script>
