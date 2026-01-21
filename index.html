@@ -80,7 +80,13 @@
     <header class="mb-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             <div class="stat-card">
-                <span class="block text-[10px] lg:text-[12px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
+                <div class="flex justify-between items-start">
+                    <span class="block text-[10px] lg:text-[12px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
+                    <span class="relative flex h-2 w-2 mt-1">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                </div>
                 <span id="stat-total" class="text-xl lg:text-3xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
@@ -131,8 +137,8 @@
     let currentTab = 'feed';
     let currentRigFilter = 'ALL';
     let searchTimeout = null;
+    let refreshInterval = null;
 
-    // Fixed color scheme mapping
     const THEME_COLORS = {
         "IEM (5128)": { text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-500", fill: "bg-emerald-500/10" },
         "Over-Ear (5128)": { text: "text-teal-400", bg: "bg-teal-500", border: "border-teal-500", fill: "bg-teal-500/10" },
@@ -203,13 +209,33 @@
 
     async function fetchData() {
         try {
-            const [hReq, dReq] = await Promise.all([fetch('history.json'), fetch('database.json')]);
-            fullHistory = await hReq.json();
-            databaseData = await dReq.json();
-            fullHistory.sort((a,b) => (toLocalTime(b.date) - toLocalTime(a.date)));
-            updateDashboard();
-            applyFilters();
+            const cacheBuster = new Date().getTime();
+            const [hReq, dReq] = await Promise.all([
+                fetch(`history.json?v=${cacheBuster}`), 
+                fetch(`database.json?v=${cacheBuster}`)
+            ]);
+            
+            const newHistory = await hReq.json();
+            const newDatabase = await dReq.json();
+            
+            // Check if there's actual new data before re-rendering everything
+            if (newHistory.length !== fullHistory.length || Object.keys(newDatabase).length !== Object.keys(databaseData).length) {
+                fullHistory = newHistory;
+                databaseData = newDatabase;
+                fullHistory.sort((a,b) => (toLocalTime(b.date) - toLocalTime(a.date)));
+                updateDashboard();
+                
+                if (currentTab === 'feed') applyFilters();
+                else renderStats();
+                
+                console.log("Database updated at: " + new Date().toLocaleTimeString());
+            }
         } catch (e) { console.error("Sync Error", e); }
+    }
+
+    function startAutoRefresh() {
+        if (refreshInterval) clearInterval(refreshInterval);
+        refreshInterval = setInterval(fetchData, 5 * 60 * 1000); // 5 Minutes
     }
 
     function updateDashboard() {
@@ -283,7 +309,6 @@
                 ${renderCategoryCard("711 IEMs", "IEM (711)")}
                 ${renderCategoryCard("711 Over-Ears", "Over-Ear (711)")}
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                  <div class="stat-card">
                     <span class="text-[10px] lg:text-[13px] uppercase mono text-zinc-500 font-bold">5128 Power Rankings</span>
@@ -336,11 +361,9 @@
                         <div class="flex items-center gap-3 mb-1">
                             ${isNew ? '<span class="bg-white text-black px-1.5 py-0.5 text-[8px] lg:text-[10px] font-black uppercase rounded-sm">New</span>' : ''}
                             <span class="text-[11px] lg:text-[13px] font-bold text-zinc-400 uppercase tracking-widest">${entry.reviewer}</span>
-                            
                             <span class="text-[9px] lg:text-[10px] mono px-2.5 py-1 border-2 ${theme.border} ${theme.text} ${theme.fill} uppercase tracking-tighter rounded-sm font-bold shadow-sm">
                                 ${rigType}
                             </span>
-                            
                             <span class="text-[11px] lg:text-[13px] text-zinc-500 mono uppercase">${getRelativeTime(date)}</span>
                         </div>
                         <h2 class="text-[17px] lg:text-[22px] font-normal ${theme.text} truncate tracking-tight">${resolveName(entry.item)}</h2>
@@ -389,7 +412,10 @@
     });
 
     document.getElementById('load-all-btn').addEventListener('click', () => loadMore(true));
+    
+    // Initialize
     fetchData();
+    startAutoRefresh();
 </script>
 </body>
 </html>
