@@ -132,7 +132,6 @@
     let currentRigFilter = 'ALL';
     let searchTimeout = null;
 
-    // Refined Theme Colors for 6 Categories
     const THEME_COLORS = {
         "IEM (5128)": { text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-900/50" },
         "Over-Ear (5128)": { text: "text-teal-400", bg: "bg-teal-500", border: "border-teal-900/50" },
@@ -143,12 +142,7 @@
     };
     
     let statsPagination = {
-        "IEM (5128)": 15,
-        "Over-Ear (5128)": 15,
-        "IEM (711)": 15,
-        "Over-Ear (711)": 15,
-        "Misc/Unknown": 10,
-        "TWS & Earbuds": 10
+        "IEM (5128)": 15, "Over-Ear (5128)": 15, "IEM (711)": 15, "Over-Ear (711)": 15, "Misc/Unknown": 10, "TWS & Earbuds": 10
     };
 
     const PAGE_SIZE = 50;
@@ -313,26 +307,21 @@
     function applyFilters() {
         const searchVal = document.getElementById('search').value.toLowerCase();
         let countAll = 0, count711 = 0, count5128 = 0;
-
         const filtered = fullHistory.filter(entry => {
             const matchesSearch = resolveName(entry.item).toLowerCase().includes(searchVal) || entry.reviewer.toLowerCase().includes(searchVal);
             if (!matchesSearch) return false;
-
             const metadata = getEntryMetadata(entry);
             countAll++;
             if (metadata.includes('711')) count711++;
             if (metadata.includes('5128')) count5128++;
-
             if (currentRigFilter === 'ALL') return true;
             if (currentRigFilter === '711') return metadata.includes('711');
             if (currentRigFilter === '5128') return metadata.includes('5128');
             return true;
         });
-
         document.getElementById('count-ALL').innerText = countAll;
         document.getElementById('count-711').innerText = count711;
         document.getElementById('count-5128').innerText = count5128;
-
         currentIndex = 0;
         currentFilteredSet = filtered;
         loadMore(false);
@@ -390,14 +379,9 @@
             const btn = document.getElementById(`tab-${t}`);
             if (btn) btn.classList.toggle('active', t === tab);
         });
-        // We keep the legend visible on both now per request
         document.getElementById('rig-filters').classList.toggle('hidden', tab === 'stats');
-        if (tab === 'stats') {
-            renderStats();
-            document.getElementById('load-all-btn').classList.add('hidden');
-        } else {
-            applyFilters();
-        }
+        if (tab === 'stats') { renderStats(); document.getElementById('load-all-btn').classList.add('hidden'); } 
+        else { applyFilters(); }
     }
 
     document.getElementById('search').addEventListener('input', () => {
