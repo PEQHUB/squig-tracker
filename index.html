@@ -166,21 +166,25 @@
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
 
-        // 1. DOMAIN RULES (Top Priority)
+        // 1. DOMAIN RULES (Top Priority - Hard Overrides)
+        
+        // Rule: Earphone Archive Specifics
+        if (link.includes('earphonesarchive.squig.link/headphones')) return "Over-Ear (5128)";
+        if (link.includes('earphonesarchive.squig.link')) return "IEM (5128)";
+
         // Rule: listener.squig.link is always 711 OE
         if (link.includes('listener.squig.link')) return "Over-Ear (711)";
         
         // Rule: Hangout 711 IE path
         if (link.includes('graph.hangout.audio/iem/711')) return "IEM (711)";
 
-        // 2. RIG DETECTION (5128)
+        // 2. RIG DETECTION (General 5128)
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
         const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
                        reviewer.includes("5128") || reviewer.includes("4620") ||
-                       reviewer.includes("earphonearchive") || link.includes("earphonearchive") ||
                        item.includes("5128") || item.includes("4620");
 
         // 3. PATH & TYPE VALIDATION
