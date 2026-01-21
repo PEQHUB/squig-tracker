@@ -166,10 +166,22 @@
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
 
+        // Comprehensive Pinnae Keyword List (GRAS & Precis)
+        const pinnaeKeywords = [
+            "kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"
+        ];
+        
+        const hasPinnaeKeyword = pinnaeKeywords.some(key => 
+            item.includes(key) || reviewer.includes(key)
+        );
+
+        // Forced 711 Over-Ear mapping for pinnae-specific measurements
+        if (hasPinnaeKeyword) return "Over-Ear (711)";
+
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
-        // EXPANDED 5128/4620 MATCHING
+        // 5128/4620 MATCHING
         const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
                        reviewer.includes("5128") || 
@@ -187,10 +199,7 @@
 
         const isHP = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone') || link.includes('listener.squig.link');
         
-        // ASSIGNMENT (Overrides 711 defaults)
         if (isHP) return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
-
-        // Handle specific squig overrides that aren't over-ear
         if (link.includes('listener800.github.io/iems')) return "IEM (711)";
 
         return is5128 ? "IEM (5128)" : "IEM (711)";
