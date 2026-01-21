@@ -11,7 +11,6 @@
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         
-        /* Compact Stat Bar */
         .stat-bar { background: var(--card); border: 1px solid var(--border); border-radius: 4px; display: flex; divide-x: 1px; divide-color: var(--border); }
         .stat-segment { padding: 0.75rem 1.25rem; flex: 1; }
 
@@ -38,14 +37,8 @@
         .recent-list-mini li { margin-bottom: 6px; border-left: 2px solid #222; padding-left: 8px; font-size: 13px; }
         .legend-dot { width: 8px; height: 8px; border-radius: 1px; display: inline-block; margin-right: 6px; }
 
-        input#search {
-            border-bottom: 1px solid #18181b;
-            font-weight: 600;
-        }
-        input#search:focus {
-            border-bottom-color: #52525b;
-            background: rgba(255,255,255,0.01);
-        }
+        input#search { border-bottom: 1px solid #18181b; font-weight: 600; }
+        input#search:focus { border-bottom-color: #52525b; background: rgba(255,255,255,0.01); }
 
         .rig-tag {
             font-size: 9px;
@@ -91,17 +84,25 @@
         </div>
 
         <div id="rig-filters-container">
-            <div class="flex flex-col md:flex-row justify-between gap-4 mb-6">
-                <div id="rig-filters" class="flex gap-2">
-                    <button onclick="setRigFilter('ALL')" class="filter-btn active mono" id="filter-ALL">All <span class="filter-count" id="count-ALL">0</span></button>
-                    <button onclick="setRigFilter('711')" class="filter-btn mono" id="filter-711">711 <span class="filter-count" id="count-711">0</span></button>
-                    <button onclick="setRigFilter('5128')" class="filter-btn mono" id="filter-5128">5128 <span class="filter-count" id="count-5128">0</span></button>
+            <div class="flex flex-col gap-4 mb-6">
+                <div class="flex flex-col md:flex-row justify-between gap-4">
+                    <div id="rig-filters" class="flex gap-2">
+                        <button onclick="setRigFilter('ALL')" class="filter-btn active mono" id="filter-ALL">All <span class="filter-count" id="count-ALL">0</span></button>
+                        <button onclick="setRigFilter('711')" class="filter-btn mono" id="filter-711">711 <span class="filter-count" id="count-711">0</span></button>
+                        <button onclick="setRigFilter('5128')" class="filter-btn mono" id="filter-5128">5128 <span class="filter-count" id="count-5128">0</span></button>
+                    </div>
+                    <div id="global-legend" class="flex flex-wrap gap-x-4 gap-y-1 mono text-[9px] uppercase font-bold text-zinc-600">
+                        <div class="flex items-center"><span class="legend-dot bg-emerald-500"></span>5128 IEM</div>
+                        <div class="flex items-center"><span class="legend-dot bg-zinc-600"></span>711 IEM</div>
+                        <div class="flex items-center"><span class="legend-dot bg-blue-500"></span>711 HP</div>
+                        <div class="flex items-center"><span class="legend-dot bg-indigo-500"></span>TWS</div>
+                    </div>
                 </div>
-                <div id="global-legend" class="flex flex-wrap gap-x-4 gap-y-1 mono text-[9px] uppercase font-bold text-zinc-600">
-                    <div class="flex items-center"><span class="legend-dot bg-emerald-500"></span>5128 IEM</div>
-                    <div class="flex items-center"><span class="legend-dot bg-zinc-600"></span>711 IEM</div>
-                    <div class="flex items-center"><span class="legend-dot bg-blue-500"></span>711 HP</div>
-                    <div class="flex items-center"><span class="legend-dot bg-indigo-500"></span>TWS</div>
+                
+                <div id="type-filters" class="flex gap-2">
+                    <button onclick="setTypeFilter('ALL')" class="filter-btn active mono" id="type-ALL">All Types <span class="filter-count" id="tcount-ALL">0</span></button>
+                    <button onclick="setTypeFilter('IEM')" class="filter-btn mono" id="type-IEM">IE <span class="filter-count" id="tcount-IEM">0</span></button>
+                    <button onclick="setTypeFilter('Over-Ear')" class="filter-btn mono" id="type-OE">OE <span class="filter-count" id="tcount-OE">0</span></button>
                 </div>
             </div>
 
@@ -122,6 +123,7 @@
     let currentIndex = 0;
     let currentTab = 'feed';
     let currentRigFilter = 'ALL';
+    let currentTypeFilter = 'ALL';
     let searchTimeout = null;
 
     const THEME_COLORS = {
@@ -163,24 +165,17 @@
         const link = (entry.link || "").toLowerCase();
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
-
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
-        // 5128 Flag: Check domain specifically for hangout.audio
         const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
                        reviewer.includes("5128") || 
                        reviewer.includes("earphonearchive");
 
-        // Overrides and specific domain logic
         if (link.includes('listener.squig.link')) return "Over-Ear (711)";
         if (link.includes('listener800.github.io/iems')) return "IEM (711)";
-        
-        // dl.squig.link override - strictly IEM 711 unless 5128 markers found
-        if (hostname.includes('dl.squig.link')) {
-            return is5128 ? "IEM (5128)" : "IEM (711)";
-        }
+        if (hostname.includes('dl.squig.link')) return is5128 ? "IEM (5128)" : "IEM (711)";
 
         const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
         if (isBuds) return "TWS & Earbuds";
@@ -244,20 +239,45 @@
 
     function applyFilters() {
         const searchVal = document.getElementById('search').value.toLowerCase();
+        
+        // Count variables
         let countAll = 0, count711 = 0, count5128 = 0;
+        let tcountAll = 0, tcountIEM = 0, tcountOE = 0;
+
         const filtered = fullHistory.filter(entry => {
-            const matchesSearch = resolveName(entry.item).toLowerCase().includes(searchVal) || entry.reviewer.toLowerCase().includes(searchVal);
+            const name = resolveName(entry.item).toLowerCase();
+            const reviewer = entry.reviewer.toLowerCase();
+            const matchesSearch = name.includes(searchVal) || reviewer.includes(searchVal);
             if (!matchesSearch) return false;
+
             const metadata = getEntryMetadata(entry);
+            
+            // Global counts (pre-rig/type filter)
             countAll++;
             if (metadata.includes('711')) count711++;
             if (metadata.includes('5128')) count5128++;
-            if (currentRigFilter === 'ALL') return true;
-            return metadata.includes(currentRigFilter);
+            
+            tcountAll++;
+            if (metadata.includes('IEM') || metadata.includes('TWS')) tcountIEM++;
+            if (metadata.includes('Over-Ear')) tcountOE++;
+
+            // Apply active filters
+            const matchesRig = currentRigFilter === 'ALL' || metadata.includes(currentRigFilter);
+            let matchesType = true;
+            if (currentTypeFilter === 'IEM') matchesType = metadata.includes('IEM') || metadata.includes('TWS');
+            if (currentTypeFilter === 'Over-Ear') matchesType = metadata.includes('Over-Ear');
+
+            return matchesRig && matchesType;
         });
+
+        // Update UI Counts
         document.getElementById('count-ALL').innerText = countAll;
         document.getElementById('count-711').innerText = count711;
         document.getElementById('count-5128').innerText = count5128;
+        document.getElementById('tcount-ALL').innerText = tcountAll;
+        document.getElementById('tcount-IEM').innerText = tcountIEM;
+        document.getElementById('tcount-OE').innerText = tcountOE;
+
         currentIndex = 0; currentFilteredSet = filtered; loadMore(false);
     }
 
@@ -316,7 +336,20 @@
     }
 
     function expandCategory(key) { statsPagination[key] += 15; renderStats(); }
-    function setRigFilter(rig) { currentRigFilter = rig; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.id === `filter-${rig}`)); applyFilters(); }
+    
+    function setRigFilter(rig) { 
+        currentRigFilter = rig; 
+        document.querySelectorAll('#rig-filters .filter-btn').forEach(btn => btn.classList.toggle('active', btn.id === `filter-${rig}`)); 
+        applyFilters(); 
+    }
+
+    function setTypeFilter(type) {
+        currentTypeFilter = type;
+        const idMap = { 'ALL': 'type-ALL', 'IEM': 'type-IEM', 'Over-Ear': 'type-OE' };
+        document.querySelectorAll('#type-filters .filter-btn').forEach(btn => btn.classList.toggle('active', btn.id === idMap[type]));
+        applyFilters();
+    }
+
     function switchTab(tab) {
         currentTab = tab;
         document.getElementById('feed').classList.toggle('hidden', tab !== 'feed');
