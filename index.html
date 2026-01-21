@@ -165,14 +165,18 @@
         const link = (entry.link || "").toLowerCase();
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
+
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
+        // Logic check for 5128 - Strictly added Earphone Archive here
         const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
                        reviewer.includes("5128") || 
-                       reviewer.includes("earphonearchive");
+                       reviewer.includes("earphonearchive") ||
+                       link.includes("earphonearchive");
 
+        // Overrides
         if (link.includes('listener.squig.link')) return "Over-Ear (711)";
         if (link.includes('listener800.github.io/iems')) return "IEM (711)";
         if (hostname.includes('dl.squig.link')) return is5128 ? "IEM (5128)" : "IEM (711)";
@@ -239,8 +243,6 @@
 
     function applyFilters() {
         const searchVal = document.getElementById('search').value.toLowerCase();
-        
-        // Count variables
         let countAll = 0, count711 = 0, count5128 = 0;
         let tcountAll = 0, tcountIEM = 0, tcountOE = 0;
 
@@ -251,8 +253,6 @@
             if (!matchesSearch) return false;
 
             const metadata = getEntryMetadata(entry);
-            
-            // Global counts (pre-rig/type filter)
             countAll++;
             if (metadata.includes('711')) count711++;
             if (metadata.includes('5128')) count5128++;
@@ -261,7 +261,6 @@
             if (metadata.includes('IEM') || metadata.includes('TWS')) tcountIEM++;
             if (metadata.includes('Over-Ear')) tcountOE++;
 
-            // Apply active filters
             const matchesRig = currentRigFilter === 'ALL' || metadata.includes(currentRigFilter);
             let matchesType = true;
             if (currentTypeFilter === 'IEM') matchesType = metadata.includes('IEM') || metadata.includes('TWS');
@@ -270,7 +269,6 @@
             return matchesRig && matchesType;
         });
 
-        // Update UI Counts
         document.getElementById('count-ALL').innerText = countAll;
         document.getElementById('count-711').innerText = count711;
         document.getElementById('count-5128').innerText = count5128;
