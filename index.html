@@ -105,6 +105,15 @@
             </div>
         </div>
 
+        <div id="global-legend" class="flex flex-wrap gap-x-6 gap-y-2 mb-6 mono text-[9px] lg:text-[11px] uppercase tracking-widest text-zinc-500">
+            <div class="flex items-center"><span class="legend-dot bg-emerald-500"></span>5128 IEM</div>
+            <div class="flex items-center"><span class="legend-dot bg-teal-500"></span>5128 Over-Ear</div>
+            <div class="flex items-center"><span class="legend-dot bg-zinc-600"></span>711 IEM</div>
+            <div class="flex items-center"><span class="legend-dot bg-blue-500"></span>711 Over-Ear</div>
+            <div class="flex items-center"><span class="legend-dot bg-indigo-500"></span>TWS / Buds</div>
+            <div class="flex items-center"><span class="legend-dot bg-amber-700"></span>Misc</div>
+        </div>
+
         <input type="text" id="search" placeholder="Search Filter..." 
             class="w-full bg-transparent border-b border-zinc-800 py-3 text-lg font-normal outline-none focus:border-zinc-400 transition-colors uppercase tracking-widest text-white">
     </header>
@@ -123,11 +132,12 @@
     let currentRigFilter = 'ALL';
     let searchTimeout = null;
 
+    // Refined Theme Colors for 6 Categories
     const THEME_COLORS = {
         "IEM (5128)": { text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-900/50" },
-        "Over-Ear (5128)": { text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-900/50" },
+        "Over-Ear (5128)": { text: "text-teal-400", bg: "bg-teal-500", border: "border-teal-900/50" },
         "IEM (711)": { text: "text-zinc-500", bg: "bg-zinc-600", border: "border-zinc-900" },
-        "Over-Ear (711)": { text: "text-zinc-500", bg: "bg-zinc-600", border: "border-zinc-900" },
+        "Over-Ear (711)": { text: "text-blue-400", bg: "bg-blue-500", border: "border-blue-900/50" },
         "TWS & Earbuds": { text: "text-indigo-400", bg: "bg-indigo-500", border: "border-indigo-900/50" },
         "Misc/Unknown": { text: "text-amber-600", bg: "bg-amber-700", border: "border-amber-900/50" }
     };
@@ -278,13 +288,6 @@
         };
 
         statsContainer.innerHTML = `
-            <div class="flex flex-wrap gap-6 mb-2 mono text-[10px] uppercase tracking-widest text-zinc-500 border-b border-zinc-900 pb-4">
-                <div class="flex items-center"><span class="legend-dot bg-emerald-500"></span>5128 Standards</div>
-                <div class="flex items-center"><span class="legend-dot bg-zinc-600"></span>711 Legacy</div>
-                <div class="flex items-center"><span class="legend-dot bg-indigo-500"></span>TWS / Bluetooth</div>
-                <div class="flex items-center"><span class="legend-dot bg-amber-700"></span>Uncategorized</div>
-            </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
                 ${renderCategoryCard("5128 IEMs", "IEM (5128)")}
                 ${renderCategoryCard("5128 Over-Ears", "Over-Ear (5128)")}
@@ -387,6 +390,7 @@
             const btn = document.getElementById(`tab-${t}`);
             if (btn) btn.classList.toggle('active', t === tab);
         });
+        // We keep the legend visible on both now per request
         document.getElementById('rig-filters').classList.toggle('hidden', tab === 'stats');
         if (tab === 'stats') {
             renderStats();
