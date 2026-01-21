@@ -5574,7 +5574,8 @@
         "https://atechreviews.squig.link/headphones/?share=Sennheiser%20HD%206XX%20%28Worn%20Pads%29&type=headphone",
         "https://atechreviews.squig.link/headphones/?share=Shanling%20HW600&type=headphone",
         "https://atechreviews.squig.link/headphones/?share=Simgot%20EP5&type=headphone",
-        "https://atechreviews.squig.link/headphones/?share=SIVGA%20SV007&type=headphone"
+        "https://atechreviews.squig.link/headphones/?share=SIVGA%20SV007&type=headphone",
+        "https://atechreviews.squig.link/?share=Tangzu%20Xue%20Tao"
     ],
     "csi-zone": [
         "https://csi-zone.squig.link/?share=7th%20Acoustic%20Asteria",
@@ -9901,7 +9902,8 @@
         "https://jaytiss.squig.link/headphones/?share=nfAcousnh20",
         "https://jaytiss.squig.link/headphones/?share=StudioMax1&type=tws",
         "https://jaytiss.squig.link/headphones/?share=Senn620",
-        "https://jaytiss.squig.link/headphones/?share=senn550"
+        "https://jaytiss.squig.link/headphones/?share=senn550",
+        "https://jaytiss.squig.link/?share=KiwiCadenza2"
     ],
     "lown-fi": [
         "https://lown-fi.squig.link/?share=64%20Audio%20U4s",
@@ -20764,5 +20766,5 @@
         "https://arn.squig.link/?share=zig",
         "https://arn.squig.link/?share=horizon"
     ],
-    "last_sync": "2026-01-21T01:04:41.576603"
+    "last_sync": "2026-01-21T04:32:51.700947"
 }
