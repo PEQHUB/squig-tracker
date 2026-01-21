@@ -16253,7 +16253,9 @@
         "https://dl.squig.link/?share=Hades&type=tws",
         "https://dl.squig.link/?share=Penon%20Conductor&type=tws",
         "https://dl.squig.link/?share=Saber%203&type=tws",
-        "https://dl.squig.link/?share=Pk1&type=tws"
+        "https://dl.squig.link/?share=Pk1&type=tws",
+        "https://dl.squig.link/headphones/?share=Penon%20Serial%20main&type=headphone",
+        "https://dl.squig.link/headphones/?share=Tanchjim%20Kara%20%28Bass%20tips%29&type=headphone"
     ],
     "ankramutt": [
         "https://ankramutt.squig.link/?share=7Hz%20Legato",
@@ -20762,5 +20764,5 @@
         "https://arn.squig.link/?share=zig",
         "https://arn.squig.link/?share=horizon"
     ],
-    "last_sync": "2026-01-20T23:20:53.545920"
+    "last_sync": "2026-01-21T01:02:06.690941"
 }
