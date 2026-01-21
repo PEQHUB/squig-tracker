@@ -166,34 +166,43 @@
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
 
-        // 1. CHECK RIG FIRST (5128 Priority)
+        // 1. DOMAIN & HOSTNAME DETECTION
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
-        const is5128 = hostname.includes('hangout.audio') || 
+        // Specific handling for Hangout 711 IE domain
+        const isHangout711IE = link.includes('graph.hangout.audio/iem/711');
+
+        const is5128 = !isHangout711IE && (
+                       hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
                        reviewer.includes("5128") || reviewer.includes("4620") ||
                        reviewer.includes("earphonearchive") || link.includes("earphonearchive") ||
-                       item.includes("5128") || item.includes("4620");
+                       item.includes("5128") || item.includes("4620"));
 
-        // 2. CHECK PINNAE (Defaults to OE 711 unless 5128 is flagged above)
-        const pinnaeKeywords = ["kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"];
-        const hasPinnaeKeyword = pinnaeKeywords.some(key => item.includes(key) || reviewer.includes(key));
-        
+        // 2. PATH VALIDATION
+        const isIEMPath = link.includes('/iem/') || link.includes('/iems/');
+        const isHPPath = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone');
+
+        // 3. SPECIAL CATEGORIES
         const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
         if (isBuds) return "TWS & Earbuds";
 
-        const isIEMPath = link.includes('/iem/') || link.includes('/iems/');
-        const isHP = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone');
-        
-        // Handle 5128 Specifics
+        // 4. PINNAE CHECK
+        const pinnaeKeywords = ["kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"];
+        const hasPinnaeKeyword = pinnaeKeywords.some(key => item.includes(key) || reviewer.includes(key));
+
         if (is5128) {
-            if (isHP && !isIEMPath) return "Over-Ear (5128)";
+            if (isIEMPath) return "IEM (5128)";
+            if (isHPPath) return "Over-Ear (5128)";
             return "IEM (5128)";
         }
 
-        // Handle 711 / Pinnae Specifics
-        if (hasPinnaeKeyword || (isHP && !isIEMPath)) return "Over-Ear (711)";
+        // Handle Hangout 711 IE strict domain
+        if (isHangout711IE) return "IEM (711)";
+
+        // Handle general 711 / Pinnae Logic
+        if (hasPinnaeKeyword || (isHPPath && !isIEMPath)) return "Over-Ear (711)";
 
         return "IEM (711)";
     }
@@ -302,10 +311,10 @@
             const cat = getEntryMetadata(entry);
             if (counts[cat] !== undefined) { counts[cat]++; lists[cat].push(entry); }
             
-            // Fixed Duplicate logic: Normalize reviewer name to prevent Crinacle/crinacle double entry
             if (cat.includes("5128")) { 
-                const rawRev = entry.reviewer || "Unknown";
-                const rev = rawRev.charAt(0).toUpperCase() + rawRev.slice(1).toLowerCase(); // Proper Case normalization
+                let rawRev = entry.reviewer || "Unknown";
+                let cleanName = rawRev.replace(/5128/gi, '').replace(/\d+$/, '').trim();
+                const rev = cleanName.charAt(0).toUpperCase() + cleanName.slice(1).toLowerCase(); 
                 contributors[rev] = (contributors[rev] || 0) + 1; 
             }
         });
