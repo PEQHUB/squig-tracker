@@ -169,14 +169,17 @@
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
-        // AGGRESSIVE 5128 MATCHING (Archive specific)
+        // EXPANDED 5128/4620 MATCHING
         const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
                        reviewer.includes("5128") || 
+                       reviewer.includes("4620") ||
                        reviewer.includes("earphonearchive") || 
                        reviewer.includes("earphonesarchive") || 
                        link.includes("earphonearchive") ||
-                       link.includes("earphonesarchive");
+                       link.includes("earphonesarchive") ||
+                       item.includes("5128") || 
+                       item.includes("4620");
 
         // CATEGORY DETECTION
         const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
