@@ -11,14 +11,16 @@
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         
-        /* Reduced padding for stat cards */
-        .stat-card { background: var(--card); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: 4px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        /* Compact Stat Bar */
+        .stat-bar { background: var(--card); border: 1px solid var(--border); border-radius: 4px; display: flex; divide-x: 1px; divide-color: var(--border); }
+        .stat-segment { padding: 0.75rem 1.25rem; flex: 1; }
+
         .item-row { border-bottom: 1px solid #161616; transition: all 0.2s ease; }
         .item-row:hover { background: #0c0c0c; border-bottom-color: #333; }
 
         .tab-btn, .filter-btn {
-            padding: 0.6rem 1.2rem;
-            font-size: 12px;
+            padding: 0.5rem 1rem;
+            font-size: 11px;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             color: #71717a;
@@ -28,74 +30,74 @@
         .tab-btn.active { color: #ffffff; border-bottom: 2px solid #ffffff; }
         .filter-btn { border: 1px solid var(--border); border-radius: 4px; background: #0a0a0a; }
         .filter-btn.active { border-color: #52525b; color: #fff; background: #18181b; }
-        .filter-count { font-size: 10px; background: #27272a; color: #fff; padding: 1px 6px; border-radius: 10px; margin-left: 4px; }
+        .filter-count { font-size: 9px; background: #27272a; color: #fff; padding: 1px 5px; border-radius: 10px; margin-left: 4px; }
 
-        .chart-bar-container { background: #1a1a1a; height: 10px; border-radius: 2px; overflow: hidden; margin: 12px 0; }
+        .chart-bar-container { background: #1a1a1a; height: 8px; border-radius: 2px; overflow: hidden; margin: 8px 0; }
         .chart-bar-fill { height: 100%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        .recent-list-mini li { margin-bottom: 8px; border-left: 2px solid #222; padding-left: 10px; }
-        .legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 8px; }
+        .recent-list-mini li { margin-bottom: 6px; border-left: 2px solid #222; padding-left: 8px; font-size: 13px; }
+        .legend-dot { width: 8px; height: 8px; border-radius: 1px; display: inline-block; margin-right: 6px; }
 
         input#search {
-            border-bottom: 2px solid #18181b;
+            border-bottom: 1px solid #18181b;
             font-weight: 600;
         }
         input#search:focus {
             border-bottom-color: #52525b;
-            background: rgba(255,255,255,0.02);
+            background: rgba(255,255,255,0.01);
         }
 
         .rig-tag {
-            font-size: 10px;
-            padding: 2px 8px;
-            border-radius: 3px;
+            font-size: 9px;
+            padding: 1px 6px;
+            border-radius: 2px;
             font-weight: 800;
             letter-spacing: 0.02em;
             text-transform: uppercase;
         }
     </style>
 </head>
-<body class="max-w-6xl lg:max-w-7xl mx-auto px-6 py-12">
+<body class="max-w-6xl lg:max-w-7xl mx-auto px-6 py-8">
 
-    <header class="mb-12">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-[0.15em] text-zinc-500 font-bold mb-1">Syncs (12H)</span>
-                <span id="stat-total" class="text-xl font-bold mono text-white">0</span>
+    <header class="mb-8">
+        <div class="stat-bar mb-6">
+            <div class="stat-segment border-r border-zinc-800">
+                <span class="block text-[9px] uppercase tracking-widest text-zinc-500 font-bold mb-0.5">Syncs (12H)</span>
+                <span id="stat-total" class="text-lg font-bold mono text-white">0</span>
             </div>
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-[0.15em] text-zinc-500 font-bold mb-1">Total Database</span>
-                <span id="stat-db-total" class="text-xl font-bold mono text-white">0</span>
+            <div class="stat-segment border-r border-zinc-800">
+                <span class="block text-[9px] uppercase tracking-widest text-zinc-500 font-bold mb-0.5">Total Database</span>
+                <span id="stat-db-total" class="text-lg font-bold mono text-white">0</span>
             </div>
-            <div class="stat-card">
-                <span class="block text-[10px] uppercase tracking-[0.15em] text-zinc-500 font-bold mb-1">Active Reviewers</span>
-                <span id="stat-sources" class="text-xl font-bold mono text-white">0</span>
+            <div class="stat-segment">
+                <span class="block text-[9px] uppercase tracking-widest text-zinc-500 font-bold mb-0.5">Reviewers</span>
+                <span id="stat-sources" class="text-lg font-bold mono text-white">0</span>
             </div>
         </div>
 
-        <div class="flex flex-col md:flex-row justify-between items-center border-b border-zinc-900 mb-8 gap-4">
-            <div class="flex gap-4">
+        <div class="flex flex-col md:flex-row justify-between items-center border-b border-zinc-900 mb-6 gap-4">
+            <div class="flex gap-2">
                 <button onclick="switchTab('feed')" id="tab-feed" class="tab-btn active mono">Live Feed</button>
                 <button onclick="switchTab('stats')" id="tab-stats" class="tab-btn mono">Statistics</button>
             </div>
             
-            <div class="flex items-center gap-3 py-2 px-4 bg-zinc-900/40 rounded-full border border-zinc-800/50 mb-2">
-                <span class="text-[10px] mono text-zinc-400 uppercase font-bold tracking-widest">System Live</span>
-                <span class="relative flex h-2 w-2">
+            <div class="flex items-center gap-3 py-1.5 px-3 bg-zinc-900/40 rounded-full border border-zinc-800/50 mb-1">
+                <span class="text-[9px] mono text-zinc-500 uppercase font-bold tracking-widest">System Live</span>
+                <span class="relative flex h-1.5 w-1.5">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
                 </span>
             </div>
         </div>
 
         <div id="rig-filters-container">
-            <div class="flex flex-col md:flex-row justify-between gap-6 mb-8">
+            <div class="flex flex-col md:flex-row justify-between gap-4 mb-6">
                 <div id="rig-filters" class="flex gap-2">
                     <button onclick="setRigFilter('ALL')" class="filter-btn active mono" id="filter-ALL">All <span class="filter-count" id="count-ALL">0</span></button>
                     <button onclick="setRigFilter('711')" class="filter-btn mono" id="filter-711">711 <span class="filter-count" id="count-711">0</span></button>
                     <button onclick="setRigFilter('5128')" class="filter-btn mono" id="filter-5128">5128 <span class="filter-count" id="count-5128">0</span></button>
                 </div>
-                <div id="global-legend" class="flex flex-wrap gap-x-5 gap-y-2 mono text-[10px] uppercase font-bold text-zinc-500">
+                <div id="global-legend" class="flex flex-wrap gap-x-4 gap-y-1 mono text-[9px] uppercase font-bold text-zinc-600">
                     <div class="flex items-center"><span class="legend-dot bg-emerald-500"></span>5128 IEM</div>
                     <div class="flex items-center"><span class="legend-dot bg-zinc-600"></span>711 IEM</div>
                     <div class="flex items-center"><span class="legend-dot bg-blue-500"></span>711 HP</div>
@@ -103,15 +105,15 @@
                 </div>
             </div>
 
-            <input type="text" id="search" placeholder="FILTER BY DEVICE, BRAND, OR REVIEWER..." 
-                class="w-full bg-transparent py-4 text-xl outline-none transition-all uppercase tracking-widest text-white placeholder-zinc-800">
+            <input type="text" id="search" placeholder="FILTER MEASUREMENTS..." 
+                class="w-full bg-transparent py-3 text-lg outline-none transition-all uppercase tracking-widest text-white placeholder-zinc-800">
         </div>
     </header>
 
     <main id="feed" class="flex flex-col"></main>
-    <main id="stats" class="hidden flex flex-col py-4 space-y-12"></main>
+    <main id="stats" class="hidden flex flex-col py-4 space-y-10"></main>
     
-    <button id="load-all-btn" class="mono uppercase hidden border border-zinc-800 py-4 w-full mt-8 hover:bg-white hover:text-black transition-all">Load More Entries</button>
+    <button id="load-all-btn" class="mono text-xs uppercase hidden border border-zinc-800 py-3 w-full mt-6 hover:bg-white hover:text-black transition-all">Load More Entries</button>
 
 <script>
     let fullHistory = [];
@@ -162,18 +164,23 @@
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
 
-        // Robust Rig Logic: Filter by URL domain to avoid falsing on IEM names
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
-        if (link.includes('listener.squig.link')) return "Over-Ear (711)";
-        if (link.includes('listener800.github.io/iems')) return "IEM (711)";
-        
         // 5128 Flag: Check domain specifically for hangout.audio
         const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
                        reviewer.includes("5128") || 
                        reviewer.includes("earphonearchive");
+
+        // Overrides and specific domain logic
+        if (link.includes('listener.squig.link')) return "Over-Ear (711)";
+        if (link.includes('listener800.github.io/iems')) return "IEM (711)";
+        
+        // dl.squig.link override - strictly IEM 711 unless 5128 markers found
+        if (hostname.includes('dl.squig.link')) {
+            return is5128 ? "IEM (5128)" : "IEM (711)";
+        }
 
         const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
         if (isBuds) return "TWS & Earbuds";
@@ -216,18 +223,18 @@
             const theme = THEME_COLORS[rigType] || THEME_COLORS["Misc/Unknown"];
             
             return `
-                <div class="item-row py-8 flex justify-between items-center group px-2">
+                <div class="item-row py-6 flex justify-between items-center group px-2">
                     <div class="min-w-0 pr-4">
-                        <div class="flex items-center gap-3 mb-2">
-                            ${isNew ? '<span class="bg-white text-black px-2 py-0.5 text-[10px] font-black uppercase rounded-sm">NEW</span>' : ''}
-                            <span class="text-[12px] font-extrabold text-zinc-500 uppercase tracking-widest">${entry.reviewer}</span>
+                        <div class="flex items-center gap-2.5 mb-1.5">
+                            ${isNew ? '<span class="bg-white text-black px-1.5 py-0.5 text-[9px] font-black uppercase rounded-sm">NEW</span>' : ''}
+                            <span class="text-[11px] font-extrabold text-zinc-500 uppercase tracking-widest">${entry.reviewer}</span>
                             <span class="rig-tag ${theme.bg} ${theme.text}">${rigType}</span>
-                            <span class="text-[12px] text-zinc-600 mono font-bold uppercase">${getRelativeTime(date)} ago</span>
+                            <span class="text-[11px] text-zinc-600 mono font-bold uppercase">${getRelativeTime(date)}</span>
                         </div>
-                        <h2 class="text-xl lg:text-2xl font-bold text-zinc-100 group-hover:text-white truncate tracking-tight transition-colors">${resolveName(entry.item)}</h2>
+                        <h2 class="text-lg lg:text-xl font-bold text-zinc-100 group-hover:text-white truncate tracking-tight transition-colors">${resolveName(entry.item)}</h2>
                     </div>
-                    <a href="${entry.link}" target="_blank" class="shrink-0 p-4 border border-zinc-800 text-zinc-500 transition-all hover:bg-zinc-100 hover:text-black hover:border-white">
-                        <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <a href="${entry.link}" target="_blank" class="shrink-0 p-3 border border-zinc-800 text-zinc-600 transition-all hover:bg-zinc-100 hover:text-black hover:border-white">
+                        <svg class="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                 </div>`;
         }).join('');
@@ -281,27 +288,27 @@
             const items = lists[key].slice(0, limit);
             const theme = THEME_COLORS[key] || THEME_COLORS["Misc/Unknown"];
             return `
-                <div class="stat-card">
-                    <span class="text-[12px] uppercase mono font-black mb-4 block ${theme.text}">${title}</span>
-                    <div class="flex justify-between text-[10px] mono text-zinc-500 mb-1"><span>Database Share</span><span>${counts[key]} Units</span></div>
+                <div class="stat-card p-4 bg-[#111] border border-zinc-800 rounded">
+                    <span class="text-[11px] uppercase mono font-black mb-3 block ${theme.text}">${title}</span>
+                    <div class="flex justify-between text-[9px] mono text-zinc-500 mb-1"><span>Database Share</span><span>${counts[key]}</span></div>
                     <div class="chart-bar-container"><div class="chart-bar-fill ${theme.bg}" style="width:${(counts[key]/totalDB)*100}%"></div></div>
-                    <ul class="recent-list-mini mt-6">
-                        ${items.map(i => `<li><a href="${i.link}" target="_blank" class="block truncate text-zinc-300 hover:text-white">${resolveName(i.item)} <span class="opacity-30 text-[9px] ml-1">${i.reviewer}</span></a></li>`).join('')}
+                    <ul class="recent-list-mini mt-4">
+                        ${items.map(i => `<li><a href="${i.link}" target="_blank" class="block truncate text-zinc-400 hover:text-white">${resolveName(i.item)} <span class="opacity-30 text-[8px] ml-1">${i.reviewer}</span></a></li>`).join('')}
                     </ul>
-                    ${lists[key].length > limit ? `<div class="text-[10px] font-bold text-center mt-4 pt-4 border-t border-zinc-900 cursor-pointer text-zinc-500 hover:text-white" onclick="expandCategory('${key}')">VIEW MORE</div>` : ''}
+                    ${lists[key].length > limit ? `<div class="text-[9px] font-bold text-center mt-3 pt-3 border-t border-zinc-900 cursor-pointer text-zinc-500 hover:text-white" onclick="expandCategory('${key}')">VIEW MORE</div>` : ''}
                 </div>`;
         };
 
         statsContainer.innerHTML = `
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 ${renderCategoryCard("5128 IEMs", "IEM (5128)")} ${renderCategoryCard("5128 Over-Ears", "Over-Ear (5128)")}
                 ${renderCategoryCard("711 IEMs", "IEM (711)")} ${renderCategoryCard("711 Over-Ears", "Over-Ear (711)")}
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="stat-card md:col-span-1">
-                    <span class="text-[12px] uppercase mono font-black text-emerald-500 mb-6 block">5128 Contributors</span>
-                    <table class="w-full text-[12px] mono text-zinc-400">
-                        ${sortedContributors.slice(0, 8).map(([name, count]) => `<tr class="border-b border-zinc-900"><td class="py-2">${name}</td><td class="text-right text-white font-bold">${count}</td></tr>`).join('')}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="stat-card p-4 bg-[#111] border border-zinc-800 rounded md:col-span-1">
+                    <span class="text-[11px] uppercase mono font-black text-emerald-500 mb-4 block">5128 Contributors</span>
+                    <table class="w-full text-[11px] mono text-zinc-500">
+                        ${sortedContributors.slice(0, 8).map(([name, count]) => `<tr class="border-b border-zinc-900"><td class="py-1.5">${name}</td><td class="text-right text-white font-bold">${count}</td></tr>`).join('')}
                     </table>
                 </div>
                 ${renderCategoryCard("TWS & Earbuds", "TWS & Earbuds")} ${renderCategoryCard("Misc / Targets", "Misc/Unknown")}
