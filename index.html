@@ -95,14 +95,18 @@
                         <div class="flex items-center"><span class="legend-dot bg-emerald-500"></span>5128 IEM</div>
                         <div class="flex items-center"><span class="legend-dot bg-zinc-600"></span>711 IEM</div>
                         <div class="flex items-center"><span class="legend-dot bg-blue-500"></span>711 HP</div>
-                        <div class="flex items-center"><span class="legend-dot bg-indigo-500"></span>TWS</div>
+                        <div class="flex items-center"><span class="legend-dot bg-orange-500"></span>Pinnae/Ear</div>
                     </div>
                 </div>
                 
-                <div id="type-filters" class="flex gap-2">
+                <div id="type-filters" class="flex flex-wrap gap-2">
                     <button onclick="setTypeFilter('ALL')" class="filter-btn active mono" id="type-ALL">All Types <span class="filter-count" id="tcount-ALL">0</span></button>
                     <button onclick="setTypeFilter('IEM')" class="filter-btn mono" id="type-IEM">IE <span class="filter-count" id="tcount-IEM">0</span></button>
                     <button onclick="setTypeFilter('Over-Ear')" class="filter-btn mono" id="type-OE">OE <span class="filter-count" id="tcount-OE">0</span></button>
+                    <div class="w-px h-6 bg-zinc-800 mx-1 self-center"></div>
+                    <button onclick="togglePinnaeOnly()" class="filter-btn mono flex items-center gap-2" id="type-Pinnae">
+                        Pinnae Only <span class="filter-count bg-orange-900/50 text-orange-400" id="tcount-Pinnae">0</span>
+                    </button>
                 </div>
             </div>
 
@@ -124,6 +128,7 @@
     let currentTab = 'feed';
     let currentRigFilter = 'ALL';
     let currentTypeFilter = 'ALL';
+    let pinnaeOnlyMode = false;
     let searchTimeout = null;
 
     const THEME_COLORS = {
@@ -131,11 +136,12 @@
         "Over-Ear (5128)": { text: "text-white", bg: "bg-teal-600", tagBg: "bg-teal-950/50" },
         "IEM (711)": { text: "text-white", bg: "bg-zinc-700", tagBg: "bg-zinc-900" },
         "Over-Ear (711)": { text: "text-white", bg: "bg-blue-600", tagBg: "bg-blue-950/50" },
+        "Pinnae (Precis/GRAS)": { text: "text-white", bg: "bg-orange-600", tagBg: "bg-orange-950/50" },
         "TWS & Earbuds": { text: "text-white", bg: "bg-indigo-600", tagBg: "bg-indigo-950/50" },
         "Misc/Unknown": { text: "text-white", bg: "bg-amber-800", tagBg: "bg-amber-950/50" }
     };
     
-    let statsPagination = { "IEM (5128)": 15, "Over-Ear (5128)": 15, "IEM (711)": 15, "Over-Ear (711)": 15, "Misc/Unknown": 10, "TWS & Earbuds": 10 };
+    let statsPagination = { "IEM (5128)": 15, "Over-Ear (5128)": 15, "IEM (711)": 15, "Over-Ear (711)": 15, "Pinnae (Precis/GRAS)": 15, "Misc/Unknown": 10, "TWS & Earbuds": 10 };
     const PAGE_SIZE = 50;
     const NEW_BADGE_MS = 4 * 60 * 60 * 1000; 
 
@@ -166,34 +172,20 @@
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
 
-        // Comprehensive Pinnae Keyword List (GRAS & Precis)
-        const pinnaeKeywords = [
-            "kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"
-        ];
-        
-        const hasPinnaeKeyword = pinnaeKeywords.some(key => 
-            item.includes(key) || reviewer.includes(key)
-        );
+        const pinnaeKeywords = ["kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"];
+        const hasPinnaeKeyword = pinnaeKeywords.some(key => item.includes(key) || reviewer.includes(key));
 
-        // Forced 711 Over-Ear mapping for pinnae-specific measurements
-        if (hasPinnaeKeyword) return "Over-Ear (711)";
+        if (hasPinnaeKeyword) return "Pinnae (Precis/GRAS)";
 
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
-        // 5128/4620 MATCHING
         const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
-                       reviewer.includes("5128") || 
-                       reviewer.includes("4620") ||
-                       reviewer.includes("earphonearchive") || 
-                       reviewer.includes("earphonesarchive") || 
-                       link.includes("earphonearchive") ||
-                       link.includes("earphonesarchive") ||
-                       item.includes("5128") || 
-                       item.includes("4620");
+                       reviewer.includes("5128") || reviewer.includes("4620") ||
+                       reviewer.includes("earphonearchive") || link.includes("earphonearchive") ||
+                       item.includes("5128") || item.includes("4620");
 
-        // CATEGORY DETECTION
         const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
         if (isBuds) return "TWS & Earbuds";
 
@@ -258,7 +250,7 @@
 
     function applyFilters() {
         const searchVal = document.getElementById('search').value.toLowerCase();
-        let countAll = 0, count711 = 0, count5128 = 0;
+        let countAll = 0, count711 = 0, count5128 = 0, countPinnae = 0;
         let tcountAll = 0, tcountIEM = 0, tcountOE = 0;
 
         const filtered = fullHistory.filter(entry => {
@@ -266,20 +258,28 @@
             if (!matchesSearch) return false;
 
             const metadata = getEntryMetadata(entry);
+            
             countAll++;
             if (metadata.includes('711')) count711++;
             if (metadata.includes('5128')) count5128++;
+            if (metadata.includes('Pinnae')) countPinnae++;
             
             tcountAll++;
             if (metadata.includes('IEM') || metadata.includes('TWS')) tcountIEM++;
             if (metadata.includes('Over-Ear')) tcountOE++;
 
+            // Rig Filtering
             const matchesRig = currentRigFilter === 'ALL' || metadata.includes(currentRigFilter);
+            
+            // Type Filtering
             let matchesType = true;
             if (currentTypeFilter === 'IEM') matchesType = metadata.includes('IEM') || metadata.includes('TWS');
             if (currentTypeFilter === 'Over-Ear') matchesType = metadata.includes('Over-Ear');
+            
+            // Pinnae Toggle
+            const matchesPinnae = !pinnaeOnlyMode || metadata.includes('Pinnae');
 
-            return matchesRig && matchesType;
+            return matchesRig && matchesType && matchesPinnae;
         });
 
         document.getElementById('count-ALL').innerText = countAll;
@@ -288,6 +288,7 @@
         document.getElementById('tcount-ALL').innerText = tcountAll;
         document.getElementById('tcount-IEM').innerText = tcountIEM;
         document.getElementById('tcount-OE').innerText = tcountOE;
+        document.getElementById('tcount-Pinnae').innerText = countPinnae;
 
         currentIndex = 0; currentFilteredSet = filtered; loadMore(false);
     }
@@ -301,7 +302,7 @@
 
     function renderStats() {
         const statsContainer = document.getElementById('stats');
-        const categories = ["IEM (5128)", "Over-Ear (5128)", "IEM (711)", "Over-Ear (711)", "Misc/Unknown", "TWS & Earbuds"];
+        const categories = ["IEM (5128)", "Over-Ear (5128)", "IEM (711)", "Over-Ear (711)", "Pinnae (Precis/GRAS)", "Misc/Unknown", "TWS & Earbuds"];
         const counts = {}; const lists = {}; categories.forEach(c => { counts[c] = 0; lists[c] = []; });
         const contributors = {};
         
@@ -336,13 +337,17 @@
                 ${renderCategoryCard("711 IEMs", "IEM (711)")} ${renderCategoryCard("711 Over-Ears", "Over-Ear (711)")}
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                ${renderCategoryCard("Precis / G.R.A.S.", "Pinnae (Precis/GRAS)")}
                 <div class="stat-card p-4 bg-[#111] border border-zinc-800 rounded md:col-span-1">
                     <span class="text-[11px] uppercase mono font-black text-emerald-500 mb-4 block">5128 Contributors</span>
                     <table class="w-full text-[11px] mono text-zinc-500">
                         ${sortedContributors.slice(0, 8).map(([name, count]) => `<tr class="border-b border-zinc-900"><td class="py-1.5">${name}</td><td class="text-right text-white font-bold">${count}</td></tr>`).join('')}
                     </table>
                 </div>
-                ${renderCategoryCard("TWS & Earbuds", "TWS & Earbuds")} ${renderCategoryCard("Misc / Targets", "Misc/Unknown")}
+                <div class="space-y-4">
+                    ${renderCategoryCard("TWS & Earbuds", "TWS & Earbuds")}
+                    ${renderCategoryCard("Misc / Targets", "Misc/Unknown")}
+                </div>
             </div>`;
     }
 
@@ -357,7 +362,15 @@
     function setTypeFilter(type) {
         currentTypeFilter = type;
         const idMap = { 'ALL': 'type-ALL', 'IEM': 'type-IEM', 'Over-Ear': 'type-OE' };
-        document.querySelectorAll('#type-filters .filter-btn').forEach(btn => btn.classList.toggle('active', btn.id === idMap[type]));
+        document.querySelectorAll('#type-filters .filter-btn').forEach(btn => {
+            if (btn.id !== 'type-Pinnae') btn.classList.toggle('active', btn.id === idMap[type]);
+        });
+        applyFilters();
+    }
+
+    function togglePinnaeOnly() {
+        pinnaeOnlyMode = !pinnaeOnlyMode;
+        document.getElementById('type-Pinnae').classList.toggle('active', pinnaeOnlyMode);
         applyFilters();
     }
 
