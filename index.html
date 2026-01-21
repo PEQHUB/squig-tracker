@@ -80,13 +80,7 @@
     <header class="mb-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             <div class="stat-card">
-                <div class="flex justify-between items-start">
-                    <span class="block text-[10px] lg:text-[12px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
-                    <span class="relative flex h-2 w-2 mt-1">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                </div>
+                <span class="block text-[10px] lg:text-[12px] uppercase tracking-widest text-zinc-500 font-semibold mb-1">Last 12 Hours</span>
                 <span id="stat-total" class="text-xl lg:text-3xl font-medium mono text-white">0</span>
             </div>
             <div class="stat-card">
@@ -100,11 +94,24 @@
         </div>
 
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-zinc-900 mb-8 gap-4">
-            <div class="flex gap-4">
-                <button onclick="switchTab('feed')" id="tab-feed" class="tab-btn active mono">Live Feed</button>
-                <button onclick="switchTab('stats')" id="tab-stats" class="tab-btn mono">Statistics</button>
+            <div class="flex items-center justify-between w-full">
+                <div class="flex gap-4">
+                    <button onclick="switchTab('feed')" id="tab-feed" class="tab-btn active mono">Live Feed</button>
+                    <button onclick="switchTab('stats')" id="tab-stats" class="tab-btn mono">Statistics</button>
+                </div>
+                
+                <div class="flex items-center gap-3 mb-2 px-2">
+                    <span class="text-[9px] lg:text-[10px] mono text-zinc-500 uppercase tracking-[0.2em]">Live Sync</span>
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-40"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                </div>
             </div>
-            <div id="rig-filters" class="flex gap-2 mb-2">
+        </div>
+
+        <div id="rig-filters-container" class="flex flex-col md:flex-row justify-between gap-4 mb-8">
+            <div id="rig-filters" class="flex gap-2">
                 <button onclick="setRigFilter('ALL')" class="filter-btn active mono" id="filter-ALL">All <span class="filter-count" id="count-ALL">0</span></button>
                 <button onclick="setRigFilter('711')" class="filter-btn mono" id="filter-711">711 <span class="filter-count" id="count-711">0</span></button>
                 <button onclick="setRigFilter('5128')" class="filter-btn mono" id="filter-5128">5128 <span class="filter-count" id="count-5128">0</span></button>
@@ -202,11 +209,6 @@
         return "Misc/Unknown";
     }
 
-    function expandCategory(cat) {
-        statsPagination[cat] += 15;
-        renderStats();
-    }
-
     async function fetchData() {
         try {
             const cacheBuster = new Date().getTime();
@@ -218,24 +220,24 @@
             const newHistory = await hReq.json();
             const newDatabase = await dReq.json();
             
-            // Check if there's actual new data before re-rendering everything
+            // Compare counts to decide if we need a visual update
             if (newHistory.length !== fullHistory.length || Object.keys(newDatabase).length !== Object.keys(databaseData).length) {
                 fullHistory = newHistory;
                 databaseData = newDatabase;
                 fullHistory.sort((a,b) => (toLocalTime(b.date) - toLocalTime(a.date)));
                 updateDashboard();
-                
                 if (currentTab === 'feed') applyFilters();
                 else renderStats();
-                
-                console.log("Database updated at: " + new Date().toLocaleTimeString());
+                console.log(`Sync complete: New data found at ${new Date().toLocaleTimeString()}`);
+            } else {
+                console.log(`Sync complete: No changes found at ${new Date().toLocaleTimeString()}`);
             }
         } catch (e) { console.error("Sync Error", e); }
     }
 
     function startAutoRefresh() {
         if (refreshInterval) clearInterval(refreshInterval);
-        refreshInterval = setInterval(fetchData, 5 * 60 * 1000); // 5 Minutes
+        refreshInterval = setInterval(fetchData, 5 * 60 * 1000); // Check every 5 minutes
     }
 
     function updateDashboard() {
@@ -401,7 +403,7 @@
             const btn = document.getElementById(`tab-${t}`);
             if (btn) btn.classList.toggle('active', t === tab);
         });
-        document.getElementById('rig-filters').classList.toggle('hidden', tab === 'stats');
+        document.getElementById('rig-filters-container').classList.toggle('hidden', tab === 'stats');
         if (tab === 'stats') { renderStats(); document.getElementById('load-all-btn').classList.add('hidden'); } 
         else { applyFilters(); }
     }
@@ -413,7 +415,7 @@
 
     document.getElementById('load-all-btn').addEventListener('click', () => loadMore(true));
     
-    // Initialize
+    // Initial fetch and start interval
     fetchData();
     startAutoRefresh();
 </script>
