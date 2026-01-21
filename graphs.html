@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequency Response Graphs - Squig-Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --card: #111111;
+            --border: #222222;
+            --text: #f4f4f5;
+            --text-secondary: #9ca3af;
+            --graph-line: #4ECDC4;
+            --accent: #4ECDC4;
+        }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+        .loading-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; padding: 2rem; }
+        .graph-card { background: var(--card); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; transition: all 0.3s ease; }
+        .graph-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .mini-graph-container { width: 100%; height: 120px; background: var(--bg); border-radius: 0.5rem; overflow: hidden; position: relative; }
+        .loading-badge { background: var(--accent); color: var(--bg); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .success-badge { background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .graph-skeleton { background: linear-gradient(90deg, var(--card) 25%, rgba(255,255,255,0.05) 50%, var(--card) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 0.5rem; }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    </style>
+</head>
+<body class="min-h-screen">
+    <nav class="bg-[var(--card)] border-b border-[var(--border)] sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="https://peqhub.github.io/squig-tracker/" class="flex items-center space-x-2">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        <span class="font-semibold text-[var(--text)]">Squig-Tracker</span>
+                    </a>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="https://peqhub.github.io/squig-tracker/" class="text-[var(--text-secondary)] hover:text-[var(--text)]">Live Feed</a>
+                        <a href="graphs.html" class="text-[var(--text)] font-semibold">Frequency Graphs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-[var(--text)] mb-2">Frequency Response Graphs</h1>
+            <p class="text-[var(--text-secondary)] text-lg">Visualize audio measurements from your favorite reviewers.</p>
+            <div class="mt-4 flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-sm text-[var(--text-secondary)]">Live Testing Environment</span>
+                </div>
+            </div>
+        </div>
+        <div class="loading-container">
+            <div class="graph-card">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="font-medium text-[var(--text)]">Sony IER-M9</h3>
+                        <p class="text-sm text-[var(--text-secondary)]">Dchpgall • 5128 Rig</p>
+                    </div>
+                    <span class="loading-badge">Loading...</span>
+                </div>
+                <div class="mini-graph-container graph-skeleton"></div>
+            </div>
+            <div class="graph-card">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="font-medium text-[var(--text)]">Moondrop Blessing 2</h3>
+                        <p class="text-sm text-[var(--text-secondary)]">Crinacle • 711 Rig</p>
+                    </div>
+                    <span class="loading-badge">Loading...</span>
+                </div>
+                <div class="mini-graph-container graph-skeleton"></div>
+            </div>
+        </div>
+    </main>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Frequency Graphs Test Site - Ready for testing!');
+        });
+    </script>
+</body>
+</html>
