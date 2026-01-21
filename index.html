@@ -166,42 +166,40 @@
         const reviewer = (entry.reviewer || "").toLowerCase().replace(/['\s]/g, ""); 
         const item = resolveName(entry.item).toLowerCase();
 
-        // 1. DOMAIN & HOSTNAME DETECTION
+        // 1. DOMAIN RULES (Top Priority)
+        // Rule: listener.squig.link is always 711 OE
+        if (link.includes('listener.squig.link')) return "Over-Ear (711)";
+        
+        // Rule: Hangout 711 IE path
+        if (link.includes('graph.hangout.audio/iem/711')) return "IEM (711)";
+
+        // 2. RIG DETECTION (5128)
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
-        // Specific handling for Hangout 711 IE domain
-        const isHangout711IE = link.includes('graph.hangout.audio/iem/711');
-
-        const is5128 = !isHangout711IE && (
-                       hostname.includes('hangout.audio') || 
+        const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
                        reviewer.includes("5128") || reviewer.includes("4620") ||
                        reviewer.includes("earphonearchive") || link.includes("earphonearchive") ||
-                       item.includes("5128") || item.includes("4620"));
+                       item.includes("5128") || item.includes("4620");
 
-        // 2. PATH VALIDATION
+        // 3. PATH & TYPE VALIDATION
         const isIEMPath = link.includes('/iem/') || link.includes('/iems/');
         const isHPPath = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone');
 
-        // 3. SPECIAL CATEGORIES
+        // 4. SPECIAL CATEGORIES
         const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
         if (isBuds) return "TWS & Earbuds";
 
-        // 4. PINNAE CHECK
-        const pinnaeKeywords = ["kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"];
-        const hasPinnaeKeyword = pinnaeKeywords.some(key => item.includes(key) || reviewer.includes(key));
-
         if (is5128) {
-            if (isIEMPath) return "IEM (5128)";
-            if (isHPPath) return "Over-Ear (5128)";
+            if (isHPPath && !isIEMPath) return "Over-Ear (5128)";
             return "IEM (5128)";
         }
 
-        // Handle Hangout 711 IE strict domain
-        if (isHangout711IE) return "IEM (711)";
+        // 5. 711 PINNAE/HP DETECTION
+        const pinnaeKeywords = ["kb5", "kb6", "k005", "k006", "kb006", "kb5000", "kb0065", "kb0066", "kb007"];
+        const hasPinnaeKeyword = pinnaeKeywords.some(key => item.includes(key) || reviewer.includes(key));
 
-        // Handle general 711 / Pinnae Logic
         if (hasPinnaeKeyword || (isHPPath && !isIEMPath)) return "Over-Ear (711)";
 
         return "IEM (711)";
