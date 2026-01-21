@@ -169,24 +169,27 @@
         let hostname = "";
         try { hostname = new URL(link).hostname; } catch(e) { hostname = link; }
 
-        // Logic check for 5128 - Strictly added Earphone Archive here
+        // AGGRESSIVE 5128 MATCHING (Archive specific)
         const is5128 = hostname.includes('hangout.audio') || 
                        link.includes('listener800.github.io/5128') || 
                        reviewer.includes("5128") || 
-                       reviewer.includes("earphonearchive") ||
-                       link.includes("earphonearchive");
+                       reviewer.includes("earphonearchive") || 
+                       reviewer.includes("earphonesarchive") || 
+                       link.includes("earphonearchive") ||
+                       link.includes("earphonesarchive");
 
-        // Overrides
-        if (link.includes('listener.squig.link')) return "Over-Ear (711)";
-        if (link.includes('listener800.github.io/iems')) return "IEM (711)";
-        if (hostname.includes('dl.squig.link')) return is5128 ? "IEM (5128)" : "IEM (711)";
-
+        // CATEGORY DETECTION
         const isBuds = link.includes('/earbuds/') || link.includes('type=tws') || link.includes('/earbud/') || item.includes('earbud');
         if (isBuds) return "TWS & Earbuds";
 
-        const isHP = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone');
+        const isHP = link.includes('/headphones/') || link.includes('/hp/') || item.includes('over-ear') || item.includes('headphone') || link.includes('type=headphone') || link.includes('listener.squig.link');
         
+        // ASSIGNMENT (Overrides 711 defaults)
         if (isHP) return is5128 ? "Over-Ear (5128)" : "Over-Ear (711)";
+
+        // Handle specific squig overrides that aren't over-ear
+        if (link.includes('listener800.github.io/iems')) return "IEM (711)";
+
         return is5128 ? "IEM (5128)" : "IEM (711)";
     }
 
@@ -247,9 +250,7 @@
         let tcountAll = 0, tcountIEM = 0, tcountOE = 0;
 
         const filtered = fullHistory.filter(entry => {
-            const name = resolveName(entry.item).toLowerCase();
-            const reviewer = entry.reviewer.toLowerCase();
-            const matchesSearch = name.includes(searchVal) || reviewer.includes(searchVal);
+            const matchesSearch = resolveName(entry.item).toLowerCase().includes(searchVal) || entry.reviewer.toLowerCase().includes(searchVal);
             if (!matchesSearch) return false;
 
             const metadata = getEntryMetadata(entry);
