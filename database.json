@@ -6599,7 +6599,10 @@
         "https://sai.squig.link/?share=Truthear%20x%20Crinacle%20Zero%20%288kHz%29",
         "https://sai.squig.link/?share=Truthear%20x%20Crinacle%20Zero%20RED%20%288kHz%29",
         "https://sai.squig.link/?share=Truthear%20Pure%20%28stock%20wide%20bore%20tips%29",
-        "https://sai.squig.link/?share=NULL"
+        "https://sai.squig.link/?share=NULL",
+        "https://sai.squig.link/?share=JT7%20with%20ECOS%20FT1Pro%20hybrid%20pads",
+        "https://sai.squig.link/?share=FT1%20Pro%20with%20NAN%20AUHP%20pads",
+        "https://sai.squig.link/?share=FT7%20with%20ZMF%20UNILP%20pads"
     ],
     "kr0mka": [
         "https://kr0mka.squig.link/?share=Dioko",
@@ -20851,5 +20854,5 @@
         "https://arn.squig.link/?share=horizon",
         "https://arn.squig.link/?share=supermix"
     ],
-    "last_sync": "2026-01-25T04:22:07.578346"
+    "last_sync": "2026-01-25T05:47:07.254350"
 }
