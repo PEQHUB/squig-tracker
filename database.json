@@ -16327,7 +16327,11 @@
         "https://dl.squig.link/?share=Pk1&type=tws",
         "https://dl.squig.link/headphones/?share=Penon%20Serial%20main&type=headphone",
         "https://dl.squig.link/headphones/?share=Tanchjim%20Kara%20%28Bass%20tips%29&type=headphone",
-        "https://dl.squig.link/?share=Fiio%20FX17"
+        "https://dl.squig.link/?share=Fiio%20FX17",
+        "https://dl.squig.link/headphones/?share=DT%20700%20Pro%20X&type=headphone",
+        "https://dl.squig.link/headphones/?share=DT%20900%20Pro%20X&type=headphone",
+        "https://dl.squig.link/headphones/?share=Fiio%20FT1&type=headphone",
+        "https://dl.squig.link/headphones/?share=Fiio%20JT7&type=headphone"
     ],
     "ankramutt": [
         "https://ankramutt.squig.link/?share=7Hz%20Legato",
@@ -20875,5 +20879,5 @@
         "https://arn.squig.link/?share=horizon",
         "https://arn.squig.link/?share=supermix"
     ],
-    "last_sync": "2026-01-26T15:00:52.833493"
+    "last_sync": "2026-01-26T16:03:45.136718"
 }
