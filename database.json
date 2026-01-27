@@ -3924,7 +3924,10 @@
         "https://musicafe.squig.link/headphones/?share=Project%20HRP&type=headphone",
         "https://musicafe.squig.link/?share=TRN%20Seahorse%20Pro%20Foam",
         "https://musicafe.squig.link/?share=TRN%20Starfish",
-        "https://musicafe.squig.link/?share=TRN%20WhaleShark%20Black"
+        "https://musicafe.squig.link/?share=TRN%20WhaleShark%20Black",
+        "https://musicafe.squig.link/?share=COZOY%20D1",
+        "https://musicafe.squig.link/?share=NFAcous%20NM25",
+        "https://musicafe.squig.link/?share=SIVGA%20SM100"
     ],
     "joshtbvo": [
         "https://joshtbvo.squig.link/?share=7HZ%20Sonus",
@@ -20885,5 +20888,5 @@
         "https://arn.squig.link/?share=horizon",
         "https://arn.squig.link/?share=supermix"
     ],
-    "last_sync": "2026-01-27T07:55:50.733160"
+    "last_sync": "2026-01-27T09:04:17.726199"
 }
