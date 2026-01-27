@@ -7452,7 +7452,10 @@
         "https://eliseaudio.squig.link/?share=Sample%208",
         "https://eliseaudio.squig.link/?share=Sample%209",
         "https://eliseaudio.squig.link/?share=Sample%2010",
-        "https://eliseaudio.squig.link/?share=Sample%2011"
+        "https://eliseaudio.squig.link/?share=Sample%2011",
+        "https://eliseaudio.squig.link/?share=Faith%20Audio%20Labs%20E1000",
+        "https://eliseaudio.squig.link/?share=FiR%20Audio%20Rx6%20%28Red%20Module%29",
+        "https://eliseaudio.squig.link/?share=Hiby%20Zeta%20II"
     ],
     "dchpgall": [
         "https://dchpgall.squig.link/?share=FLAT",
@@ -20893,5 +20896,5 @@
         "https://arn.squig.link/?share=horizon",
         "https://arn.squig.link/?share=supermix"
     ],
-    "last_sync": "2026-01-27T18:01:49.235797"
+    "last_sync": "2026-01-27T19:43:39.151852"
 }
