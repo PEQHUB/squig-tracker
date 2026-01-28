@@ -5589,7 +5589,10 @@
         "https://atechreviews.squig.link/headphones/?share=SIVGA%20SV007&type=headphone",
         "https://atechreviews.squig.link/?share=Tangzu%20Xue%20Tao",
         "https://atechreviews.squig.link/?share=ZiiGaat%20x%20Fresh%20Reviews%20Arete%202%20%28Switch%20OFF%29",
-        "https://atechreviews.squig.link/?share=Geekfly%20Geek%20Wold%20GK20%20Pro"
+        "https://atechreviews.squig.link/?share=Geekfly%20Geek%20Wold%20GK20%20Pro",
+        "https://atechreviews.squig.link/?share=BLON%20Mini",
+        "https://atechreviews.squig.link/?share=Tin%20HiFi%20T2",
+        "https://atechreviews.squig.link/?share=Tin%20HiFi%20T6%20%28Green%20Nozzle%29"
     ],
     "csi-zone": [
         "https://csi-zone.squig.link/?share=7th%20Acoustic%20Asteria",
@@ -19981,7 +19984,9 @@
         "https://hbb.squig.link/?share=Fre%20A",
         "https://hbb.squig.link/?share=Fres%20B",
         "https://hbb.squig.link/?share=Ziigaat%20Cinno",
-        "https://hbb.squig.link/?share=Ki%20Cad%202"
+        "https://hbb.squig.link/?share=Ki%20Cad%202",
+        "https://hbb.squig.link/?share=EPZ%20P40",
+        "https://hbb.squig.link/?share=Tinhi%20T6"
     ],
     "pw": [
         "https://pw.squig.link/?share=64Audio%20Trio",
@@ -20897,5 +20902,5 @@
         "https://arn.squig.link/?share=horizon",
         "https://arn.squig.link/?share=supermix"
     ],
-    "last_sync": "2026-01-27T23:44:08.454596"
+    "last_sync": "2026-01-28T04:12:06.181703"
 }
