@@ -6304,7 +6304,10 @@
         "https://boizoff.squig.link/headphones/?share=Auteur%20Classic%20%28lambskin%20perforated%20pads%29&type=headphone",
         "https://boizoff.squig.link/?share=Kunten%20%28TENNMAK%20SoFoam%20tips%29%20%E2%9C%93",
         "https://boizoff.squig.link/?share=SuperMix%205%20%28sample%201%29%20%28stock%20silicone%20tips%29%20%E2%9C%93",
-        "https://boizoff.squig.link/?share=SuperMix%205%20%28sample%202%29%20%28stock%20silicone%20tips%29%20%E2%9C%93"
+        "https://boizoff.squig.link/?share=SuperMix%205%20%28sample%202%29%20%28stock%20silicone%20tips%29%20%E2%9C%93",
+        "https://boizoff.squig.link/?share=Aether%20%28standard%20foam%20tips%29%20%E2%9C%93",
+        "https://boizoff.squig.link/?share=Horizon%20%28sample%2001%29%20%28stock%20black%20tips%29%20%E2%9C%93",
+        "https://boizoff.squig.link/?share=Horizon%20%28sample%2002%29%20%28TENNMAK%20SoFoam%20tips%29"
     ],
     "sai": [
         "https://sai.squig.link/?share=The%20Composer",
@@ -20938,5 +20941,5 @@
         "https://arn.squig.link/?share=horizon",
         "https://arn.squig.link/?share=supermix"
     ],
-    "last_sync": "2026-01-31T10:55:07.266394"
+    "last_sync": "2026-01-31T11:41:05.754726"
 }
