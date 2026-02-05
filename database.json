@@ -5603,7 +5603,8 @@
         "https://atechreviews.squig.link/?share=BLON%20Mini",
         "https://atechreviews.squig.link/?share=Tin%20HiFi%20T2",
         "https://atechreviews.squig.link/?share=Tin%20HiFi%20T6%20%28Green%20Nozzle%29",
-        "https://atechreviews.squig.link/?share=Kiwi%20Ears%20Cadenza%20II"
+        "https://atechreviews.squig.link/?share=Kiwi%20Ears%20Cadenza%20II",
+        "https://atechreviews.squig.link/?share=Geek%20Wold%20GK20%20Pro"
     ],
     "csi-zone": [
         "https://csi-zone.squig.link/?share=7th%20Acoustic%20Asteria",
@@ -16220,7 +16221,9 @@
         "https://bassaudio.squig.link/?share=Kiwi%20Ears%20Cadenza%202",
         "https://bassaudio.squig.link/?share=Agasound%20Sublimation",
         "https://bassaudio.squig.link/?share=Moondrop%20Lan%202%20Pop",
-        "https://bassaudio.squig.link/?share=Moondrop%20Rays"
+        "https://bassaudio.squig.link/?share=Moondrop%20Rays",
+        "https://bassaudio.squig.link/?share=Dunu%20Kima%202%20Raven%20Teal",
+        "https://bassaudio.squig.link/?share=Dunu%20Titan%20X"
     ],
     "dl": [
         "https://dl.squig.link/?share=Fourte",
@@ -20985,5 +20988,5 @@
         "https://arn.squig.link/?share=horizon",
         "https://arn.squig.link/?share=supermix"
     ],
-    "last_sync": "2026-02-05T07:59:05.492871"
+    "last_sync": "2026-02-05T10:11:07.709374"
 }
