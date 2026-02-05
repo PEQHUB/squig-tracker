@@ -11598,7 +11598,9 @@
         "https://ideru.squig.link/headphones/?share=FT1_ST&type=headphone",
         "https://ideru.squig.link/headphones/?share=KSC75X_HBM&type=headphone",
         "https://ideru.squig.link/headphones/?share=HD600_ST&type=headphone",
-        "https://ideru.squig.link/headphones/?share=ODK%20%28ST%29&type=headphone"
+        "https://ideru.squig.link/headphones/?share=ODK%20%28ST%29&type=headphone",
+        "https://ideru.squig.link/headphones/?share=FT1%20%28ST%29&type=headphone",
+        "https://ideru.squig.link/headphones/?share=Razer%20Nari%20%282.4%29&type=headphone"
     ],
     "bassyalexander": [
         "https://bassyalexander.squig.link/?share=FatFreq%20Scarlet",
@@ -20995,5 +20997,5 @@
         "https://arn.squig.link/?share=horizon",
         "https://arn.squig.link/?share=supermix"
     ],
-    "last_sync": "2026-02-05T19:52:55.840641"
+    "last_sync": "2026-02-05T21:05:41.854080"
 }
